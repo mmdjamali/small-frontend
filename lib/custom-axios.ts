@@ -7,7 +7,7 @@ export const axios_with_refresh_token = axios.create({
   headers: { "Content-Type": "application/json" },
 });
 
-export const axios_with_token = axios.create({
+export const custom_axios = axios.create({
   baseURL: BACKEND_URL,
   headers: { "Content-Type": "application/json" },
 });

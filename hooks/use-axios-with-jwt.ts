@@ -1,5 +1,5 @@
 import { BACKEND_URL } from "@/config/env";
-import { axios_with_refresh_token, axios_with_token } from "@/lib/custom-axios";
+import { axios_with_refresh_token, custom_axios } from "@/lib/custom-axios";
 import { useEffect, useState } from "react";
 
 type State = string | undefined;
@@ -44,17 +44,15 @@ export const useJwtAxios = () => {
   }, [state]);
 
   useEffect(() => {
-    const requestInterceptor = axios_with_token.interceptors.request.use(
-      (req) => {
-        if (!req.headers["Authorization"]) {
-          req.headers["Authorization"] = `Bearer ${state}`;
-          return req;
-        }
+    const requestInterceptor = custom_axios.interceptors.request.use((req) => {
+      if (!req.headers["Authorization"]) {
+        req.headers["Authorization"] = `Bearer ${state}`;
         return req;
       }
-    );
+      return req;
+    });
 
-    const responseInterceptor = axios_with_token.interceptors.response.use(
+    const responseInterceptor = custom_axios.interceptors.response.use(
       (res) => res,
       async (err) => {
         const previousRequest = err.config;
@@ -63,17 +61,17 @@ export const useJwtAxios = () => {
           previousRequest.sent = true;
           const new_token = await refresh_token();
           previousRequest.headers["Authorization"] = `Bearer ${new_token}`;
-          return axios_with_token(previousRequest);
+          return custom_axios(previousRequest);
         }
         return Promise.reject(err);
       }
     );
 
     return () => {
-      axios_with_token.interceptors.request.eject(requestInterceptor);
-      axios_with_token.interceptors.response.eject(responseInterceptor);
+      custom_axios.interceptors.request.eject(requestInterceptor);
+      custom_axios.interceptors.response.eject(responseInterceptor);
     };
   }, [state]);
 
-  return axios_with_token;
+  return custom_axios;
 };

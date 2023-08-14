@@ -1,7 +1,11 @@
 import axios from "axios";
 
+import { custom_axios } from "@/lib/custom-axios";
+import { BACKEND_URL } from "@/config/env";
+
 export const getAxios = (access_token: string, refresh_token: string) => {
   const axios_with_jwt = axios.create({
+    baseURL: BACKEND_URL,
     withCredentials: true,
     headers: {
       "Content-Type": "application/json",
@@ -22,7 +26,6 @@ export const getAxios = (access_token: string, refresh_token: string) => {
       const previousRequest = err.config;
 
       if (err?.response?.status === 403 && !previousRequest.sent) {
-        console.log("trying to get new token");
         previousRequest.sent = true;
         const new_token = await refresh(refresh_token);
 
@@ -39,7 +42,7 @@ export const getAxios = (access_token: string, refresh_token: string) => {
 
 export const refresh = async (refresh_token: string) => {
   return (
-    await axios.post("http://localhost:3001/auth/refresh", {
+    await custom_axios.post("/api/auth/refresh", {
       refresh_token,
     })
   ).data.data;
