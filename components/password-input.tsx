@@ -12,15 +12,16 @@ const PasswordInput = React.forwardRef<
     <Input
       type={show ? "text" : "password"}
       actions={[
-        <Icon
-          onClick={(e) => {
-            e.preventDefault();
-            setShow((prev) => !prev);
-          }}
-          key={0}
-          name={show ? "Eye" : "EyeClose"}
-          className="text-[21px] cursor-pointer"
-        />,
+        <button key={0}>
+          <Icon
+            onClick={(e) => {
+              e.preventDefault();
+              setShow((prev) => !prev);
+            }}
+            name={show ? "Eye" : "EyeClose"}
+            className="text-[21px] cursor-pointer"
+          />
+        </button>,
       ]}
       ref={ref}
       {...props}
