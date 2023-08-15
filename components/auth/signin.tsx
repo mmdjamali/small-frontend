@@ -8,6 +8,7 @@ import Link from "next/link";
 import { BACKEND_URL } from "@/config/env";
 
 import { useDebouncedValue } from "@/hooks/use-debounced-value";
+import PasswordInput from "../password-input";
 
 function Signin() {
   const [email, registerEmail, emailError] = useDebouncedValue("", 500, [
@@ -31,8 +32,8 @@ function Signin() {
     <section className="w-full relative px-0 sm:p-8 max-w-md sm:max-w-lg mx-auto text-foreground text-[14px]">
       <div className="rounded-[8px] bg-background sm:p-5 my-[10%] relative">
         <div className="grid gap-2 mb-6 text-center">
-          <h1 className="text-[28px] font-bold">
-            Welcome back to yellow page!
+          <h1 className="flex items-center gap-x-1 justify-center flex-wrap text-[28px] font-bold">
+            <span>Welcome back to</span> <span>yellow page!</span>
           </h1>
           <p className="text-[14px] text-foreground/75">
             Please enter your credentials to continue.
@@ -73,11 +74,11 @@ function Signin() {
             {...registerEmail()}
           />
 
-          <Input
+          <PasswordInput
             error={passwordError}
             name="password"
             label="Password"
-            placeholder="*********"
+            placeholder="unbreakable"
             {...registerPassword()}
           />
 

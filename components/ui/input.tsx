@@ -49,7 +49,7 @@ const Input = React.forwardRef<React.ElementRef<"input">, props>(
         {label ? (
           <label
             htmlFor={ID}
-            className="text-[14px] font-semibold text-foreground mb-1"
+            className="text-[14px] font-medium text-foreground mb-1"
           >
             {label}
             {required ? (

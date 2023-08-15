@@ -135,14 +135,14 @@ function Signup() {
               error={passwordError}
               name="password"
               label="Password"
-              placeholder="*********"
+              placeholder="unbreakable"
               {...registerPassword()}
             />
             <PasswordInput
               error={confirmPasswordError}
               name="password_confirm"
               label="Confirm"
-              placeholder="*********"
+              placeholder="unbreakable"
               {...registerConfirmPassword()}
             />
           </div>
