@@ -31,8 +31,16 @@ function Signup() {
         error_message: "Password is too short",
       },
       {
-        pattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+        pattern: /[A-Z]+/,
         error_message: "must contain at least one uppercase character",
+      },
+      {
+        pattern: /[a-z]+/,
+        error_message: "must contain at least one lowecase character",
+      },
+      {
+        pattern: /[0-9]+/,
+        error_message: "must contain at least one number",
       },
     ]
   );

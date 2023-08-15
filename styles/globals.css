@@ -24,6 +24,22 @@
     background-color: var(--background);
     transition: background-color 5000s ease-in-out 0s;
   }
+
+  /* html::-webkit-scrollbar {
+    @apply w-3 h-3;
+  }
+
+  html::-webkit-scrollbar-track {
+    @apply bg-background;
+  }
+
+  html::-webkit-scrollbar-thumb {
+    @apply bg-gradient-to-b from-background to-primary/75 rounded;
+  }
+
+  html::-webkit-scrollbar-thumb:hover {
+    @apply bg-gradient-to-b from-primary/25 to-primary;
+  } */
 }
 
 :root {
