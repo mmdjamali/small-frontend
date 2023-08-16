@@ -20,7 +20,7 @@ interface MainNavProps {
 function MainNav({ items }: MainNavProps) {
   return (
     <header className="hidden lg:flex items-center justify-center">
-      <Link className="flex items-center justify-center gap-1 mr-4" href="/">
+      <Link className="flex items-center justify-center gap-1 mr-8" href="/">
         <Icon
           name="Logo"
           className="text-[24px] text-primary h-[24px] aspect-square"
@@ -48,9 +48,9 @@ function MainNav({ items }: MainNavProps) {
                       </p>
                     </a>
                   </li>
-                  {items?.[0].items?.map(({ title, href, description }) => (
+                  {items?.[0].items?.map(({ title, url, description }) => (
                     <NavigationMenuLink key={title} asChild>
-                      <Link href={href ?? "#"}>
+                      <Link href={url ?? "#"}>
                         <li key={title} className="flex flex-col gap-2">
                           <div className="text-sm leading-none font-medium">
                             {title}
@@ -75,9 +75,9 @@ function MainNav({ items }: MainNavProps) {
                 <NavigationMenuTrigger>{title}</NavigationMenuTrigger>
                 <NavigationMenuContent>
                   <ul className="grid p-6 gap-4 w-[400px] md:w-[500px] lg:w-[600px] lg:grid-cols-2">
-                    {items?.map(({ title, href, description }) => (
+                    {items?.map(({ title, url, description }) => (
                       <NavigationMenuLink key={title} asChild>
-                        <Link href={href ?? "#"}>
+                        <Link href={url ?? "#"}>
                           <li key={title} className="flex flex-col gap-2">
                             <div className="text-sm leading-none font-medium">
                               {title}

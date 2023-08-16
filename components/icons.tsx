@@ -2,6 +2,7 @@ import { IconType } from "react-icons";
 import {
   RiArrowDownSLine,
   RiCheckboxBlankCircleLine,
+  RiCloseLine,
   RiDiscordFill,
   RiEyeCloseLine,
   RiEyeLine,
@@ -9,6 +10,7 @@ import {
   RiFunctionFill,
   RiGoogleFill,
   RiLoader5Line,
+  RiMenu2Line,
   RiUser2Line,
 } from "react-icons/ri";
 
@@ -25,4 +27,6 @@ export const Icons: {
   Eye: RiEyeLine,
   EyeClose: RiEyeCloseLine,
   ArrowDown: RiArrowDownSLine,
+  Menu: RiMenu2Line,
+  Close: RiCloseLine,
 };

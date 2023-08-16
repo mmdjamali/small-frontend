@@ -4,9 +4,9 @@ type IconKeyType = keyof typeof Icons;
 
 interface NavItem {
   title: string;
-  href?: string;
+  url?: string;
   description?: string;
-  disabed?: boolean;
+  disabled?: boolean;
   external?: boolean;
   icon?: IconKeyType;
 }
