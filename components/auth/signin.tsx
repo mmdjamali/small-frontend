@@ -10,6 +10,7 @@ import { BACKEND_URL } from "@/config/env";
 import { useDebouncedValue } from "@/hooks/use-debounced-value";
 import PasswordInput from "../password-input";
 import axios from "axios";
+import { axios_with_refresh_token } from "@/lib/custom-axios";
 
 function Signin() {
   const [email, registerEmail, emailError] = useDebouncedValue("", 500, [
@@ -28,6 +29,7 @@ function Signin() {
   );
 
   const [loading, setLoading] = useState(false);
+  const [loading2, setLoading2] = useState(false);
 
   return (
     <section className="w-full relative px-0 sm:p-8 max-w-md sm:max-w-lg mx-auto text-foreground text-[14px]">
@@ -47,29 +49,31 @@ function Signin() {
             try {
               setLoading(true);
 
-              // await fetch(BACKEND_URL + "/api/auth/login", {
-              //   method: "POST",
-              //   credentials: "include",
-              //   mode: "cors",
-              //   headers: {
-              //     "Content-Type": "application/json",
-              //   },
-              //   body: JSON.stringify({
-              //     email,
-              //     password,
-              //   }),
-              // }).then((res) => res.json());
-
-              await axios.post(
-                BACKEND_URL + "/api/auth/login",
-                {
+              const res = await fetch(BACKEND_URL + "/api/auth/login", {
+                method: "POST",
+                credentials: "include",
+                mode: "cors",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
                   email,
                   password,
-                },
-                {
-                  withCredentials: true,
-                }
-              );
+                }),
+              }).then((res) => res.json());
+
+              // const res = await axios.post(
+              //   BACKEND_URL + "/api/auth/login",
+              //   {
+              //     email,
+              //     password,
+              //   },
+              //   {
+              //     withCredentials: true,
+              //   }
+              // );
+
+              console.log(res);
 
               setLoading(false);
             } catch (err) {
@@ -128,6 +132,36 @@ function Signin() {
           </p>
         </div>
       </div>
+
+      <Button
+        loading={loading2}
+        onClick={async () => {
+          setLoading2(true);
+
+          // const res = await fetch(BACKEND_URL + "/api/auth/refresh-token", {
+          //   method: "POST",
+          //   credentials: "include",
+          //   mode: "cors",
+          //   headers: {
+          //     "Content-Type": "application/json",
+          //   },
+          //   body: JSON.stringify({
+          //     email,
+          //     password,
+          //   }),
+          // }).then((res) => res.json());
+
+          const res = await axios_with_refresh_token.post(
+            "/api/auth/refresh-token",
+            {}
+          );
+
+          console.log(res);
+          setLoading2(false);
+        }}
+      >
+        Get Token
+      </Button>
     </section>
   );
 }
