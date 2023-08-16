@@ -138,23 +138,20 @@ function Signin() {
         onClick={async () => {
           setLoading2(true);
 
-          // const res = await fetch(BACKEND_URL + "/api/auth/refresh-token", {
-          //   method: "POST",
-          //   credentials: "include",
-          //   mode: "cors",
-          //   headers: {
-          //     "Content-Type": "application/json",
-          //   },
-          //   body: JSON.stringify({
-          //     email,
-          //     password,
-          //   }),
-          // }).then((res) => res.json());
+          const res = await fetch(BACKEND_URL + "/api/auth/refresh-token", {
+            method: "POST",
+            credentials: "include",
+            mode: "cors",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({}),
+          }).then((res) => res.json());
 
-          const res = await axios_with_refresh_token.post(
-            "/api/auth/refresh-token",
-            {}
-          );
+          // const res = await axios_with_refresh_token.post(
+          //   "/api/auth/refresh-token",
+          //   {}
+          // );
 
           console.log(res);
           setLoading2(false);
