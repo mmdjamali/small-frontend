@@ -9,6 +9,7 @@ import { BACKEND_URL } from "@/config/env";
 
 import { useDebouncedValue } from "@/hooks/use-debounced-value";
 import PasswordInput from "../password-input";
+import axios from "axios";
 
 function Signin() {
   const [email, registerEmail, emailError] = useDebouncedValue("", 500, [
@@ -46,18 +47,29 @@ function Signin() {
             try {
               setLoading(true);
 
-              await fetch(BACKEND_URL + "/api/auth/login", {
-                method: "POST",
-                credentials: "include",
-                mode: "cors",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
+              // await fetch(BACKEND_URL + "/api/auth/login", {
+              //   method: "POST",
+              //   credentials: "include",
+              //   mode: "cors",
+              //   headers: {
+              //     "Content-Type": "application/json",
+              //   },
+              //   body: JSON.stringify({
+              //     email,
+              //     password,
+              //   }),
+              // }).then((res) => res.json());
+
+              await axios.post(
+                BACKEND_URL + "/api/auth/login",
+                {
                   email,
                   password,
-                }),
-              }).then((res) => res.json());
+                },
+                {
+                  withCredentials: true,
+                }
+              );
 
               setLoading(false);
             } catch (err) {
