@@ -145,7 +145,7 @@ function Signin() {
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({}),
+            body: "",
           }).then((res) => res.json());
 
           // const res = await axios_with_refresh_token.post(
