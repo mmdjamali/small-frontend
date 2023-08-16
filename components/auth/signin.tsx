@@ -20,7 +20,7 @@ function Signin() {
     500,
     [
       {
-        pattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+        pattern: /^.{8,}$/,
         error_message: "Password is too short",
       },
     ]

@@ -44,13 +44,7 @@ function Signup() {
       },
     ]
   );
-  const [confirmPassword, registerConfirmPassword, confirmPasswordError] =
-    useDebouncedValue("", 500, [
-      {
-        pattern: new RegExp(`^${password}$`),
-        error_message: "Password doesn't match",
-      },
-    ]);
+  const [confirmPassword, registerConfirmPassword] = useDebouncedValue("", 500);
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -78,7 +72,6 @@ function Signup() {
               !firstName ||
               lastNameError ||
               !lastName ||
-              confirmPasswordError ||
               !confirmPassword
             )
               return setError("Credentials are not valid!");
@@ -147,7 +140,11 @@ function Signup() {
               {...registerPassword()}
             />
             <PasswordInput
-              error={confirmPasswordError}
+              error={
+                confirmPassword !== password && confirmPassword
+                  ? "Password doesn't match"
+                  : ""
+              }
               name="password_confirm"
               label="Confirm"
               placeholder="unbreakable"
