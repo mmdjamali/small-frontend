@@ -25,6 +25,10 @@
     transition: background-color 5000s ease-in-out 0s;
   }
 
+  p {
+    @apply text-inherit;
+  }
+
   /* html::-webkit-scrollbar {
     @apply w-3 h-3;
   }

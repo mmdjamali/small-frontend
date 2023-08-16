@@ -2,12 +2,12 @@
 
     <style>
         path {
-            fill : rgb(97 75 195);
+            fill : rgb(39 158 173);
         }
 
         @media (prefers-color-scheme: dark) {
             path {
-                fill: rgb(97 75 195);
+                fill: rgb(39 158 173);
             }
         }
     </style>
