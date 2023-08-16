@@ -15,7 +15,7 @@ const dispatch = (state: State) => {
 
 const refresh_token = async () => {
   const res = await axios_with_refresh_token.post(
-    BACKEND_URL + "/auth/refresh",
+    BACKEND_URL + "/auth/refresh-token",
     null,
     {
       withCredentials: true,
@@ -26,8 +26,8 @@ const refresh_token = async () => {
 
   if (!res?.data?.data?.access_token) return;
 
-  dispatch(res.data.data.access_token);
-  return res.data.data.access_token;
+  dispatch(res.data.data.accessToken);
+  return res.data.data.accessToken;
 };
 
 export const useJwtAxios = () => {
