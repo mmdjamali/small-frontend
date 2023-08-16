@@ -1,7 +1,7 @@
 import Icon from "@/components/icon";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { PropsWithChildren } from "react";
 
 function AuthLayout({ children }: PropsWithChildren) {
   return (
