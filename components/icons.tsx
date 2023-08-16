@@ -1,5 +1,6 @@
 import { IconType } from "react-icons";
 import {
+  RiArrowDownSLine,
   RiCheckboxBlankCircleLine,
   RiDiscordFill,
   RiEyeCloseLine,
@@ -23,4 +24,5 @@ export const Icons: {
   Logo: RiFunctionFill,
   Eye: RiEyeLine,
   EyeClose: RiEyeCloseLine,
+  ArrowDown: RiArrowDownSLine,
 };

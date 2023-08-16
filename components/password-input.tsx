@@ -14,7 +14,7 @@ const PasswordInput = React.forwardRef<
         type={show ? "text" : "password"}
         placeholder={show ? placeholder : "*********"}
         actions={[
-          <button key={0}>
+          <button type="button" key={0}>
             <Icon
               onClick={(e) => {
                 e.preventDefault();
