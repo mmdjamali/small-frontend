@@ -11,15 +11,20 @@ const PasswordInput = React.forwardRef<
   return (
     <div>
       <Input
+        data-testid="password-input"
         type={show ? "text" : "password"}
         placeholder={show ? placeholder : "*********"}
         actions={[
-          <button type="button" key={0}>
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              setShow((prev) => !prev);
+            }}
+            data-testid="password-input-button"
+            type="button"
+            key={0}
+          >
             <Icon
-              onClick={(e) => {
-                e.preventDefault();
-                setShow((prev) => !prev);
-              }}
               name={show ? "Eye" : "EyeClose"}
               className="text-[21px] cursor-pointer"
             />
