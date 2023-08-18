@@ -19,13 +19,15 @@ interface MainNavProps {
 
 function MainNav({ items }: MainNavProps) {
   return (
-    <header className="hidden lg:flex items-center justify-center">
+    <header className="hidden md:flex items-center justify-center">
       <Link className="flex items-center justify-center gap-1 mr-8" href="/">
         <Icon
           name="Logo"
           className="text-[24px] text-primary h-[24px] aspect-square"
         />
-        <p className="text-[16px] font-bold text-primary">{siteConfig?.name}</p>
+        <p className="text-[16px] font-semibold text-primary">
+          {siteConfig?.name}
+        </p>
       </Link>
       <NavigationMenu>
         <NavigationMenuList>

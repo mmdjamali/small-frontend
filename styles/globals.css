@@ -64,3 +64,7 @@
   --error: 239 38 38;
   --warning: 244 187 32;
 }
+
+.image-tool__image > img {
+  @apply mx-auto;
+}

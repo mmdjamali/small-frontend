@@ -1,6 +1,8 @@
 import { IconType } from "react-icons";
 import {
   RiArrowDownSLine,
+  RiArticleFill,
+  RiArticleLine,
   RiCheckboxBlankCircleLine,
   RiCloseLine,
   RiDiscordFill,
@@ -23,7 +25,7 @@ export const Icons: {
   Discord: RiDiscordFill,
   Google: RiGoogleFill,
   Facebook: RiFacebookFill,
-  Logo: RiFunctionFill,
+  Logo: RiArticleFill,
   Eye: RiEyeLine,
   EyeClose: RiEyeCloseLine,
   ArrowDown: RiArrowDownSLine,

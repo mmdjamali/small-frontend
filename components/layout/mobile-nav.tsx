@@ -30,12 +30,12 @@ function MobileNav({ items }: NavbarProps) {
   return (
     <Drawer>
       <DrawerTrigger asChild>
-        <Button className="p-2 sm:hidden" variant="text" color="foreground">
+        <Button className="p-2 md:hidden" variant="text" color="foreground">
           <Icon name="Menu" className="text-[21px]" />
         </Button>
       </DrawerTrigger>
 
-      <DrawerPortal className="sm:hidden">
+      <DrawerPortal className="md:hidden">
         <DrawerOverlay />
 
         <DrawerContent
@@ -51,9 +51,12 @@ function MobileNav({ items }: NavbarProps) {
 
             <Link
               href={`/`}
-              className="flex items-center justify-center gap-1 text-primary"
+              className="flex items-center justify-center gap-1 text-foreground flex-grow-0"
             >
-              <Icon name="Logo" className="text-[28px] h-[28px]" />
+              <Icon
+                name="Logo"
+                className="text-[28px] h-[28px] aspect-square"
+              />
             </Link>
           </div>
 

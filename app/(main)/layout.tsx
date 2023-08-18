@@ -7,7 +7,7 @@ import Button from "@/components/ui/button";
 import { MainNavItem } from "@/types";
 import MobileNav from "@/components/layout/mobile-nav";
 
-function MainLayout({}: PropsWithChildren) {
+function MainLayout({ children }: PropsWithChildren) {
   return (
     <div className="flex flex-col relative w-full min-h-screen text-foreground">
       <div className="w-full relative border-b border-border">
@@ -24,6 +24,8 @@ function MainLayout({}: PropsWithChildren) {
           </div>
         </header>
       </div>
+
+      {children}
     </div>
   );
 }

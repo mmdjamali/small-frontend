@@ -1,9 +1,10 @@
 import Signin from "@/components/auth/signin";
+import { siteConfig } from "@/config";
 import { Metadata } from "next";
 import React from "react";
 
 export const metadata: Metadata = {
-  title: "Yellow Page | Sign in",
+  title: `${siteConfig.name} - Sign in`,
 };
 
 function Page() {
