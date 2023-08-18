@@ -10,6 +10,10 @@
     "test": "vitest --coverage"
   },
   "dependencies": {
+    "@editorjs/code": "^2.8.0",
+    "@editorjs/editorjs": "^2.27.2",
+    "@editorjs/image": "^2.8.1",
+    "@editorjs/inline-code": "^1.4.0",
     "@radix-ui/react-accordion": "^1.1.2",
     "@radix-ui/react-dialog": "^1.0.4",
     "@radix-ui/react-navigation-menu": "^1.1.3",
