@@ -3,11 +3,15 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import EditorJS from "@editorjs/editorjs";
 import { BACKEND_URL } from "@/config/env";
+import { fileToBase64 } from "@/lib/file-to-base64";
+import Button from "./ui/button";
+import TextareaAutoSize from "react-autosize-textarea";
 // import "@/styles/editor.css";
 
 function Editor() {
   const ref = useRef<EditorJS>();
   const [isMounted, setIsMounted] = useState<boolean>(false);
+  const [title, setTitle] = useState<string>("");
   const [isSaving, setIsSaving] = useState<boolean>(false);
 
   const initializeEditor = useCallback(async () => {
@@ -41,8 +45,27 @@ function Editor() {
         image: {
           class: image,
           config: {
-            endpoints: {
-              byFile: BACKEND_URL + "/upload",
+            // endpoints: {
+            //   byFile: BACKEND_URL + "/upload",
+            // },
+            uploader: {
+              async uploadByFile(file: File) {
+                const base64 = await fileToBase64(file);
+                return {
+                  success: 1,
+                  file: {
+                    url: base64,
+                  },
+                };
+              },
+              async uploadByUrl(url: string) {
+                return {
+                  success: 1,
+                  file: {
+                    url,
+                  },
+                };
+              },
             },
           },
         },
@@ -66,22 +89,36 @@ function Editor() {
   }, [initializeEditor, isMounted]);
 
   return (
-    <div
-      className="
-        relative max-w-full w-full
-        flex flex-col
-        text-neutral
-        "
-    >
-      {/* <TextareaAutoSize
-            className="resize-none outline-none min-w-0 text-5xl font-bold"
-            id="title"
-            autoFocus={true}
-            defaultValue={"untitled"}
-            placeholder='Story title'
-            /> */}
+    <div className="relative max-w-full w-full mt-6 flex gap-4 text-neutral">
+      <div className="flex flex-col w-full">
+        <TextareaAutoSize
+          value={title}
+          onChange={(e: any) => {
+            setTitle(e.target?.value ?? "");
+          }}
+          className="resize-none text-foreground outline-none min-w-0 text-5xl font-bold max-w-[650px] w-full mx-auto"
+          id="title"
+          autoFocus={true}
+          placeholder="Post title"
+        />
 
-      <div id="editor" className=" w-full h-fit text-inherit" />
+        <div id="editor" className=" w-full h-fit text-inherit" />
+      </div>
+
+      <div className="sticky top-6 h-screen">
+        <Button
+          color="foreground"
+          loading={isSaving}
+          onClick={async () => {
+            setIsSaving(true);
+            const res = await ref.current?.save();
+            setIsSaving(false);
+            console.log({ title, content: res?.blocks });
+          }}
+        >
+          Save
+        </Button>
+      </div>
     </div>
   );
 }
