@@ -19,7 +19,7 @@ interface MainNavProps {
 
 function MainNav({ items }: MainNavProps) {
   return (
-    <header className="hidden md:flex items-center justify-center">
+    <header className="hidden lg:flex items-center justify-center">
       <Link className="flex items-center justify-center gap-1 mr-8" href="/">
         <Icon
           name="Logo"
@@ -36,25 +36,24 @@ function MainNav({ items }: MainNavProps) {
               <NavigationMenuTrigger>{items[0].title}</NavigationMenuTrigger>
 
               <NavigationMenuContent>
-                <ul className="grid p-6 gap-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_,_1fr]">
-                  <li className="row-span-3 ">
-                    <a className="flex h-full w-full rounded p-2 flex-col items-center justify-center bg-gradient-to-t from-yellow-500/50 to-yellow-500 cursor-pointer">
+                <ul className="grid p-6 gap-3 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_,_1fr]">
+                  <li className="row-span-3 w-full">
+                    <a className="flex gap-3 h-full w-full rounded p-6 flex-col items-start justify-center bg-gradient-to-t from-primary to-primary/75 cursor-pointer">
                       <Icon name="Logo" className="text-[28px] text-white" />
 
-                      <div className="mt-2 text-white text-[16px] font-semibold">
+                      <div className="text-white text-[16px] font-semibold">
                         {siteConfig?.name}
                       </div>
 
-                      <p className="mt-2 text-white text-center">
-                        {siteConfig?.description}
-                      </p>
+                      <p className="text-white">{siteConfig?.description}</p>
                     </a>
                   </li>
+
                   {items?.[0].items?.map(({ title, url, description }) => (
-                    <NavigationMenuLink key={title} asChild>
+                    <NavigationMenuLink key={title} asChild className="p-3">
                       <Link href={url ?? "#"}>
-                        <li key={title} className="flex flex-col gap-2">
-                          <div className="text-sm leading-none font-medium">
+                        <li key={title} className="flex flex-col gap-2 w-full">
+                          <div className="text-sm leading-none font-semibold">
                             {title}
                           </div>
 
@@ -76,12 +75,12 @@ function MainNav({ items }: MainNavProps) {
               <NavigationMenuItem key={title}>
                 <NavigationMenuTrigger>{title}</NavigationMenuTrigger>
                 <NavigationMenuContent>
-                  <ul className="grid p-6 gap-4 w-[400px] md:w-[500px] lg:w-[600px] lg:grid-cols-2">
+                  <ul className="grid p-6 gap-3 w-[400px] md:w-[500px] lg:w-[600px] lg:grid-cols-2">
                     {items?.map(({ title, url, description }) => (
-                      <NavigationMenuLink key={title} asChild>
+                      <NavigationMenuLink key={title} asChild className="p-3">
                         <Link href={url ?? "#"}>
                           <li key={title} className="flex flex-col gap-2">
-                            <div className="text-sm leading-none font-medium">
+                            <div className="text-sm leading-none font-semibold">
                               {title}
                             </div>
 
