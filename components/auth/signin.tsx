@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, ChangeEvent } from "react";
+import React, { useState } from "react";
 import Input from "@/components/ui/input";
 import Button from "@/components/ui/button";
 import Icon from "@/components/icon";
@@ -9,8 +9,6 @@ import { BACKEND_URL } from "@/config/env";
 
 import { useDebouncedValue } from "@/hooks/use-debounced-value";
 import PasswordInput from "../password-input";
-import axios from "axios";
-import { axios_with_refresh_token } from "@/lib/custom-axios";
 
 function Signin() {
   const [email, registerEmail, emailError] = useDebouncedValue("", 500, [
@@ -29,7 +27,6 @@ function Signin() {
   );
 
   const [loading, setLoading] = useState(false);
-  const [loading2, setLoading2] = useState(false);
 
   return (
     <section className="w-full relative px-0 sm:p-8 max-w-md sm:max-w-lg mx-auto text-foreground text-[14px]">
@@ -98,9 +95,14 @@ function Signin() {
             {...registerPassword()}
           />
 
-          <Button loading={loading} className="mt-4">
-            <p className="capitalize">SIGNIN</p>
-          </Button>
+          <div className="grid gap-1 w-full">
+            <Button loading={loading} className="mt-4">
+              <p className="capitalize">SIGNIN</p>
+            </Button>
+            <Link href={"/forgot-password"} className="underline">
+              Forgot password?
+            </Link>
+          </div>
         </form>
 
         <div className="w-full flex gap-3 items-center reltive my-6">
