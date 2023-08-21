@@ -4,8 +4,10 @@ import {
   RiArticleFill,
   RiArticleLine,
   RiCheckboxBlankCircleLine,
+  RiCheckboxCircleFill,
   RiCloseLine,
   RiDiscordFill,
+  RiErrorWarningFill,
   RiEyeCloseLine,
   RiEyeLine,
   RiFacebookFill,
@@ -31,4 +33,6 @@ export const Icons: {
   ArrowDown: RiArrowDownSLine,
   Menu: RiMenu2Line,
   Close: RiCloseLine,
+  Success: RiCheckboxCircleFill,
+  Error: RiErrorWarningFill,
 };
