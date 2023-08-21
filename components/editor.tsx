@@ -96,7 +96,7 @@ function Editor() {
           onChange={(e: any) => {
             setTitle(e.target?.value ?? "");
           }}
-          className="resize-none text-foreground outline-none min-w-0 text-5xl font-bold max-w-[650px] w-full mx-auto"
+          className="resize-none text-foreground outline-none min-w-0 text-5xl font-bold max-w-[650px] w-full mx-auto bg-transparent"
           id="title"
           autoFocus={true}
           placeholder="Post title"
