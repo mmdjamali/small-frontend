@@ -16,6 +16,7 @@ const PasswordInput = React.forwardRef<
         placeholder={show ? placeholder : "*********"}
         actions={[
           <button
+            className="relative flex-shrink-0"
             onClick={(e) => {
               e.preventDefault();
               setShow((prev) => !prev);
@@ -24,9 +25,16 @@ const PasswordInput = React.forwardRef<
             type="button"
             key={0}
           >
+            <Icon className="text-[21px] pointer-events-none invisible" />
             <Icon
-              name={show ? "Eye" : "EyeClose"}
-              className="text-[21px] cursor-pointer"
+              data-state={show ? "active" : "closed"}
+              name={"Eye"}
+              className="text-[21px] cursor-pointer absolute m-auto inset-0 data-[state=active]:animate-in data-[state=active]:zoom-in-0 data-[state=closed]:animate-out data-[state=closed]:zoom-out-0 data-[state=closed]:opacity-0 transition-opacity"
+            />
+            <Icon
+              data-state={!show ? "active" : "closed"}
+              name={"EyeClose"}
+              className="text-[21px] cursor-pointer absolute m-auto inset-0 data-[state=active]:animate-in data-[state=active]:zoom-in-0 data-[state=closed]:animate-out data-[state=closed]:zoom-out-0  data-[state=closed]:opacity-0 transition-opacity"
             />
           </button>,
         ]}
