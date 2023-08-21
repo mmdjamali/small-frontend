@@ -59,19 +59,6 @@ function Signin() {
                 }),
               }).then((res) => res.json());
 
-              // const res = await axios.post(
-              //   BACKEND_URL + "/api/auth/login",
-              //   {
-              //     email,
-              //     password,
-              //   },
-              //   {
-              //     withCredentials: true,
-              //   }
-              // );
-
-              console.log(res);
-
               setLoading(false);
             } catch (err) {
               setLoading(false);

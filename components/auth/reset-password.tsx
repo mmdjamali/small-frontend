@@ -56,7 +56,7 @@ function ResetPassword({ token }: { token: string }) {
               setLoading(true);
 
               const res = await fetch(
-                BACKEND_URL + "/api/auth/forgot-password",
+                BACKEND_URL + "/api/auth/reset-password",
                 {
                   method: "POST",
                   credentials: "include",
@@ -66,12 +66,10 @@ function ResetPassword({ token }: { token: string }) {
                   },
                   body: JSON.stringify({
                     password,
-                    token,
+                    resetPasswordToken: token,
                   }),
                 }
               ).then((res) => res.json());
-
-              console.log(res);
 
               setLoading(false);
             } catch (err) {
@@ -81,7 +79,7 @@ function ResetPassword({ token }: { token: string }) {
           className="flex flex-col gap-2"
         >
           <PasswordInput
-            error={password}
+            error={passwordError}
             name="password"
             label="New Password"
             placeholder="unbreakable"
@@ -97,7 +95,7 @@ function ResetPassword({ token }: { token: string }) {
             name="confirmPassword"
             label="Repeat New Password"
             placeholder="unbreakable"
-            {...registerPassword()}
+            {...registerConfirmPassword()}
           />
 
           <Button loading={loading} className="mt-4">
