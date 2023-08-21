@@ -14,7 +14,12 @@ import {
   RiFunctionFill,
   RiGoogleFill,
   RiLoader5Line,
+  RiMacbookLine,
   RiMenu2Line,
+  RiMoonCloudyLine,
+  RiMoonFoggyLine,
+  RiSunCloudyLine,
+  RiSunFoggyLine,
   RiUser2Line,
 } from "react-icons/ri";
 
@@ -35,4 +40,7 @@ export const Icons: {
   Close: RiCloseLine,
   Success: RiCheckboxCircleFill,
   Error: RiErrorWarningFill,
+  Sun: RiSunFoggyLine,
+  Moon: RiMoonFoggyLine,
+  Macbook: RiMacbookLine,
 };

@@ -1,3 +1,4 @@
+import Providers from "@/components/providers";
 import { Toaster } from "@/components/ui/toaster";
 import { siteConfig } from "@/config";
 import "@/styles/globals.css";
@@ -21,8 +22,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className + "text-foreground text-[14px]"}>
-        {children}
+      <body
+        className={
+          inter.className + "text-foreground bg-background text-[14px]"
+        }
+      >
+        <Providers>{children}</Providers>
         <Toaster />
       </body>
     </html>
