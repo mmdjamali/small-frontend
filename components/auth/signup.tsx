@@ -1,16 +1,21 @@
 "use client";
 
-import React, { useState, ChangeEvent } from "react";
+import React, { useState } from "react";
 import Input from "../ui/input";
 import Button from "../ui/button";
-import { axios_with_refresh_token } from "@/lib/custom-axios";
 import Icon from "../icon";
 import Link from "next/link";
 import { BACKEND_URL } from "@/config/env";
 import { useDebouncedValue } from "@/hooks/use-debounced-value";
 import PasswordInput from "../password-input";
+import { siteConfig } from "@/config";
+import toast from "../ui/toast";
+
+import { useRouter } from "next/navigation";
 
 function Signup() {
+  const router = useRouter();
+
   const [firstName, registerFirstName, firstNameError] = useDebouncedValue(
     "",
     500
@@ -47,13 +52,14 @@ function Signup() {
   const [confirmPassword, registerConfirmPassword] = useDebouncedValue("", 500);
 
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
 
   return (
     <section className="w-full relative px-0 sm:p-8 max-w-md sm:max-w-lg mx-auto text-foreground text-[14px]">
       <div className="rounded-[8px] bg-background p-5 my-[10%] relative">
         <div className="grid gap-2 mb-6 text-center">
-          <h1 className="text-[28px] font-bold">Welcome to yellow page!</h1>
+          <h1 className="text-[28px] font-bold">
+            Welcome to {siteConfig.name}!
+          </h1>
           <p className="text-[14px] text-foreground/75">
             Please enter your credentials to continue.
           </p>
@@ -64,19 +70,30 @@ function Signup() {
             e.preventDefault();
 
             if (
-              emailError ||
               !email ||
-              passwordError ||
               !password ||
-              firstNameError ||
               !firstName ||
-              lastNameError ||
               !lastName ||
               !confirmPassword
             )
-              return setError("Credentials are not valid!");
+              return toast({
+                varinat: "error",
+                title: "Invaild credentials!",
+                description: "credentials can't be empty.",
+              });
 
-            setError("");
+            if (
+              emailError ||
+              passwordError ||
+              firstNameError ||
+              lastNameError ||
+              password !== confirmPassword
+            )
+              return toast({
+                varinat: "error",
+                title: "Invaild Credentials!",
+                description: "credentials are not valid.",
+              });
 
             try {
               setLoading(true);
@@ -96,7 +113,22 @@ function Signup() {
                 }),
               }).then((res) => res.json());
 
-              navigator.clipboard.writeText(JSON.stringify(res, null, 2));
+              if (!res.success) {
+                toast({
+                  varinat: "error",
+                  title: "Something went wrong!",
+                  description:
+                    res.message ?? "something went wrong, please try again.",
+                });
+              } else {
+                toast({
+                  varinat: "success",
+                  title: "Signup was successful!",
+                  description: "welcome to small, we are better than medium :)",
+                });
+              }
+
+              setTimeout(() => router.push("/"), 500);
 
               setLoading(false);
             } catch (err) {
@@ -155,7 +187,6 @@ function Signup() {
           <Button loading={loading} className="mt-4">
             SIGNUP
           </Button>
-          {error ? <p className="text-error ">{error}</p> : null}
         </form>
 
         <div className="w-full flex gap-3 items-center reltive my-6">

@@ -7,6 +7,7 @@ import Link from "next/link";
 import { BACKEND_URL } from "@/config/env";
 
 import { useDebouncedValue } from "@/hooks/use-debounced-value";
+import toast from "../ui/toast";
 
 function ForgotPassword() {
   const [email, registerEmail, emailError] = useDebouncedValue("", 500, [
@@ -30,6 +31,21 @@ function ForgotPassword() {
         <form
           onSubmit={async (e) => {
             e.preventDefault();
+
+            if (!email)
+              return toast({
+                varinat: "error",
+                title: "Invaild credentials!",
+                description: "credentials can't be empty.",
+              });
+
+            if (emailError)
+              return toast({
+                varinat: "error",
+                title: "Invaild Credentials!",
+                description: "credentials are not valid.",
+              });
+
             try {
               setLoading(true);
 
@@ -48,7 +64,20 @@ function ForgotPassword() {
                 }
               ).then((res) => res.json());
 
-              console.log(res);
+              if (!res.success) {
+                toast({
+                  varinat: "error",
+                  title: "Something went wrong!",
+                  description:
+                    res.message ?? "something went wrong, please try again.",
+                });
+              } else {
+                toast({
+                  varinat: "success",
+                  title: "Operation successful!",
+                  description: "checkout your inbox for reset password link.",
+                });
+              }
 
               setLoading(false);
             } catch (err) {

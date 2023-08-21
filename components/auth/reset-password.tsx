@@ -8,8 +8,12 @@ import { BACKEND_URL } from "@/config/env";
 
 import { useDebouncedValue } from "@/hooks/use-debounced-value";
 import PasswordInput from "../password-input";
+import toast from "../ui/toast";
+import { useRouter } from "next/navigation";
 
 function ResetPassword({ token }: { token: string }) {
+  const router = useRouter();
+
   const [password, registerPassword, passwordError] = useDebouncedValue(
     "",
     500,
@@ -52,6 +56,21 @@ function ResetPassword({ token }: { token: string }) {
         <form
           onSubmit={async (e) => {
             e.preventDefault();
+
+            if (!password || !confirmPassword)
+              return toast({
+                varinat: "error",
+                title: "Invaild credentials!",
+                description: "credentials can't be empty.",
+              });
+
+            if (passwordError || password !== confirmPassword)
+              return toast({
+                varinat: "error",
+                title: "Invaild Credentials!",
+                description: "credentials are not valid.",
+              });
+
             try {
               setLoading(true);
 
@@ -70,6 +89,23 @@ function ResetPassword({ token }: { token: string }) {
                   }),
                 }
               ).then((res) => res.json());
+
+              if (!res.success) {
+                toast({
+                  varinat: "error",
+                  title: "Something went wrong!",
+                  description:
+                    res.message ?? "something went wrong, please try again.",
+                });
+              } else {
+                toast({
+                  varinat: "success",
+                  title: "Reset was successful!",
+                  description: "Try your new password and Login!",
+                });
+              }
+
+              setTimeout(() => router.push("/"), 500);
 
               setLoading(false);
             } catch (err) {
