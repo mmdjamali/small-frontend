@@ -14,7 +14,7 @@ const EditorView = () => {
           <MainLogo />
 
           <div className="flex items-center justify-center gap-3">
-            <Button color="foreground" className="border-none">
+            <Button color="foreground" className="border-none hidden sm:flex">
               Publish
             </Button>
 

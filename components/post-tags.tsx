@@ -34,7 +34,6 @@ const PostTags = () => {
         BACKEND_URL +
           `/api/topics/search?searchKeywords=${encodeURIComponent(value)}`,
         {
-          mode: "cors",
           headers: {
             "Content-Type": "application/json",
           },
@@ -91,7 +90,7 @@ const PostTags = () => {
               onKeyDown={(e) => {
                 if (open) setOpen(false);
 
-                if (e.key !== "Enter") return;
+                if (e.key !== "Enter" || tags.includes(value) || !value) return;
 
                 e.preventDefault();
                 setTags((prev) => [...prev, value]);

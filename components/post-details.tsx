@@ -68,7 +68,7 @@ const PostDetails = () => {
           <Button
             color="foreground"
             variant="contained"
-            className="px-2 py-1.5 items-start justify-start border-none"
+            className="sm:hidden px-2 py-1.5 items-start justify-start border-none"
           >
             Publish
           </Button>
@@ -79,18 +79,3 @@ const PostDetails = () => {
 };
 
 export default PostDetails;
-
-const links = [
-  {
-    type: "button",
-    title: "Change topics",
-    className: "",
-    disabled: false,
-  },
-  {
-    type: "button",
-    title: "Settings",
-    className: "",
-    disabled: false,
-  },
-];
