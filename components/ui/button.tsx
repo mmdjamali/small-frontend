@@ -54,9 +54,6 @@ const Button = React.forwardRef<React.ElementRef<"button">, props>(
           "py-2 px-4 text-[14px]",
           block ? "w-full" : "",
           loading ? "opacity-75 pointer-events-none" : "",
-          variant !== "text"
-            ? "shadow hover:shadow-md shadow-foreground/10"
-            : "",
           variants[variant]["shared"],
           variants[variant][color],
           className
