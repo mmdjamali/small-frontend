@@ -89,36 +89,19 @@ function Editor() {
   }, [initializeEditor, isMounted]);
 
   return (
-    <div className="relative max-w-full w-full mt-6 flex gap-4 text-neutral">
-      <div className="flex flex-col w-full">
-        <TextareaAutoSize
-          value={title}
-          onChange={(e: any) => {
-            setTitle(e.target?.value ?? "");
-          }}
-          className="resize-none text-foreground outline-none min-w-0 text-5xl font-bold max-w-[650px] w-full mx-auto bg-transparent"
-          id="title"
-          autoFocus={true}
-          placeholder="Post title"
-        />
+    <div className="relative flex flex-col w-full max-w-full mt-6 gap-4 text-neutral">
+      <TextareaAutoSize
+        value={title}
+        onChange={(e: any) => {
+          setTitle(e.target?.value ?? "");
+        }}
+        className="resize-none text-foreground outline-none min-w-0 text-5xl font-bold max-w-[650px] w-full mx-auto bg-transparent"
+        id="title"
+        autoFocus={true}
+        placeholder="Post title"
+      />
 
-        <div id="editor" className=" w-full h-fit text-inherit" />
-      </div>
-
-      <div className="sticky top-6 h-screen">
-        <Button
-          color="foreground"
-          loading={isSaving}
-          onClick={async () => {
-            setIsSaving(true);
-            const res = await ref.current?.save();
-            setIsSaving(false);
-            console.log({ title, content: res?.blocks });
-          }}
-        >
-          Save
-        </Button>
-      </div>
+      <div id="editor" className=" w-full h-fit text-inherit" />
     </div>
   );
 }

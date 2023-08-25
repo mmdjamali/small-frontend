@@ -18,6 +18,8 @@ import {
   RiMenu2Line,
   RiMoonCloudyLine,
   RiMoonFoggyLine,
+  RiMore2Fill,
+  RiMoreFill,
   RiSunCloudyLine,
   RiSunFoggyLine,
   RiUser2Line,
@@ -43,4 +45,6 @@ export const Icons: {
   Sun: RiSunFoggyLine,
   Moon: RiMoonFoggyLine,
   Macbook: RiMacbookLine,
+  MoreVertical: RiMore2Fill,
+  MoreHorizontal: RiMoreFill,
 };
