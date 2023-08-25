@@ -1,6 +1,5 @@
 "use client";
 
-import { PropsWithChildren } from "react";
 import Button from "./ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import MainLogo from "./layout/main-logo";

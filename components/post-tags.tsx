@@ -23,7 +23,7 @@ const PostTags = () => {
   const [suggestions, setSuggestions] = useState<null | string[]>(null);
 
   useEffect(() => {
-    if (!value) return setOpen(false);
+    if (!value || value.length < 3) return setOpen(false);
 
     const func = async () => {
       const res: {
@@ -32,7 +32,13 @@ const PostTags = () => {
         };
       } = await fetch(
         BACKEND_URL +
-          `/api/topics/search?searchKeywords=${encodeURIComponent(value)}`
+          `/api/topics/search?searchKeywords=${encodeURIComponent(value)}`,
+        {
+          mode: "cors",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
       ).then((res) => res.json());
 
       const topics =
@@ -45,6 +51,7 @@ const PostTags = () => {
 
       if (topics && topics?.length) setOpen(true);
     };
+
     func();
   }, [value, tags]);
 
