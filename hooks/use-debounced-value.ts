@@ -48,9 +48,15 @@ export const useDebouncedValue = (
     },
   });
 
-  return [debouncedValue, register, error] as [
+  const changeValue = (v: string) => {
+    setValue(v);
+    setDebouncedValue(v);
+  };
+
+  return [debouncedValue, register, error, changeValue] as [
     typeof debouncedValue,
     typeof register,
-    typeof error
+    typeof error,
+    typeof changeValue
   ];
 };
