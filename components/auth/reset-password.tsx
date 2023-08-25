@@ -105,7 +105,7 @@ function ResetPassword({ token }: { token: string }) {
                 });
               }
 
-              setTimeout(() => router.push("/"), 500);
+              setTimeout(() => router.push("/signin"), 500);
 
               setLoading(false);
             } catch (err) {
