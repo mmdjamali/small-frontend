@@ -14,21 +14,25 @@ import {
   RiFunctionFill,
   RiGoogleFill,
   RiLoader5Line,
+  RiLoginBoxLine,
+  RiLogoutBoxFill,
+  RiLogoutBoxLine,
   RiMacbookLine,
   RiMenu2Line,
   RiMoonCloudyLine,
   RiMoonFoggyLine,
   RiMore2Fill,
   RiMoreFill,
+  RiPencilLine,
+  RiSettings2Line,
   RiSunCloudyLine,
   RiSunFoggyLine,
   RiUser2Line,
+  RiUser3Line,
 } from "react-icons/ri";
 
-export const Icons: {
-  [name: string]: IconType;
-} = {
-  User: RiUser2Line,
+export const Icons = {
+  User: RiUser3Line,
   Spinner: RiLoader5Line,
   Circle: RiCheckboxBlankCircleLine,
   Discord: RiDiscordFill,
@@ -47,4 +51,9 @@ export const Icons: {
   Macbook: RiMacbookLine,
   MoreVertical: RiMore2Fill,
   MoreHorizontal: RiMoreFill,
+  Login: RiLoginBoxLine,
+  Logout: RiLogoutBoxLine,
+  Setting: RiSettings2Line,
+  Pencil: RiPencilLine,
+  Article: RiArticleLine,
 };

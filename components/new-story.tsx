@@ -11,6 +11,7 @@ import EditorJS from "@editorjs/editorjs";
 import TextareaAutosize from "react-autosize-textarea";
 import { useRouter } from "next/navigation";
 import { useCustomFetch } from "@/hooks/use-custom-fetch";
+import UserDropdownMenu from "./user-profile-dropdown";
 
 const NewStory = () => {
   const router = useRouter();
@@ -68,10 +69,7 @@ const NewStory = () => {
 
             <PostDetails />
 
-            <Avatar>
-              <AvatarImage src="" />
-              <AvatarFallback />
-            </Avatar>
+            <UserDropdownMenu />
           </div>
         </header>
       </div>

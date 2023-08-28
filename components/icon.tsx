@@ -3,7 +3,7 @@ import { Icons } from "./icons";
 import { IconBaseProps } from "react-icons";
 
 interface IconProps extends IconBaseProps {
-  name?: string;
+  name?: keyof typeof Icons;
 }
 
 function Icon({ name = "Circle", ...props }: IconProps) {
