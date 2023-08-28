@@ -52,45 +52,49 @@ export const useCustomFetch = () => {
 
   const custom_fetch = useCallback(
     async (input: RequestInfo | URL, init?: RequestInit | undefined) => {
-      const res = await fetch(
-        (BACKEND_URL ?? "") + input,
-        init
-          ? {
-              ...init,
-              headers: init.headers
-                ? {
-                    ...init.headers,
-                    Authorization: `Bearer ${state}`,
-                  }
-                : {
-                    Authorization: `Bearer ${state}`,
-                  },
-            }
-          : undefined
-      );
+      try {
+        const res = await fetch(
+          (BACKEND_URL ?? "") + input,
+          init
+            ? {
+                ...init,
+                headers: init.headers
+                  ? {
+                      ...init.headers,
+                      Authorization: `Bearer ${state}`,
+                    }
+                  : {
+                      Authorization: `Bearer ${state}`,
+                    },
+              }
+            : undefined
+        );
 
-      if (res.status !== 403) return res;
+        if (res.status !== 401) return res;
 
-      const new_token = await refresh_token();
+        const new_token = await refresh_token();
 
-      if (!new_token) return res;
+        if (!new_token) return res;
 
-      return await fetch(
-        (BACKEND_URL ?? "") + input,
-        init
-          ? {
-              ...init,
-              headers: init.headers
-                ? {
-                    ...init.headers,
-                    Authorization: `Bearer ${new_token}`,
-                  }
-                : {
-                    Authorization: `Bearer ${new_token}`,
-                  },
-            }
-          : undefined
-      );
+        return await fetch(
+          (BACKEND_URL ?? "") + input,
+          init
+            ? {
+                ...init,
+                headers: init.headers
+                  ? {
+                      ...init.headers,
+                      Authorization: `Bearer ${new_token}`,
+                    }
+                  : {
+                      Authorization: `Bearer ${new_token}`,
+                    },
+              }
+            : undefined
+        );
+      } catch (err) {
+        throw new Error("Something went wrong!");
+      }
     },
     [state]
   );
