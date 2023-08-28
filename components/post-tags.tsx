@@ -24,6 +24,7 @@ const PostTags = () => {
 
   useEffect(() => {
     if (!value || value.length < 3) return setOpen(false);
+    const abortController = new AbortController();
 
     const func = async () => {
       const res: {
@@ -37,6 +38,7 @@ const PostTags = () => {
           headers: {
             "Content-Type": "application/json",
           },
+          signal: abortController.signal,
         }
       ).then((res) => res.json());
 
@@ -52,6 +54,10 @@ const PostTags = () => {
     };
 
     func();
+
+    return () => {
+      abortController.abort();
+    };
   }, [value, tags]);
 
   return (
