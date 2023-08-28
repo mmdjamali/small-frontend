@@ -8,6 +8,7 @@ import { MainNavItem } from "@/types";
 import MobileNav from "@/components/layout/mobile-nav";
 import { siteConfig } from "@/config";
 import ThemeChanger from "@/components/theme-changer";
+import UserDropdownMenu from "@/components/user-profile-dropdown";
 
 function MainLayout({ children }: PropsWithChildren) {
   return (
@@ -17,13 +18,9 @@ function MainLayout({ children }: PropsWithChildren) {
           <MobileNav items={siteConfig.items} />
           <MainNav items={siteConfig.items} />
 
-          <div className="flex gap-3">
+          <div className="flex items-center justify-center gap-3">
             <ThemeChanger />
-            <Link href="/signin">
-              <Button className="" color="primary">
-                Login
-              </Button>
-            </Link>
+            <UserDropdownMenu />
           </div>
         </header>
       </div>
