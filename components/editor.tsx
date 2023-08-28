@@ -1,45 +1,49 @@
 "use client";
 
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import EditorJS from "@editorjs/editorjs";
-import { BACKEND_URL } from "@/config/env";
+import React, { useCallback, useEffect, useState } from "react";
+import EditorJS, { OutputBlockData } from "@editorjs/editorjs";
 import { fileToBase64 } from "@/lib/file-to-base64";
-import Button from "./ui/button";
-import TextareaAutoSize from "react-autosize-textarea";
-// import "@/styles/editor.css";
 
-function Editor() {
-  const ref = useRef<EditorJS>();
+type EditorComponentPrpos = {
+  blocks?: OutputBlockData<string, any>[];
+  setEditor: (e: EditorJS | undefined) => void;
+};
+
+function Editor({ setEditor, blocks }: EditorComponentPrpos) {
+  const [ref, setRef] = useState<EditorJS>();
+
   const [isMounted, setIsMounted] = useState<boolean>(false);
-  const [title, setTitle] = useState<string>("");
-  const [isSaving, setIsSaving] = useState<boolean>(false);
 
   const initializeEditor = useCallback(async () => {
+    if (ref) return;
+
     const EditorJS = (await import("@editorjs/editorjs")).default;
     const code = await require("@editorjs/code");
-    // const list = (await import("@editorjs/list")).default
+    const list = await require("@editorjs/list");
     // const table = (await import("@editorjs/table")).default
     const inlineCode = await require("@editorjs/inline-code");
     // const embed = (await import("@editorjs/embed")).default
     // const linkTool = (await import("@editorjs/link")).default
-    // const header = (await import("@editorjs/header")).default
+    const header = await require("@editorjs/header");
     const image = await require("@editorjs/image");
-
-    if (ref.current) return;
 
     const editor = new EditorJS({
       holder: "editor",
+      onChange() {
+        editor.emit("change", undefined);
+      },
       onReady() {
-        ref.current = editor;
+        setRef(editor);
+        setEditor(editor);
       },
       placeholder: "Write your amazing story...",
       autofocus: false,
       tools: {
-        // header,
+        header,
         code,
         inlineCode,
         // table,
-        // list,
+        list,
         // embed,
         // linkTool,
         image: {
@@ -70,7 +74,12 @@ function Editor() {
           },
         },
       },
+      data: {
+        blocks: blocks ?? [],
+      },
     });
+
+    /* eslint-disable */
   }, []);
 
   useEffect(() => {
@@ -79,31 +88,17 @@ function Editor() {
 
   useEffect(() => {
     if (isMounted) {
-      initializeEditor();
+      if (!ref) initializeEditor();
 
       return () => {
-        ref.current?.destroy();
-        ref.current = undefined;
+        ref?.destroy();
+        setRef(undefined);
       };
     }
+    /* eslint-disable */
   }, [initializeEditor, isMounted]);
 
-  return (
-    <div className="relative flex flex-col w-full max-w-full mt-6 gap-4 text-neutral">
-      <TextareaAutoSize
-        value={title}
-        onChange={(e: any) => {
-          setTitle(e.target?.value ?? "");
-        }}
-        className="resize-none text-foreground outline-none min-w-0 text-5xl font-bold max-w-[650px] w-full mx-auto bg-transparent"
-        id="title"
-        autoFocus={true}
-        placeholder="Post title"
-      />
-
-      <div id="editor" className=" w-full h-fit text-inherit" />
-    </div>
-  );
+  return <div id="editor" className=" w-full h-fit text-inherit" />;
 }
 
 export default Editor;
