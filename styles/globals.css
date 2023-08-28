@@ -68,3 +68,13 @@
 .image-tool__image > img {
   @apply mx-auto;
 }
+
+.codex-editor h2 {
+  @apply text-[21px] font-bold mb-2;
+}
+.codex-editor h3 {
+  @apply text-[18px] font-bold;
+}
+.codex-editor h4 {
+  @apply text-[16px] font-bold;
+}

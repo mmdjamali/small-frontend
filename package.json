@@ -12,8 +12,10 @@
   "dependencies": {
     "@editorjs/code": "^2.8.0",
     "@editorjs/editorjs": "^2.27.2",
+    "@editorjs/header": "^2.7.0",
     "@editorjs/image": "^2.8.1",
     "@editorjs/inline-code": "^1.4.0",
+    "@editorjs/list": "^1.8.0",
     "@formkit/auto-animate": "^0.7.0",
     "@radix-ui/react-accordion": "^1.1.2",
     "@radix-ui/react-avatar": "^1.0.3",
