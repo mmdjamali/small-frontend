@@ -1,29 +1,49 @@
-import EditStory from "@/components/edit-story";
-import { NextPage } from "next";
+"use client";
 
-const Page: NextPage = ({}) => {
+import EditStory from "@/components/edit-story";
+import { useCustomFetch } from "@/hooks/use-custom-fetch";
+import { OutputBlockData } from "@editorjs/editorjs";
+import { NextPage } from "next";
+import { useEffect, useState } from "react";
+
+const Page = ({ params: { _id } }: { params: { _id: string } }) => {
+  const [data, setData] = useState<any>();
+  const [loading, setLoading] = useState(true);
+
+  const fetch = useCustomFetch();
+
+  useEffect(() => {
+    const func = async () => {
+      setLoading(true);
+      const res = await fetch("/api/articles/" + _id, {
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (res?.status !== 401) {
+        const res_data = await res.json();
+        setData(res_data.data.article);
+        setLoading(false);
+      }
+      setLoading(false);
+    };
+
+    func();
+
+    /* eslint-disable */
+  }, [_id]);
+
+  if (loading) return <div></div>;
+
   return (
     <EditStory
+      id={_id}
       post={{
-        content: [
-          {
-            id: "mhTl6ghSkV",
-            type: "paragraph",
-            data: {
-              text: "Hey. Meet the new Editor. On this picture you can see it in action. Then, try a demo 🤓",
-            },
-          },
-          {
-            id: "l98dyx3yjb",
-            type: "header",
-            data: {
-              text: "Key features",
-              level: 3,
-            },
-          },
-        ],
+        content: JSON.parse(data?.content ?? "[]") as OutputBlockData[],
         published: false,
-        title: "Testing",
+        title: data?.title ?? "",
       }}
     />
   );
