@@ -50,7 +50,7 @@ const EditStory = ({ post, id }: EditStoryProps) => {
             mode: "cors",
             body: JSON.stringify({
               articleId: id,
-              title,
+              Title: title,
               Content: JSON.stringify((await editor.save()).blocks),
             }),
           });
@@ -66,7 +66,7 @@ const EditStory = ({ post, id }: EditStoryProps) => {
     };
 
     /* eslint-disable */
-  }, [editor, router]);
+  }, [editor, router, title]);
 
   return (
     <div className="relative flex min-h-screen w-full flex-col text-foreground">

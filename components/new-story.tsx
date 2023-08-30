@@ -62,7 +62,7 @@ const NewStory = () => {
       c?.removeEventListener("keyup", handleKeyUp);
     };
     /* eslint-disable */
-  }, [editor, router]);
+  }, [editor, router, title]);
 
   return (
     <div className="relative flex min-h-screen w-full flex-col text-foreground">
