@@ -13,6 +13,7 @@ import { useCustomFetch } from "@/hooks/use-custom-fetch";
 import UserDropdownMenu from "./user-profile-dropdown";
 
 interface EditStoryProps {
+  id: string;
   post: {
     title: string;
     content: OutputBlockData[];
@@ -20,7 +21,7 @@ interface EditStoryProps {
   };
 }
 
-const EditStory = ({ post }: EditStoryProps) => {
+const EditStory = ({ post, id }: EditStoryProps) => {
   const router = useRouter();
   const fetch = useCustomFetch();
 
@@ -43,8 +44,16 @@ const EditStory = ({ post }: EditStoryProps) => {
 
       timeout.current = setTimeout(() => {
         setSaving(true);
-        setTimeout(() => {
-          console.log("saved!");
+        setTimeout(async () => {
+          await fetch("/api/articles", {
+            method: "PUT",
+            mode: "cors",
+            body: JSON.stringify({
+              articleId: id,
+              title,
+              Content: JSON.stringify((await editor.save()).blocks),
+            }),
+          });
           setSaving(false);
         }, 1000);
       }, 1000);
@@ -55,6 +64,8 @@ const EditStory = ({ post }: EditStoryProps) => {
     return () => {
       c?.removeEventListener("keyup", handleKeyUp);
     };
+
+    /* eslint-disable */
   }, [editor, router]);
 
   return (
