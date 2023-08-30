@@ -12,9 +12,9 @@ import UserDropdownMenu from "@/components/user-profile-dropdown";
 
 function MainLayout({ children }: PropsWithChildren) {
   return (
-    <div className="flex flex-col relative w-full min-h-screen text-foreground">
-      <div className="w-full relative border-b border-border">
-        <header className="flex items-center justify-between w-full gap-3 h-[57px] mx-auto px-4 md:px-8 max-w-[1300px]">
+    <div className="relative flex min-h-screen w-full flex-col text-foreground">
+      <div className="sticky top-0 z-[50] w-full border-b border-border bg-background">
+        <header className="mx-auto flex h-[57px] w-full max-w-[1300px] items-center justify-between gap-3 px-4 md:px-8">
           <MobileNav items={siteConfig.items} />
           <MainNav items={siteConfig.items} />
 
@@ -25,7 +25,13 @@ function MainLayout({ children }: PropsWithChildren) {
         </header>
       </div>
 
-      {children}
+      <div className="relative block h-full w-full">
+        <main className="mx-auto grid min-h-[calc(100vh_-_58px)] max-w-[1300px] grid-cols-1 px-4 md:grid-cols-[1fr_352px] md:gap-8 md:px-8 lg:gap-12">
+          <div className="flex h-full w-full flex-col pt-2">{children}</div>
+
+          <div className="hidden h-full w-full border-l border-border pl-8 md:flex"></div>
+        </main>
+      </div>
     </div>
   );
 }
