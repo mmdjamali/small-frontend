@@ -35,7 +35,12 @@ const NewStory = () => {
       if (timeout.current) clearTimeout(timeout.current);
 
       timeout.current = setTimeout(() => {
-        router.push("/");
+        setSaving(true);
+
+        setTimeout(() => {
+          router.push("/p/j/edit");
+          setSaving(false);
+        }, 1000);
       }, 1000);
     };
 
@@ -47,22 +52,18 @@ const NewStory = () => {
   }, [editor, router]);
 
   return (
-    <div className="flex flex-col relative w-full min-h-screen text-foreground">
-      <div className="w-full sticky top-0 inset-x-0 bg-background z-[50] border-b border-border">
-        <header className="flex items-center justify-between w-full gap-3 h-[57px] mx-auto px-4 md:px-8 max-w-[1300px]">
+    <div className="relative flex min-h-screen w-full flex-col text-foreground">
+      <div className="sticky inset-x-0 top-0 z-[50] w-full border-b border-border bg-background">
+        <header className="mx-auto flex h-[57px] w-full max-w-[1300px] items-center justify-between gap-3 px-4 md:px-8">
           <MainLogo />
 
           {saving && <p>saving...</p>}
 
           <div className="flex items-center justify-center gap-3">
             <Button
-              onClick={async () => {
-                if (!editor) return;
-                const content = await editor?.save();
-                console.log(content);
-              }}
+              disabled={true}
               color="foreground"
-              className="border-none hidden sm:flex"
+              className="hidden border-none sm:flex"
             >
               Publish
             </Button>
@@ -74,18 +75,18 @@ const NewStory = () => {
         </header>
       </div>
 
-      <div className="w-full h-full">
-        <main className="flex max-w-[1300px] mx-auto px-4 md:px-8 ">
+      <div className="h-full w-full">
+        <main className="mx-auto flex max-w-[1300px] px-4 md:px-8 ">
           <div
             ref={container}
-            className="relative flex flex-col w-full max-w-full mt-6 gap-4 text-neutral"
+            className="text-neutral relative mt-6 flex w-full max-w-full flex-col gap-4"
           >
             <TextareaAutosize
               value={title}
               onChange={(e: any) => {
                 setTitle(e.target?.value ?? "");
               }}
-              className="resize-none text-foreground outline-none min-w-0 text-4xl font-bold max-w-[650px] w-full mx-auto bg-transparent"
+              className="mx-auto w-full min-w-0 max-w-[650px] resize-none bg-transparent text-4xl font-bold text-foreground outline-none"
               id="title"
               autoFocus={true}
               placeholder="Post title"

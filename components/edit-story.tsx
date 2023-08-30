@@ -75,7 +75,7 @@ const EditStory = ({ post }: EditStoryProps) => {
               color="foreground"
               className="hidden border-none sm:flex"
             >
-              Publish
+              {"Publish"}
             </Button>
 
             <PostDetails />
