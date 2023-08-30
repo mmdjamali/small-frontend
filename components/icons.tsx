@@ -1,5 +1,6 @@
 import { IconType } from "react-icons";
 import {
+  RiAddLine,
   RiArrowDownSLine,
   RiArticleFill,
   RiArticleLine,
@@ -56,4 +57,5 @@ export const Icons = {
   Setting: RiSettings2Line,
   Pencil: RiPencilLine,
   Article: RiArticleLine,
+  Add: RiAddLine,
 };
