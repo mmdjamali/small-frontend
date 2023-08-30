@@ -70,7 +70,7 @@
 }
 
 .codex-editor h2 {
-  @apply text-[21px] font-bold mb-2;
+  @apply mb-2 text-[21px] font-bold;
 }
 .codex-editor h3 {
   @apply text-[18px] font-bold;
