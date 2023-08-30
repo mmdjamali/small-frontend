@@ -1,5 +1,6 @@
 import { toast as OGtoast } from "sonner";
 import Icon from "@/components/icon";
+import { IconKeyType } from "@/types";
 
 type ToastProps = {
   varinat?: "success" | "error" | "normal";
@@ -10,23 +11,23 @@ type ToastProps = {
 const toast = ({ varinat = "normal", title, description }: ToastProps) => {
   return OGtoast.custom((t) => {
     return (
-      <div className="flex items-start relative font-[Inter] w-[var(--width)] max-w-full mx-auto gap-1 p-3 rounded border bg-background border-foreground/10 shadow-md shadow-foreground/20">
+      <div className="relative mx-auto flex w-[var(--width)] max-w-full items-start gap-1 rounded border border-foreground/10 bg-background p-3 font-[Inter] shadow-md shadow-foreground/20">
         {["success", "error"].includes(varinat) ? (
           <Icon
-            name={toastIcons[varinat as keyof typeof toastIcons]}
-            className="text-[21px] text-foreground mr-2"
+            name={toastIcons[varinat]}
+            className="mr-2 text-[21px] text-foreground"
           />
         ) : null}
 
-        <div className="flex flex-col w-full">
-          <h4 className="text-sm text-foreground font-semibold">{title}</h4>
+        <div className="flex w-full flex-col">
+          <h4 className="text-sm font-semibold text-foreground">{title}</h4>
           {description ? (
             <p className="text-sm text-foreground/75">{description}</p>
           ) : null}
         </div>
 
         <button
-          className="text-foreground text-[14px]"
+          className="text-[14px] text-foreground"
           onClick={() => OGtoast.dismiss(t)}
         >
           <Icon name="Close" />
@@ -38,7 +39,7 @@ const toast = ({ varinat = "normal", title, description }: ToastProps) => {
 
 export default toast;
 
-const toastIcons = {
+const toastIcons: Record<string, IconKeyType> = {
   success: "Success",
   error: "Error",
 };

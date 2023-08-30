@@ -1,6 +1,6 @@
 import { Icons } from "@/components/icons";
 
-type IconKeyType = keyof typeof Icons;
+export type IconKeyType = keyof typeof Icons;
 
 interface NavItem {
   title: string;

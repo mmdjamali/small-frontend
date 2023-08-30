@@ -1,14 +1,12 @@
-import Icon from "@/components/icon";
 import Image from "next/image";
-import Link from "next/link";
 import React, { PropsWithChildren } from "react";
 
 function AuthLayout({ children }: PropsWithChildren) {
   return (
-    <div className="h-fit w-full relative block text-foreground">
-      <div className="w-full h-full grid grid-cols-1 md:grid-cols-3 lg:grid-cols-2 place-items-center">
+    <div className="relative block h-fit w-full text-foreground">
+      <div className="grid h-full w-full grid-cols-1 place-items-center md:grid-cols-3 lg:grid-cols-2">
         {children}
-        <div className="h-screen max-h-screen hidden md:flex inset-0 md:sticky top-0 w-full">
+        <div className="inset-0 top-0 hidden h-screen max-h-screen w-full md:sticky md:flex">
           <Image
             className="object-cover"
             unoptimized

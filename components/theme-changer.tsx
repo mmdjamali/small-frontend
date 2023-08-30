@@ -14,6 +14,7 @@ import Button from "./ui/button";
 import { useTheme } from "next-themes";
 import { Icons } from "./icons";
 import Icon from "./icon";
+import { IconKeyType } from "@/types";
 
 function ThemeChanger() {
   const { theme, setTheme } = useTheme();
@@ -29,7 +30,7 @@ function ThemeChanger() {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
-          className="text-[21px] p-2 outline-none"
+          className="p-2 text-[21px] outline-none"
           variant="outlined"
           color="foreground"
         >
@@ -44,7 +45,7 @@ function ThemeChanger() {
         <DropdownMenuContent align="end">
           {themes.map(({ name, icon }, idx) => (
             <DropdownMenuItem
-              className="flex gap-2 text-[14px] items-center cursor-pointer hover:bg-foreground/10"
+              className="flex cursor-pointer items-center gap-2 text-[14px] hover:bg-foreground/10"
               onClick={() => {
                 setTheme(name);
               }}
@@ -62,7 +63,7 @@ function ThemeChanger() {
 
 export default ThemeChanger;
 
-const themes = [
+const themes: { name: string; icon: IconKeyType }[] = [
   { name: "light", icon: "Sun" },
   { name: "dark", icon: "Moon" },
   { name: "system", icon: "Macbook" },
