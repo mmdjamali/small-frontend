@@ -22,7 +22,7 @@ const TabsList = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <TabsPrimitives.List
     ref={ref}
-    className={cn("flex shrink-0 gap-4 border-b border-border", className)}
+    className={cn("flex shrink-0  gap-4 border-b border-border", className)}
     {...props}
   />
 ));
@@ -31,15 +31,21 @@ TabsList.displayName = "@radix-ui/react-tabs-list";
 const TabsTrigger = React.forwardRef<
   React.ElementRef<typeof TabsPrimitives.Trigger>,
   React.ComponentPropsWithoutRef<typeof TabsPrimitives.Trigger>
->(({ className, ...props }, ref) => (
-  <TabsPrimitives.Trigger
-    ref={ref}
-    className={cn(
-      "flex h-12 shrink-0 items-center justify-center border-border bg-background data-[state=active]:translate-y-[1px] data-[state=active]:border-b data-[state=active]:border-foreground",
-      className,
-    )}
-    {...props}
-  />
+>(({ className, children, ...props }, ref) => (
+  <div className="group/container">
+    <TabsPrimitives.Trigger
+      ref={ref}
+      className={cn(
+        "group/trigger flex h-12 shrink-0 items-center justify-center border-border bg-background text-sm text-foreground/75 group-hover/container:text-foreground data-[state=active]:translate-y-[1px] data-[state=active]:border-b data-[state=active]:border-foreground data-[state=active]:pb-[1px] data-[state=active]:font-medium data-[state=active]:text-foreground",
+        className,
+      )}
+      {...props}
+    >
+      <span className="rounded px-2 py-1 group-hover/container:bg-foreground/10">
+        {children}
+      </span>
+    </TabsPrimitives.Trigger>
+  </div>
 ));
 TabsTrigger.displayName = "@radix-ui/react-tabs-trigger";
 

@@ -22,9 +22,10 @@ const Button = React.forwardRef<React.ElementRef<"button">, props>(
       loading = false,
       children,
       onClick,
+      disabled,
       ...props
     },
-    ref
+    ref,
   ) => {
     const variants = {
       contained: {
@@ -49,14 +50,16 @@ const Button = React.forwardRef<React.ElementRef<"button">, props>(
     return (
       <button
         ref={ref}
+        disabled={disabled}
         className={cn(
           "relative flex items-center justify-center rounded transition-all",
-          "py-2 px-4 text-[14px]",
+          "px-4 py-2 text-[14px]",
           block ? "w-full" : "",
-          loading ? "opacity-75 pointer-events-none" : "",
+          loading ? "pointer-events-none opacity-75" : "",
+          disabled ? "pointer-events-none opacity-75" : "",
           variants[variant]["shared"],
           variants[variant][color],
-          className
+          className,
         )}
         onClick={loading ? () => {} : onClick}
         {...props}
@@ -64,7 +67,7 @@ const Button = React.forwardRef<React.ElementRef<"button">, props>(
         <div
           className={cn(
             "flex items-center justify-center gap-1",
-            loading ? "opacity-0" : ""
+            loading ? "opacity-0" : "",
           )}
         >
           {children}
@@ -72,12 +75,12 @@ const Button = React.forwardRef<React.ElementRef<"button">, props>(
         {loading ? (
           <Icon
             name="Spinner"
-            className="absolute inset-0 m-auto text-[21px] animate-spin repeat-infinite"
+            className="absolute inset-0 m-auto animate-spin text-[21px] repeat-infinite"
           />
         ) : null}
       </button>
     );
-  }
+  },
 );
 
 Button.displayName = "@1stmmd/Button";
