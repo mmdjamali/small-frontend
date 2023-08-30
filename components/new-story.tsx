@@ -34,13 +34,25 @@ const NewStory = () => {
 
       if (timeout.current) clearTimeout(timeout.current);
 
-      timeout.current = setTimeout(() => {
+      timeout.current = setTimeout(async () => {
         setSaving(true);
 
-        setTimeout(() => {
-          router.push("/p/j/edit");
-          setSaving(false);
-        }, 1000);
+        const res = await fetch("/api/articles", {
+          method: "POST",
+          mode: "cors",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            Title: title,
+            Content: JSON.stringify((await editor.save()).blocks ?? []),
+          }),
+        }).then((res) => res.json());
+
+        if (!res?.success) return;
+        setSaving(false);
+
+        router.push(`/p/${res.data.id}/edit`);
       }, 1000);
     };
 
@@ -49,6 +61,7 @@ const NewStory = () => {
     return () => {
       c?.removeEventListener("keyup", handleKeyUp);
     };
+    /* eslint-disable */
   }, [editor, router]);
 
   return (
@@ -61,7 +74,10 @@ const NewStory = () => {
 
           <div className="flex items-center justify-center gap-3">
             <Button
-              disabled={true}
+              // disabled={true}
+              onClick={async () => {
+                console.log((await editor?.save())?.blocks);
+              }}
               color="foreground"
               className="hidden border-none sm:flex"
             >

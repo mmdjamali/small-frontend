@@ -5,7 +5,7 @@ type State = string | undefined;
 
 type CustomFetch = (
   input: RequestInfo | URL,
-  init?: RequestInit | undefined
+  init?: RequestInit | undefined,
 ) => Promise<Response>;
 
 let initialState: State;
@@ -34,6 +34,7 @@ const refresh_token = async () => {
   if (!data?.accessToken) return;
 
   dispatch(data.accessToken);
+  initialState = data.accessToken;
   return data.accessToken;
 };
 
@@ -57,17 +58,20 @@ export const useCustomFetch = () => {
           (BACKEND_URL ?? "") + input,
           init
             ? {
+                mode: "cors",
                 ...init,
                 headers: init.headers
                   ? {
                       ...init.headers,
                       Authorization: `Bearer ${state}`,
+                      "Content-Type": "application/json",
                     }
                   : {
                       Authorization: `Bearer ${state}`,
+                      "Content-Type": "application/json",
                     },
               }
-            : undefined
+            : undefined,
         );
 
         if (res.status !== 401) return res;
@@ -90,13 +94,13 @@ export const useCustomFetch = () => {
                       Authorization: `Bearer ${new_token}`,
                     },
               }
-            : undefined
+            : undefined,
         );
       } catch (err) {
         throw new Error("Something went wrong!");
       }
     },
-    [state]
+    [state],
   );
 
   return custom_fetch;
