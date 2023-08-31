@@ -6,22 +6,22 @@ import * as DropdownMenuPrimitive from "@radix-ui/react-dropdown-menu";
 import { cn } from "@/lib/utils";
 
 const DropdownMenu = ({
+  onOpenChange,
   ...props
 }: React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Root>) => (
   <DropdownMenuPrimitive.Root
-    // onOpenChange={(open) => {
-    //   const bool =
-    //     document.body.scrollHeight > document.body.clientHeight &&
-    //     !/Mobi/i.test(navigator.userAgent);
+    onOpenChange={(open) => {
+      const bool = !/Mobi/i.test(navigator.userAgent);
+      // document.body.scrollHeight > document.body.clientHeight &&
 
-    //   open
-    //     ? bool
-    //       ? document.body.classList.add("pr-[17px]")
-    //       : null
-    //     : document.body.classList.remove("pr-[17px]");
+      open
+        ? bool
+          ? document.body.classList.add("pr-[17px]")
+          : null
+        : document.body.classList.remove("pr-[17px]");
 
-    //   onOpenChange ? onOpenChange(open) : null;
-    // }}
+      onOpenChange ? onOpenChange(open) : null;
+    }}
     {...props}
   />
 );

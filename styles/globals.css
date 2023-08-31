@@ -5,8 +5,7 @@
 @tailwind utilities;
 
 @layer base {
-  html
-  {
+  body {
     @apply overflow-y-scroll;
   }
   html,
