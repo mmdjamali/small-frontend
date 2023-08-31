@@ -4,16 +4,54 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Link from "next/link";
 import Button from "./ui/button";
 import Icon from "./icon";
+import ArticleInListLoader from "./loaders/article-in-list-loader";
+import { useInfiniteQuery } from "react-query";
+import { BACKEND_URL } from "@/config/env";
+import { GetAllArticlesDataType } from "@/types/api";
 import { cn } from "@/lib/utils";
+import { OutputBlockData } from "@editorjs/editorjs";
+import Image from "next/image";
+import ArticleListView from "./article-list-view";
 
 type FeedProps = {
   active?: string;
 };
 
 const Feed = ({ active = "" }: FeedProps) => {
+  const {
+    data,
+    hasNextPage,
+    isLoading,
+    isFetchingNextPage,
+    isError,
+    fetchNextPage,
+  } = useInfiniteQuery({
+    queryKey: ["articles"],
+    queryFn: async ({ pageParam = 0 }) => {
+      const res = await fetch(
+        `${BACKEND_URL}/api/articles?pageIndex=${pageParam}`,
+        {
+          mode: "cors",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        },
+      );
+      return (await res.json()).data as GetAllArticlesDataType;
+    },
+    getNextPageParam: (lastPage) => {
+      if (typeof lastPage.pageIndex !== "number") return;
+
+      if (!lastPage.hasNextPage) return;
+
+      return lastPage.pageIndex + 1;
+    },
+    refetchOnWindowFocus: false,
+  });
+
   return (
-    <Tabs defaultValue={active}>
-      <TabsList>
+    <Tabs defaultValue={active} className="relative w-full">
+      <TabsList className="sticky top-[58px] z-[49] bg-background">
         <div className="flex items-center justify-center">
           <Button className="p-1" variant="text" color="foreground">
             <Icon name="Add" className="text-[18px]" />
@@ -40,39 +78,40 @@ const Feed = ({ active = "" }: FeedProps) => {
         ))}
       </TabsList>
 
-      <TabsContent className="flex flex-col gap-6 py-6" value="">
-        {Array.from({
-          length: 10,
-        }).map((_, idx, list) => (
-          <div
-            key={idx}
-            className={cn(
-              "flex w-full gap-4 pb-6",
-              idx < list.length - 1 ? "" : "",
-            )}
+      <TabsContent
+        className="flex w-full flex-col items-start justify-start gap-6 overflow-x-hidden py-6"
+        value=""
+      >
+        {(!isError || !isLoading) &&
+          data?.pages.map((d, index, d_list) => {
+            console.log(d);
+            return d.items?.map((post, idx, list) => (
+              <ArticleListView key={post.id} post={post} />
+            ));
+          })}
+
+        {(isLoading || isFetchingNextPage) &&
+          Array.from({
+            length: 10,
+          }).map((_, idx, list) => (
+            <ArticleInListLoader
+              key={idx}
+              variant={idx % 2 === 0 ? "with-image" : "normal"}
+            />
+          ))}
+
+        {hasNextPage && (
+          <Button
+            onClick={() => {
+              fetchNextPage();
+            }}
+            variant="text"
+            color="foreground"
+            className="w-fit"
           >
-            <div className="flex w-full flex-col gap-4">
-              <div className="flex w-full items-center gap-2">
-                <span className="aspect-square h-6 animate-pulse rounded-full bg-foreground/10" />
-                <span className="flex h-2 w-24 animate-pulse bg-foreground/10" />
-              </div>
-
-              <div className="flex w-full flex-col gap-1">
-                <span className="flex h-4 w-[80%] animate-pulse bg-foreground/10" />
-              </div>
-
-              <div className="flex w-full flex-col gap-1">
-                <span className="flex h-4 w-[50%] animate-pulse bg-foreground/10" />
-              </div>
-            </div>
-
-            {idx % 2 === 0 && (
-              <div className="flex w-28 flex-shrink-0 items-center justify-center">
-                <div className="flex aspect-square w-full flex-shrink-0 animate-pulse rounded bg-foreground/10"></div>
-              </div>
-            )}
-          </div>
-        ))}
+            Show more
+          </Button>
+        )}
       </TabsContent>
     </Tabs>
   );

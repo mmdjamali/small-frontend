@@ -8,7 +8,7 @@ import { Inter } from "next/font/google";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: siteConfig.name,
+  title: siteConfig.name + " - Where you teach and learn",
   description: siteConfig.description,
   icons: {
     icon: "/favicon.svg",
@@ -24,7 +24,7 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={
-          inter.className + "text-foreground bg-background text-[14px]"
+          inter.className + "bg-background text-[14px] text-foreground"
         }
       >
         <Providers>{children}</Providers>
