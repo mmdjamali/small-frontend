@@ -11,6 +11,7 @@ import TextareaAutosize from "react-autosize-textarea";
 import { useRouter } from "next/navigation";
 import { useCustomFetch } from "@/hooks/use-custom-fetch";
 import UserDropdownMenu from "./user-profile-dropdown";
+import Saving from "./saving";
 
 interface EditStoryProps {
   id: string;
@@ -74,7 +75,10 @@ const EditStory = ({ post, id }: EditStoryProps) => {
         <header className="mx-auto flex h-[57px] w-full max-w-[1300px] items-center justify-between gap-3 px-4 md:px-8">
           <MainLogo />
 
-          {saving && <p>saving...</p>}
+          <Saving
+            active={saving}
+            className="opacity-0 transition-opacity data-[state=closed]:opacity-0 data-[state=open]:opacity-100 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:zoom-out-75 data-[state=open]:zoom-in-75"
+          />
 
           <div className="flex items-center justify-center gap-3">
             <Button

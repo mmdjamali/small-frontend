@@ -12,6 +12,8 @@ import TextareaAutosize from "react-autosize-textarea";
 import { useRouter } from "next/navigation";
 import { useCustomFetch } from "@/hooks/use-custom-fetch";
 import UserDropdownMenu from "./user-profile-dropdown";
+import Icon from "./icon";
+import Saving from "./saving";
 
 const NewStory = () => {
   const router = useRouter();
@@ -70,7 +72,7 @@ const NewStory = () => {
         <header className="mx-auto flex h-[57px] w-full max-w-[1300px] items-center justify-between gap-3 px-4 md:px-8">
           <MainLogo />
 
-          {saving && <p>saving...</p>}
+          <Saving active={saving} />
 
           <div className="flex items-center justify-center gap-3">
             <Button
