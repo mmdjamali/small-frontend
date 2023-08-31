@@ -9,7 +9,7 @@ const Saving = ({
   active: boolean;
   className?: string;
 }) => {
-  const [show, setShow] = useState(true);
+  const [show, setShow] = useState(active);
 
   useEffect(() => {
     if (active) setShow(true);
