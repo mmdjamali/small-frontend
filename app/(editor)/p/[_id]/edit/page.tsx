@@ -1,6 +1,7 @@
 "use client";
 
 import EditStory from "@/components/edit-story";
+import Icon from "@/components/icon";
 import { useCustomFetch } from "@/hooks/use-custom-fetch";
 import { OutputBlockData } from "@editorjs/editorjs";
 import { NextPage } from "next";
@@ -35,7 +36,13 @@ const Page = ({ params: { _id } }: { params: { _id: string } }) => {
     /* eslint-disable */
   }, [_id]);
 
-  if (loading) return <div></div>;
+  if (loading)
+    return (
+      <Icon
+        name="Logo"
+        className="absolute inset-0 m-auto aspect-square h-[50px] animate-pulse text-[50px] text-foreground"
+      />
+    );
 
   return (
     <EditStory

@@ -71,6 +71,13 @@ function Editor({ setEditor, blocks }: EditorComponentPrpos) {
                       url: res?.data?.fileInformation?.url,
                     },
                   };
+
+                return {
+                  success: 0,
+                  file: {
+                    url: "",
+                  },
+                };
               },
               async uploadByUrl(url: string) {
                 return {
