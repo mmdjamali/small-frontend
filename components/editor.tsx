@@ -3,6 +3,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import EditorJS, { OutputBlockData } from "@editorjs/editorjs";
 import { fileToBase64 } from "@/lib/file-to-base64";
+import { useCustomFetch } from "@/hooks/use-custom-fetch";
 
 type EditorComponentPrpos = {
   blocks?: OutputBlockData<string, any>[];
@@ -11,6 +12,7 @@ type EditorComponentPrpos = {
 
 function Editor({ setEditor, blocks }: EditorComponentPrpos) {
   const [ref, setRef] = useState<EditorJS>();
+  const fetch = useCustomFetch();
 
   const [isMounted, setIsMounted] = useState<boolean>(false);
 
@@ -54,13 +56,21 @@ function Editor({ setEditor, blocks }: EditorComponentPrpos) {
             // },
             uploader: {
               async uploadByFile(file: File) {
-                const base64 = await fileToBase64(file);
-                return {
-                  success: 1,
-                  file: {
-                    url: base64,
-                  },
-                };
+                const formData = new FormData();
+                formData.append("File", file);
+
+                const res = await fetch("/api/articles/upload-article-image", {
+                  method: "POST",
+                  body: formData,
+                }).then((res) => res.json());
+
+                if (res.success)
+                  return {
+                    success: 1,
+                    file: {
+                      url: res?.data?.fileInformation?.url,
+                    },
+                  };
               },
               async uploadByUrl(url: string) {
                 return {
@@ -98,7 +108,7 @@ function Editor({ setEditor, blocks }: EditorComponentPrpos) {
     /* eslint-disable */
   }, [initializeEditor, isMounted]);
 
-  return <div id="editor" className=" w-full h-fit text-inherit" />;
+  return <div id="editor" className=" h-fit w-full text-inherit" />;
 }
 
 export default Editor;
