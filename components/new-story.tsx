@@ -12,7 +12,6 @@ import TextareaAutosize from "react-autosize-textarea";
 import { useRouter } from "next/navigation";
 import { useCustomFetch } from "@/hooks/use-custom-fetch";
 import UserDropdownMenu from "./user-profile-dropdown";
-import Icon from "./icon";
 import Saving from "./saving";
 
 const NewStory = () => {
@@ -27,7 +26,7 @@ const NewStory = () => {
   const container = useRef<null | HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!editor || !container) return;
+    if (!editor || !container || saving) return;
 
     const c = container.current;
 
@@ -76,7 +75,7 @@ const NewStory = () => {
 
           <div className="flex items-center justify-center gap-3">
             <Button
-              // disabled={true}
+              disabled={true}
               onClick={async () => {
                 console.log((await editor?.save())?.blocks);
               }}
@@ -86,7 +85,7 @@ const NewStory = () => {
               Publish
             </Button>
 
-            <PostDetails />
+            <PostDetails disabled={true} />
 
             <UserDropdownMenu />
           </div>

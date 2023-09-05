@@ -13,7 +13,7 @@ import { useEffect, useState } from "react";
 
 import PostTags from "./post-tags";
 
-const PostDetails = () => {
+const PostDetails = ({ disabled }: { disabled?: boolean }) => {
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState<"" | "tags">("");
 
@@ -40,6 +40,7 @@ const PostDetails = () => {
       ) : (
         <PopoverContent align="end" className="gap-1">
           <Button
+            disabled={disabled}
             onClick={() => {
               navigator.share({
                 title: "Checkout my draft",
@@ -49,26 +50,28 @@ const PostDetails = () => {
             }}
             color="foreground"
             variant="text"
-            className="px-2 py-1.5 items-start justify-start"
+            className="items-start justify-start px-2 py-1.5"
           >
             Share draft link
           </Button>
 
           <Button
+            disabled={disabled}
             onClick={() => {
               setSelected("tags");
             }}
             color="foreground"
             variant="text"
-            className="px-2 py-1.5 items-start justify-start"
+            className="items-start justify-start px-2 py-1.5"
           >
             Change topics
           </Button>
 
           <Button
+            disabled={disabled}
             color="foreground"
             variant="contained"
-            className="sm:hidden px-2 py-1.5 items-start justify-start border-none"
+            className="items-start justify-start border-none px-2 py-1.5 sm:hidden"
           >
             Publish
           </Button>
