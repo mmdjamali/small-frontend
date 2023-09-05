@@ -48,6 +48,10 @@ const EditStory = ({ post, id }: EditStoryProps) => {
   const timeout = useRef<null | ReturnType<typeof setTimeout>>(null);
   const container = useRef<null | HTMLDivElement>(null);
 
+  const parsed: OutputBlockData[] = JSON.parse(
+    isJSON(post.content) ? post.content.toString() : "[]",
+  );
+
   useEffect(() => {
     if (!editor || !container || saving || published) return;
 
@@ -154,10 +158,7 @@ const EditStory = ({ post, id }: EditStoryProps) => {
               autoFocus={true}
               placeholder="Post title"
             />
-            <Editor
-              setEditor={(e) => setEditor(e)}
-              blocks={isJSON(post.content) ? [] : post.content}
-            />
+            <Editor setEditor={(e) => setEditor(e)} blocks={parsed} />
           </div>
         </main>
       </div>

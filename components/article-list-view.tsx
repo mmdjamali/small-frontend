@@ -10,9 +10,11 @@ type Props = {
 };
 
 const ArticleListView = ({ post: { author, content, id, title } }: Props) => {
-  const isText = isJSON(content);
+  const parsed: OutputBlockData[] = JSON.parse(
+    isJSON(content) ? content.toString() : "[]",
+  );
 
-  const withImage = isText ? false : content?.[0]?.type === "image";
+  const withImage = parsed?.[0]?.type === "image";
 
   return (
     <div
@@ -39,7 +41,9 @@ const ArticleListView = ({ post: { author, content, id, title } }: Props) => {
 
           <div className="flex w-full flex-col gap-1 overflow-hidden">
             <p className="max-h-[50px] overflow-hidden text-ellipsis break-words text-lg leading-6 text-foreground/75">
-              {isText ? content : content?.[0]?.data?.text ?? "nothing"}
+              {withImage
+                ? parsed?.[1]?.data?.text ?? "nothing"
+                : parsed?.[0]?.data?.text ?? "nothing"}
             </p>
           </div>
         </Link>
@@ -52,7 +56,7 @@ const ArticleListView = ({ post: { author, content, id, title } }: Props) => {
               className="object-cover"
               fill
               unoptimized
-              src={content?.[0]?.data?.file?.url ?? ""}
+              src={parsed?.[0]?.data?.file?.url ?? ""}
               alt={title}
             />
           </div>
