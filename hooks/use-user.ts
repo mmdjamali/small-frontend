@@ -1,9 +1,20 @@
 import { useCallback, useEffect, useState } from "react";
 import { useCustomFetch } from "./use-custom-fetch";
 
+type State = boolean;
+
+let state: State;
+
+let listeners: Array<(state: State) => void> = [];
+
+const dispacth = (new_state: State) => {
+  listeners.forEach((setState) => setState(new_state));
+  state = new_state;
+};
+
 export const useUser = () => {
   const fetch = useCustomFetch();
-  const [user, setUser] = useState<boolean>(false);
+  const [user, setUser] = useState<State>(state);
   const [loading, setLoading] = useState<boolean>(true);
 
   const handleFetch = useCallback(async () => {
@@ -15,7 +26,7 @@ export const useUser = () => {
       },
     });
 
-    setUser(!!data?.ok ?? false);
+    dispacth(!!data?.ok ?? false);
 
     setLoading(false);
 
@@ -25,6 +36,16 @@ export const useUser = () => {
   useEffect(() => {
     handleFetch();
   }, [handleFetch]);
+
+  useEffect(() => {
+    listeners.push(setUser);
+
+    return () => {
+      const idx = listeners.indexOf(setUser);
+
+      if (idx >= 0) listeners.splice(idx, 1);
+    };
+  }, [user]);
 
   return [user, loading];
 };
