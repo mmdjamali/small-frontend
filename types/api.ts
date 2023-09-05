@@ -16,7 +16,7 @@ type ApiResponse<T> =
 
 export type UpdateTopicsApiResponse = ApiResponse<{ topics: TopicType[] }>;
 
-export type GetArticleApiResponse = ApiResponse<ArticleType>;
+export type GetArticleApiResponse = ApiResponse<{ article: ArticleType }>;
 
 export type PublishArticleApiResponse = ApiResponse<{ publshed: boolean }>;
 

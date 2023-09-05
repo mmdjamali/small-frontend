@@ -4,7 +4,7 @@ import { TopicType } from "./topic";
 export type ArticleType = {
   id: number;
   title: string;
-  content: OutputBlockData[];
+  content: string;
   topics: TopicType[];
   author: AuthorType;
   published: boolean;
