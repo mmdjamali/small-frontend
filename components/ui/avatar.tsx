@@ -5,19 +5,33 @@ import * as AvatarPrimitives from "@radix-ui/react-avatar";
 import React from "react";
 import { Icons } from "../icons";
 
+interface AvatarProps
+  extends React.ComponentPropsWithoutRef<typeof AvatarPrimitives.Root> {
+  size: "sm" | "md" | "lg";
+}
+
 export const Avatar = React.forwardRef<
   React.ElementRef<typeof AvatarPrimitives.Root>,
-  React.ComponentPropsWithoutRef<typeof AvatarPrimitives.Root>
->(({ className, ...props }, ref) => (
-  <AvatarPrimitives.Root
-    ref={ref}
-    className={cn(
-      "relative flex h-9 w-9 shrink-0 select-none overflow-hidden rounded-full",
-      className,
-    )}
-    {...props}
-  />
-));
+  AvatarProps
+>(({ className, size, ...props }, ref) => {
+  const sizes: Record<typeof size, string> = {
+    sm: "w-7 h-7",
+    md: "w-9 h-9",
+    lg: "w-11 h-11",
+  };
+
+  return (
+    <AvatarPrimitives.Root
+      ref={ref}
+      className={cn(
+        "relative flex shrink-0 select-none overflow-hidden rounded-full",
+        sizes[size],
+        className,
+      )}
+      {...props}
+    />
+  );
+});
 
 Avatar.displayName = "@radix-ui/avatar";
 
