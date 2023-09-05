@@ -72,12 +72,15 @@
   @apply mx-auto;
 }
 
-.codex-editor h2 {
+.codex-editor h2,
+.test h2 {
   @apply mb-2 text-[21px] font-bold;
 }
-.codex-editor h3 {
+.codex-editor h3,
+.test h3 {
   @apply text-[18px] font-bold;
 }
-.codex-editor h4 {
+.codex-editor h4,
+.test h4 {
   @apply text-[16px] font-bold;
 }
