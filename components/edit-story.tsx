@@ -4,7 +4,7 @@ import Button from "./ui/button";
 import MainLogo from "./layout/main-logo";
 import PostDetails from "./post-details";
 import Editor from "./editor";
-import { useEffect, useRef, useState } from "react";
+import { createContext, useEffect, useRef, useState } from "react";
 
 import EditorJS, { OutputBlockData } from "@editorjs/editorjs";
 import TextareaAutosize from "react-autosize-textarea";
@@ -12,15 +12,24 @@ import { useRouter } from "next/navigation";
 import { useCustomFetch } from "@/hooks/use-custom-fetch";
 import UserDropdownMenu from "./user-profile-dropdown";
 import Saving from "./saving";
+import { ArticleType } from "@/types/article";
+import { isJSON } from "@/lib/utils";
+import { PublishArticleApiResponse } from "@/types/api";
 
 interface EditStoryProps {
   id: string;
-  post: {
-    title: string;
-    content: OutputBlockData[];
-    published: boolean;
-  };
+  post: ArticleType;
 }
+
+type EditStoryContextType = {
+  topics: string[];
+  setTopics: (state: string[]) => void;
+  id: string;
+};
+
+export const EditStoryContext = createContext<EditStoryContextType>(
+  {} as EditStoryContextType,
+);
 
 const EditStory = ({ post, id }: EditStoryProps) => {
   const router = useRouter();
@@ -28,17 +37,25 @@ const EditStory = ({ post, id }: EditStoryProps) => {
 
   const [editor, setEditor] = useState<EditorJS>();
   const [title, setTitle] = useState(post.title ?? "");
+
+  const [topics, setTopics] = useState<string[]>(
+    post?.topics?.map(({ name }) => name) ?? [],
+  );
+  const [published, setPublished] = useState(post?.published ?? false);
+
   const [saving, setSaving] = useState<boolean>(false);
 
   const timeout = useRef<null | ReturnType<typeof setTimeout>>(null);
   const container = useRef<null | HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!editor || !container) return;
+    if (!editor || !container || saving || published) return;
 
     const c = container.current;
 
     const handleKeyUp = (e: globalThis.KeyboardEvent) => {
+      if (published) return;
+
       if (e.key === "Tab") return;
 
       if (timeout.current) clearTimeout(timeout.current);
@@ -83,17 +100,38 @@ const EditStory = ({ post, id }: EditStoryProps) => {
           <div className="flex items-center justify-center gap-3">
             <Button
               onClick={async () => {
-                if (!editor) return;
-                const content = await editor?.save();
-                console.log(content);
+                try {
+                  const res: PublishArticleApiResponse = await fetch(
+                    `/api/articles/${id}/publish`,
+                    {
+                      method: "POST",
+                    },
+                  ).then((res) => res.json());
+
+                  console.log(res);
+
+                  if (!res?.success) return;
+
+                  setPublished(true);
+                } catch (err) {
+                  console.log(err);
+                }
               }}
               color="foreground"
               className="hidden border-none sm:flex"
             >
-              {"Publish"}
+              {published ? "Save" : "Publish"}
             </Button>
 
-            <PostDetails />
+            <EditStoryContext.Provider
+              value={{
+                topics,
+                setTopics,
+                id,
+              }}
+            >
+              <PostDetails />
+            </EditStoryContext.Provider>
 
             <UserDropdownMenu />
           </div>
@@ -116,7 +154,10 @@ const EditStory = ({ post, id }: EditStoryProps) => {
               autoFocus={true}
               placeholder="Post title"
             />
-            <Editor setEditor={(e) => setEditor(e)} blocks={post.content} />
+            <Editor
+              setEditor={(e) => setEditor(e)}
+              blocks={isJSON(post.content) ? [] : post.content}
+            />
           </div>
         </main>
       </div>

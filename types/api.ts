@@ -1,18 +1,27 @@
+import { ArticleType, AuthorType } from "./article";
+import { TopicType } from "./topic";
+
+type ApiResponse<T> =
+  | {
+      success: false;
+      status: number;
+      message?: string;
+    }
+  | {
+      success: true;
+      status: number;
+      message?: string;
+      data: T;
+    };
+
+export type UpdateTopicsApiResponse = ApiResponse<{ topics: TopicType[] }>;
+
+export type GetArticleApiResponse = ApiResponse<ArticleType>;
+
+export type PublishArticleApiResponse = ApiResponse<{ publshed: boolean }>;
+
 export type GetAllArticlesDataType = {
-  items?: ArticlesDataItemsType[];
+  items?: ArticleType[];
   pageIndex?: number;
   hasNextPage?: boolean;
-};
-
-export type Author = {
-  firstName: string;
-  id: number;
-  lastName: string;
-};
-
-export type ArticlesDataItemsType = {
-  id: number;
-  author: Author;
-  content: string;
-  title: string;
 };

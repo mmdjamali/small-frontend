@@ -1,31 +1,18 @@
-import { cn } from "@/lib/utils";
+import { cn, isJSON } from "@/lib/utils";
 import Link from "next/link";
 import Icon from "./icon";
-import { ArticlesDataItemsType } from "@/types/api";
 import { OutputBlockData } from "@editorjs/editorjs";
 import Image from "next/image";
+import { ArticleType } from "@/types/article";
 
 type Props = {
-  post: ArticlesDataItemsType;
-};
-
-const isJSON = (s: string): boolean => {
-  if (typeof s !== "string") return false;
-
-  try {
-    JSON.parse(s);
-    return true;
-  } catch (err) {
-    return false;
-  }
+  post: ArticleType;
 };
 
 const ArticleListView = ({ post: { author, content, id, title } }: Props) => {
-  const parsed_content = JSON?.parse(
-    isJSON(content) ? content : "[]",
-  ) as OutputBlockData[];
+  const isText = isJSON(content);
 
-  const withImage = parsed_content?.[0]?.type === "image";
+  const withImage = isText ? false : content?.[0]?.type === "image";
 
   return (
     <div
@@ -52,7 +39,7 @@ const ArticleListView = ({ post: { author, content, id, title } }: Props) => {
 
           <div className="flex w-full flex-col gap-1 overflow-hidden">
             <p className="max-h-[50px] overflow-hidden text-ellipsis break-words text-lg leading-6 text-foreground/75">
-              {parsed_content?.[0]?.data?.text ?? "nothing"}
+              {isText ? content : content?.[0]?.data?.text ?? "nothing"}
             </p>
           </div>
         </Link>
@@ -65,7 +52,7 @@ const ArticleListView = ({ post: { author, content, id, title } }: Props) => {
               className="object-cover"
               fill
               unoptimized
-              src={parsed_content?.[0]?.data?.file?.url ?? ""}
+              src={content?.[0]?.data?.file?.url ?? ""}
               alt={title}
             />
           </div>

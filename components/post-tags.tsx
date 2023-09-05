@@ -1,26 +1,28 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Button from "./ui/button";
-import {
-  Popover,
-  PopoverClose,
-  PopoverContent,
-  PopoverPortal,
-  PopoverTrigger,
-} from "./ui/popover";
+import { PopoverClose, PopoverContent } from "./ui/popover";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import Icon from "./icon";
 import { useDebouncedValue } from "@/hooks/use-debounced-value";
 import { BACKEND_URL } from "@/config/env";
 import { TopicType } from "@/types/topic";
+import { EditStoryContext } from "./edit-story";
+import { useCustomFetch } from "@/hooks/use-custom-fetch";
+import { UpdateTopicsApiResponse } from "@/types/api";
 
 const PostTags = () => {
-  const [tags, setTags] = useState<string[]>([]);
+  const { topics, setTopics, id } = useContext(EditStoryContext);
+  const custom_fetch = useCustomFetch();
+
+  const [tags, setTags] = useState<string[]>(topics ?? []);
   const [value, resgister, , setValue] = useDebouncedValue("", 100);
+  const [suggestions, setSuggestions] = useState<null | string[]>(null);
+
+  const [saving, setSaving] = useState(false);
 
   const [parent] = useAutoAnimate();
 
   const [open, setOpen] = useState(false);
-  const [suggestions, setSuggestions] = useState<null | string[]>(null);
 
   useEffect(() => {
     if (!value || value.length < 3) return setOpen(false);
@@ -39,7 +41,7 @@ const PostTags = () => {
             "Content-Type": "application/json",
           },
           signal: abortController.signal,
-        }
+        },
       ).then((res) => res.json());
 
       const topics =
@@ -60,23 +62,48 @@ const PostTags = () => {
     };
   }, [value, tags]);
 
+  const HandleTopicSave = async () => {
+    setSaving(true);
+
+    try {
+      const res: UpdateTopicsApiResponse = await custom_fetch(
+        "/api/articles/UpdateTopics",
+        {
+          method: "POST",
+          body: JSON.stringify(tags),
+        },
+      ).then((res) => res.json());
+
+      if (!res?.success) {
+        setSaving(false);
+        return;
+      }
+
+      setTopics(res.data.topics.map(({ name }) => name) ?? []);
+      setOpen(false);
+      setSaving(false);
+    } catch (err) {
+      setSaving(false);
+    }
+  };
+
   return (
     <PopoverContent
       align="end"
-      className="p-4 w-full max-w-xs gap-6 select-none"
+      className="w-full max-w-xs select-none gap-6 p-4"
     >
       <p className="text-sm text-foreground/75">
         Add or change topics (up to 3) so readers know what your story is about:
       </p>
 
       <div
-        className="flex flex-wrap items-start gap-2 w-full relative"
+        className="relative flex w-full flex-wrap items-start gap-2"
         ref={parent}
       >
         {tags.map((tag, idx) => (
           <div
             key={tag}
-            className="flex gap-2 text-sm p-2 rounded border border-foreground/10 bg-transparent cursor-pointer"
+            className="flex cursor-pointer gap-2 rounded border border-foreground/10 bg-transparent p-2 text-sm"
           >
             {tag}
             <button
@@ -102,15 +129,15 @@ const PostTags = () => {
                 setTags((prev) => [...prev, value]);
                 setValue("");
               }}
-              className="flex-shrink py-2 text-sm w-fit min-w-[50%] text-foreground bg-transparent outline-none"
+              className="w-fit min-w-[50%] flex-shrink bg-transparent py-2 text-sm text-foreground outline-none"
             />
 
             {open && suggestions?.length && (
-              <div className="flex flex-col z-[55] bg-background rounded text-sm absolute overflow-hidden border border-border top-full min-w-[120px]">
+              <div className="absolute top-full z-[55] flex min-w-[120px] flex-col overflow-hidden rounded border border-border bg-background text-sm">
                 {suggestions?.map((topic, idx) => {
                   return (
                     <button
-                      className="px-2 py-1.5 bg-background hover:bg-foreground/10 text-start"
+                      className="bg-background px-2 py-1.5 text-start hover:bg-foreground/10"
                       onClick={() => {
                         setTags((prev) => [...prev, topic]);
                         setValue("");
