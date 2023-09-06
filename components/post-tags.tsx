@@ -8,7 +8,10 @@ import { BACKEND_URL } from "@/config/env";
 import { TopicType } from "@/types/topic";
 import { EditStoryContext } from "./edit-story";
 import { useCustomFetch } from "@/hooks/use-custom-fetch";
-import { UpdateTopicsApiResponse } from "@/types/api";
+import {
+  TopicSuggestionsApiResponse,
+  UpdateTopicsApiResponse,
+} from "@/types/api";
 
 const PostTags = () => {
   const { topics, setTopics, id } = useContext(EditStoryContext);
@@ -25,15 +28,15 @@ const PostTags = () => {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
+    setTags(topics.map((t) => t.toLocaleLowerCase()));
+  }, [topics]);
+
+  useEffect(() => {
     if (!value || value.length < 3) return setOpen(false);
     const abortController = new AbortController();
 
     const func = async () => {
-      const res: {
-        data: {
-          topics: TopicType[];
-        };
-      } = await fetch(
+      const res: TopicSuggestionsApiResponse = await fetch(
         BACKEND_URL +
           `/api/topics/search?searchKeywords=${encodeURIComponent(value)}`,
         {
@@ -44,9 +47,11 @@ const PostTags = () => {
         },
       ).then((res) => res.json());
 
+      if (!res.success) return;
+
       const topics =
-        res?.data?.topics
-          ?.map(({ name }) => name)
+        res?.data?.items
+          ?.map(({ name }) => name.toLocaleLowerCase())
           .filter((topic) => !tags.includes(topic))
           .slice(0, 2) ?? null;
 
@@ -70,7 +75,7 @@ const PostTags = () => {
         "/api/articles/UpdateTopics",
         {
           method: "POST",
-          body: JSON.stringify(tags),
+          body: JSON.stringify({ articleId: id, topicNames: tags }),
         },
       ).then((res) => res.json());
 
@@ -79,7 +84,9 @@ const PostTags = () => {
         return;
       }
 
-      setTopics(res.data.topics.map(({ name }) => name) ?? []);
+      setTopics(
+        res.data.topics.map(({ name }) => name.toLocaleLowerCase()) ?? [],
+      );
       setOpen(false);
       setSaving(false);
     } catch (err) {
@@ -90,7 +97,7 @@ const PostTags = () => {
   return (
     <PopoverContent
       align="end"
-      className="w-full max-w-xs select-none gap-6 p-4"
+      className="w-full max-w-xs select-none gap-6 overflow-hidden p-4"
     >
       <p className="text-sm text-foreground/75">
         Add or change topics (up to 3) so readers know what your story is about:
@@ -103,9 +110,9 @@ const PostTags = () => {
         {tags.map((tag, idx) => (
           <div
             key={tag}
-            className="flex cursor-pointer gap-2 rounded border border-foreground/10 bg-transparent p-2 text-sm"
+            className="flex cursor-pointer gap-2 overflow-hidden rounded border border-foreground/10 bg-transparent p-2 text-sm"
           >
-            {tag}
+            <p className="overflow-hidden text-ellipsis">{tag}</p>
             <button
               onClick={() => {
                 setTags((prev) => prev.filter((_, i) => i !== idx));
@@ -126,7 +133,7 @@ const PostTags = () => {
                 if (e.key !== "Enter" || tags.includes(value) || !value) return;
 
                 e.preventDefault();
-                setTags((prev) => [...prev, value]);
+                setTags((prev) => [...prev, value.toLocaleLowerCase()]);
                 setValue("");
               }}
               className="w-fit min-w-[50%] flex-shrink bg-transparent py-2 text-sm text-foreground outline-none"
@@ -155,7 +162,12 @@ const PostTags = () => {
       </div>
 
       <div className="flex items-center gap-2">
-        <Button color="foreground" className="border-none">
+        <Button
+          color="foreground"
+          className="border-none"
+          loading={saving}
+          onClick={HandleTopicSave}
+        >
           Save
         </Button>
 
