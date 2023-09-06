@@ -47,7 +47,7 @@ const CommentInput = ({ id }: { id: string | number }) => {
   return (
     <div
       ref={parent}
-      className="flex w-full flex-col gap-3 rounded border border-foreground/10 p-3"
+      className="flex w-full flex-col gap-2 rounded border border-foreground/10 p-3"
     >
       {show && (
         <div className="flex items-center gap-2">
@@ -64,7 +64,7 @@ const CommentInput = ({ id }: { id: string | number }) => {
         onFocus={handleFocus}
         placeholder="What are your thoughts?"
         className="bg-transparent text-sm outline-none"
-        rows={show ? 3 : 1}
+        rows={show ? 2 : 1}
       />
 
       {show && (

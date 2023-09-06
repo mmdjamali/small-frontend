@@ -90,3 +90,7 @@
 .test p {
   @apply mb-2 text-[18px] text-foreground/75;
 }
+
+.test img {
+  @apply mb-2 h-96 object-contain text-foreground/75;
+}

@@ -55,7 +55,7 @@ const DrawerContent = React.forwardRef<
     <DialogPrimitives.Content
       ref={ref}
       className={cn(
-        "animate-duration-200 animate-ease-linear fixed z-[999] h-full w-full overflow-auto bg-background data-[state=open]:animate-in data-[state=closed]:animate-out	",
+        "animate-duration-200 animate-ease-linear fixed z-[999] h-full w-full overflow-auto bg-background shadow-md shadow-foreground/50 data-[state=open]:animate-in data-[state=closed]:animate-out	",
         variant[side],
         className,
       )}

@@ -22,6 +22,7 @@ import UserAvatar from "./user-avatar";
 import { useInfiniteQuery, useQuery } from "react-query";
 import { BACKEND_URL } from "@/config/env";
 import { GetAllCommentsApiResponse } from "@/types/api";
+import Comment from "./comment";
 
 const ArticleComments = ({ id }: { id: string | number }) => {
   const {
@@ -70,7 +71,7 @@ const ArticleComments = ({ id }: { id: string | number }) => {
         <DrawerOverlay />
         <DrawerContent
           side="right"
-          className="z-50 flex h-screen w-[min(100%_,_380px)] flex-col border-x border-border bg-background px-5"
+          className="z-50 flex h-screen w-full flex-col overflow-y-scroll border-x border-border bg-background px-4 sm:w-[min(100%_,_450px)]"
         >
           <div className="flex flex-row-reverse items-center justify-between py-2">
             <DrawerClose asChild>
@@ -116,47 +117,8 @@ const ArticleComments = ({ id }: { id: string | number }) => {
               )}
               {data?.pages?.map((item) => {
                 if (!item) return <></>;
-                return item?.items.map(({ author, content, createdAt, id }) => {
-                  return (
-                    <div
-                      key={id}
-                      className="flex w-full flex-col gap-2 overflow-hidden border-b border-foreground/10 py-4"
-                    >
-                      <div className="flex items-center gap-2">
-                        <UserAvatar size="md" src="" />
-
-                        <div className="flex flex-col">
-                          <Link className="hover:underline" href={""}>
-                            {author.firstName + " " + author.lastName}
-                          </Link>
-                          <p className="text-foreground/75">1 day ago</p>
-                        </div>
-
-                        <Button
-                          className="ml-auto p-2 text-[21px]"
-                          color="foreground"
-                          variant="text"
-                        >
-                          <Icon name="MoreHorizontal" />
-                        </Button>
-                      </div>
-
-                      <p className="break-words">{content}</p>
-
-                      <div className="flex items-center justify-between">
-                        <Button
-                          className="p-2 text-[21px]"
-                          color="foreground"
-                          variant="text"
-                        >
-                          <Icon name="ThumbUpLine" />
-                        </Button>
-                        <Button className="" color="foreground" variant="text">
-                          Reply
-                        </Button>
-                      </div>
-                    </div>
-                  );
+                return item?.items.map((comment) => {
+                  return <Comment key={comment.id} comment={comment} />;
                 });
               })}
             </div>
