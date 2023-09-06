@@ -117,6 +117,7 @@ const EditStory = ({ post, id }: EditStoryProps) => {
                         articleId: id,
                         Title: title,
                         Content: JSON.stringify((await editor.save()).blocks),
+                        Published: true,
                       }),
                     });
 

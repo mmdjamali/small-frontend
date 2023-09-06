@@ -10,7 +10,7 @@ const Page = async ({ params: { _id } }: { params: { _id: string } }) => {
   const res: GetArticleApiResponse = await fetch(
     BACKEND_URL + `/api/articles/${_id}`,
     {
-      cache: "reload",
+      cache: "no-cache",
     },
   ).then((res) => res.json());
 
@@ -32,9 +32,11 @@ const Page = async ({ params: { _id } }: { params: { _id: string } }) => {
           <div className="flex flex-col">
             <Link href="" className="text-[16px] hover:underline">
               {res.data.article.author.firstName}{" "}
-              {res.data.article.author.firstName}
+              {res.data.article.author.lastName}
             </Link>
-            <p className="text-foreground/90">Published at Aug, 26</p>
+            <p className="text-foreground/75">
+              Published at {new Date(res.data.article.createdDate).getDay()}
+            </p>
           </div>
         </div>
       </div>

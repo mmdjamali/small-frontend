@@ -8,6 +8,8 @@ export type ArticleType = {
   topics: TopicType[];
   author: AuthorType;
   published: boolean;
+  createdDate: string;
+  updatedDate: string;
 };
 
 export type AuthorType = {
