@@ -20,6 +20,8 @@ export type GetArticleApiResponse = ApiResponse<{ article: ArticleType }>;
 
 export type PublishArticleApiResponse = ApiResponse<{ publshed: boolean }>;
 
+export type TopicSuggestionsApiResponse = ApiResponse<{ items: TopicType[] }>;
+
 export type GetAllArticlesDataType = {
   items?: ArticleType[];
   pageIndex?: number;
