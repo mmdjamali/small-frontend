@@ -97,7 +97,7 @@ export const useCustomFetch = () => {
             : undefined,
         );
       } catch (err) {
-        throw new Error("Something went wrong!");
+        return;
       }
     },
     [state],
