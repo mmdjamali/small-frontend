@@ -77,7 +77,7 @@ const PostTags = () => {
           method: "POST",
           body: JSON.stringify({ articleId: id, topicNames: tags }),
         },
-      ).then((res) => res.json());
+      ).then((res) => res?.json());
 
       if (!res?.success) {
         setSaving(false);

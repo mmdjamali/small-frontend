@@ -195,7 +195,7 @@ const Publish = ({
             {
               method: "POST",
             },
-          ).then((res) => res.json());
+          ).then((res) => res?.json());
 
           console.log(res);
 

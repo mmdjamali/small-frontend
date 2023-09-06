@@ -48,7 +48,7 @@ const NewStory = () => {
             Title: title,
             Content: JSON.stringify((await editor.save()).blocks ?? []),
           }),
-        }).then((res) => res.json());
+        }).then((res) => res?.json());
 
         if (!res?.success) return;
         setSaving(false);

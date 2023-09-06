@@ -62,7 +62,7 @@ function Editor({ setEditor, blocks }: EditorComponentPrpos) {
                 const res = await fetch("/api/articles/upload-article-image", {
                   method: "POST",
                   body: formData,
-                }).then((res) => res.json());
+                }).then((res) => res?.json());
 
                 if (res.success)
                   return {
