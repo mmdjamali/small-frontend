@@ -11,14 +11,15 @@ const DropdownMenu = ({
 }: React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Root>) => (
   <DropdownMenuPrimitive.Root
     onOpenChange={(open) => {
-      const bool = !/Mobi/i.test(navigator.userAgent);
-      // document.body.scrollHeight > document.body.clientHeight &&
+      const bool =
+        !/Mobi/i.test(navigator.userAgent) &&
+        document.body.scrollHeight > document.body.clientHeight;
 
       open
         ? bool
-          ? document.body.classList.add("pr-[17px]")
+          ? document.body.classList.add("pr-[var(--margin-dropdown)]")
           : null
-        : document.body.classList.remove("pr-[17px]");
+        : document.body.classList.remove("pr-[var(--margin-dropdown)]");
 
       onOpenChange ? onOpenChange(open) : null;
     }}

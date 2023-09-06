@@ -45,7 +45,8 @@ const DrawerContent = React.forwardRef<
 >(({ side, className, ...props }, ref) => {
   const variant = {
     top: "top-0",
-    right: "right-0 inset-y-0 slide-in-from-right-full",
+    right:
+      "right-0 inset-y-0 data-[state=open]:slide-in-from-right-full  data-[state=closed]:slide-out-to-right-full",
     bottom: "bottom-0",
     left: "left-0 inset-y-0 data-[state=open]:slide-in-from-left-full  data-[state=closed]:slide-out-to-left-full",
   };
@@ -54,9 +55,9 @@ const DrawerContent = React.forwardRef<
     <DialogPrimitives.Content
       ref={ref}
       className={cn(
-        "fixed data-[state=open]:animate-in data-[state=closed]:animate-out w-full h-full overflow-auto z-[999] bg-background animate-duration-200 animate-ease-linear	",
+        "animate-duration-200 animate-ease-linear fixed z-[999] h-full w-full overflow-auto bg-background data-[state=open]:animate-in data-[state=closed]:animate-out	",
         variant[side],
-        className
+        className,
       )}
       {...props}
     />
@@ -72,8 +73,8 @@ const DrawerOverlay = React.forwardRef<
   <DialogPrimitives.Overlay
     ref={ref}
     className={cn(
-      "fixed inset-0 z-[50] w-full h-full backdrop-blur-[2px] data-[state=open]:animate-in data-[state=open]:bg-background/75 data-[state=closed]:animate-out data-[state=closed]:bg-transparent",
-      className
+      "fixed inset-0 z-[50] h-full w-full backdrop-blur-[2px] data-[state=closed]:bg-transparent data-[state=open]:bg-background/75 data-[state=open]:animate-in data-[state=closed]:animate-out",
+      className,
     )}
     {...props}
   />

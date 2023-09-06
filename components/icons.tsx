@@ -4,6 +4,7 @@ import {
   RiArrowDownSLine,
   RiArticleFill,
   RiArticleLine,
+  RiChat1Line,
   RiCheckboxBlankCircleLine,
   RiCheckboxCircleFill,
   RiCloseLine,
@@ -28,6 +29,8 @@ import {
   RiSettings2Line,
   RiSunCloudyLine,
   RiSunFoggyLine,
+  RiThumbUpFill,
+  RiThumbUpLine,
   RiUser2Line,
   RiUser3Line,
 } from "react-icons/ri";
@@ -58,4 +61,7 @@ export const Icons = {
   Pencil: RiPencilLine,
   Article: RiArticleLine,
   Add: RiAddLine,
+  Chat: RiChat1Line,
+  ThumbUpLine: RiThumbUpLine,
+  ThumbUpFill: RiThumbUpFill,
 };

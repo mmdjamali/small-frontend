@@ -57,6 +57,8 @@
   --success: 16 243 84;
   --error: 239 38 38;
   --warning: 244 187 32;
+
+  --margin-dropdown: 17px;
 }
 
 [data-theme="dark"] {
@@ -82,5 +84,9 @@
 }
 .codex-editor h4,
 .test h4 {
-  @apply text-[16px] font-bold;
+  @apply text-[18px] font-bold;
+}
+
+.test p {
+  @apply mb-2 text-[18px] text-foreground/75;
 }
