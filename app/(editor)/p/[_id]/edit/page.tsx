@@ -22,7 +22,7 @@ const Page = ({ params: { _id } }: { params: { _id: string } }) => {
         headers: {
           "Content-Type": "application/json",
         },
-      }).then((res) => res.json());
+      }).then((res) => res?.json());
 
       if (!res?.success) {
         setLoading(false);
