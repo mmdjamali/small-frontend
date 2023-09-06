@@ -9,6 +9,9 @@ import Link from "next/link";
 const Page = async ({ params: { _id } }: { params: { _id: string } }) => {
   const res: GetArticleApiResponse = await fetch(
     BACKEND_URL + `/api/articles/${_id}`,
+    {
+      cache: "reload",
+    },
   ).then((res) => res.json());
 
   if (!res?.success) return;

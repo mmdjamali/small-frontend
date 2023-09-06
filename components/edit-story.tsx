@@ -102,30 +102,35 @@ const EditStory = ({ post, id }: EditStoryProps) => {
           />
 
           <div className="flex items-center justify-center gap-3">
-            <Button
-              onClick={async () => {
-                try {
-                  const res: PublishArticleApiResponse = await fetch(
-                    `/api/articles/${id}/publish`,
-                    {
-                      method: "POST",
-                    },
-                  ).then((res) => res.json());
+            {published ? (
+              <Save
+                onClick={async (setLoading) => {
+                  if (!editor) return;
 
-                  console.log(res);
+                  try {
+                    setLoading(true);
+                    setSaving(true);
+                    await fetch("/api/articles", {
+                      method: "PUT",
+                      mode: "cors",
+                      body: JSON.stringify({
+                        articleId: id,
+                        Title: title,
+                        Content: JSON.stringify((await editor.save()).blocks),
+                      }),
+                    });
 
-                  if (!res?.success) return;
-
-                  setPublished(true);
-                } catch (err) {
-                  console.log(err);
-                }
-              }}
-              color="foreground"
-              className="hidden border-none sm:flex"
-            >
-              {published ? "Save" : "Publish"}
-            </Button>
+                    setLoading(false);
+                    setSaving(false);
+                  } catch (err) {
+                    setLoading(false);
+                    setSaving(false);
+                  }
+                }}
+              />
+            ) : (
+              <Publish id={id} setPublished={setPublished} />
+            )}
 
             <EditStoryContext.Provider
               value={{
@@ -167,3 +172,69 @@ const EditStory = ({ post, id }: EditStoryProps) => {
 };
 
 export default EditStory;
+
+const Publish = ({
+  id,
+  setPublished,
+}: {
+  id: string;
+  setPublished: (state: boolean) => void;
+}) => {
+  const fetch = useCustomFetch();
+  const [loading, setLoading] = useState(false);
+
+  return (
+    <Button
+      loading={loading}
+      onClick={async () => {
+        try {
+          setLoading(true);
+          const res: PublishArticleApiResponse = await fetch(
+            `/api/articles/${id}/publish`,
+            {
+              method: "POST",
+            },
+          ).then((res) => res.json());
+
+          console.log(res);
+
+          if (!res?.success) {
+            setLoading(false);
+            return;
+          }
+
+          setPublished(true);
+          setLoading(false);
+        } catch (err) {
+          console.log(err);
+          setLoading(false);
+        }
+      }}
+      color="foreground"
+      className="hidden border-none sm:flex"
+    >
+      Publish
+    </Button>
+  );
+};
+
+const Save = ({
+  onClick,
+}: {
+  onClick: (setLoading: (state: boolean) => void) => void;
+}) => {
+  const [loading, setLoading] = useState(false);
+
+  return (
+    <Button
+      loading={loading}
+      onClick={() => {
+        onClick(setLoading);
+      }}
+      color="foreground"
+      className="hidden border-none sm:flex"
+    >
+      Save
+    </Button>
+  );
+};
