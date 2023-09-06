@@ -4,6 +4,7 @@ import UserAvatar from "../user-avatar";
 import { useCustomFetch } from "@/hooks/use-custom-fetch";
 import { useState } from "react";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
+import toast from "../ui/toast";
 
 type ReplyInputProps = {
   id: string | number;
@@ -37,8 +38,21 @@ const ReplyInput = ({ id, placeholder, onClose }: ReplyInputProps) => {
         return;
       }
 
+      setContent("");
+
+      toast({
+        varinat: "success",
+        title: "Success",
+        description: res?.message ?? "",
+      });
+
       setLoading(false);
     } catch (err) {
+      toast({
+        varinat: "error",
+        title: "Fail!",
+        description: "Something went wrong :(",
+      });
       setLoading(false);
     }
   };
@@ -68,7 +82,7 @@ const ReplyInput = ({ id, placeholder, onClose }: ReplyInputProps) => {
           className="border-none"
           color="foreground"
         >
-          Comment
+          Reply
         </Button>
       </div>
     </div>

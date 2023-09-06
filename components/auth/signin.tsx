@@ -28,15 +28,15 @@ function Signin() {
         pattern: /^.{8,}$/,
         error_message: "Password is too short",
       },
-    ]
+    ],
   );
 
   const [loading, setLoading] = useState(false);
 
   return (
-    <section className="w-full relative px-0 sm:p-8 max-w-md sm:max-w-lg mx-auto text-foreground text-[14px]">
-      <div className="rounded-[8px] bg-background sm:p-5 my-[10%] relative">
-        <div className="grid gap-2 mb-6 text-center">
+    <section className="relative mx-auto w-full max-w-md px-0 text-[14px] text-foreground sm:max-w-lg sm:p-8">
+      <div className="relative my-[10%] rounded-[8px] bg-background sm:p-5">
+        <div className="mb-6 grid gap-2 text-center">
           <h1 className=" text-[28px] font-bold">
             Welcome back to {siteConfig.name}!
           </h1>
@@ -89,9 +89,9 @@ function Signin() {
               } else {
                 toast({
                   varinat: "success",
-                  title: "Signup was successful!",
+                  title: "Signin was successful!",
                   description:
-                    "welcome back to small, we are better than medium :)",
+                    "welcome back to small, we are smaller than medium :)",
                 });
               }
 
@@ -120,7 +120,7 @@ function Signin() {
             {...registerPassword()}
           />
 
-          <div className="grid gap-1 w-full">
+          <div className="grid w-full gap-1">
             <Button loading={loading} className="mt-4">
               <p className="capitalize">SIGNIN</p>
             </Button>
@@ -131,15 +131,15 @@ function Signin() {
           </div>
         </form>
 
-        <div className="w-full flex gap-3 items-center reltive my-6">
-          <span className="flex h-[1px] bg-border w-full" />
-          <p className="text-[12px] text-border flex-shrink-0">
+        <div className="reltive my-6 flex w-full items-center gap-3">
+          <span className="flex h-[1px] w-full bg-border" />
+          <p className="flex-shrink-0 text-[12px] text-border">
             OR CONTINUE WITH
           </p>
-          <span className="flex h-[1px] bg-border w-full" />
+          <span className="flex h-[1px] w-full bg-border" />
         </div>
 
-        <div className="grid sm:grid-cols-2 gap-3">
+        <div className="grid gap-3 sm:grid-cols-2">
           <Button variant="outlined" color="foreground">
             <Icon name="Google" className="text-[21px]" /> Google
           </Button>
@@ -152,7 +152,7 @@ function Signin() {
           <p className="text-foreground/75">
             Already have an account?{" "}
             <Link
-              className="underline text-foreground font-medium"
+              className="font-medium text-foreground underline"
               href="/signup"
             >
               sign up

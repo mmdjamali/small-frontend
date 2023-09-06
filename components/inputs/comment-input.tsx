@@ -6,6 +6,7 @@ import UserAvatar from "../user-avatar";
 import TextareaAutosize from "react-autosize-textarea";
 import Button from "../ui/button";
 import { useCustomFetch } from "@/hooks/use-custom-fetch";
+import toast from "../ui/toast";
 
 const CommentInput = ({ id }: { id: string | number }) => {
   const fetch = useCustomFetch();
@@ -37,9 +38,21 @@ const CommentInput = ({ id }: { id: string | number }) => {
         setLoading(false);
         return;
       }
+      setContent("");
+
+      toast({
+        varinat: "success",
+        title: "Success",
+        description: res?.message ?? "",
+      });
 
       setLoading(false);
     } catch (err) {
+      toast({
+        varinat: "error",
+        title: "Fail!",
+        description: "Something went wrong :(",
+      });
       setLoading(false);
     }
   };

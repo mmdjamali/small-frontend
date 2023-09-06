@@ -18,11 +18,11 @@ function Signup() {
 
   const [firstName, registerFirstName, firstNameError] = useDebouncedValue(
     "",
-    500
+    500,
   );
   const [lastName, registerLastName, lastNameError] = useDebouncedValue(
     "",
-    500
+    500,
   );
   const [email, registerEmail, emailError] = useDebouncedValue("", 500, [
     { pattern: /^\S+@\S+\.\S+$/, error_message: "Email is invalid" },
@@ -47,16 +47,16 @@ function Signup() {
         pattern: /[0-9]+/,
         error_message: "must contain at least one number",
       },
-    ]
+    ],
   );
   const [confirmPassword, registerConfirmPassword] = useDebouncedValue("", 500);
 
   const [loading, setLoading] = useState(false);
 
   return (
-    <section className="w-full relative px-0 sm:p-8 max-w-md sm:max-w-lg mx-auto text-foreground text-[14px]">
-      <div className="rounded-[8px] bg-background p-5 my-[10%] relative">
-        <div className="grid gap-2 mb-6 text-center">
+    <section className="relative mx-auto w-full max-w-md px-0 text-[14px] text-foreground sm:max-w-lg sm:p-8">
+      <div className="relative my-[10%] rounded-[8px] bg-background p-5">
+        <div className="mb-6 grid gap-2 text-center">
           <h1 className="text-[28px] font-bold">
             Welcome to {siteConfig.name}!
           </h1>
@@ -124,7 +124,8 @@ function Signup() {
                 toast({
                   varinat: "success",
                   title: "Signup was successful!",
-                  description: "welcome to small, we are better than medium :)",
+                  description:
+                    "welcome to small, we are smaller than medium :)",
                 });
               }
 
@@ -137,7 +138,7 @@ function Signup() {
           }}
           className="flex flex-col gap-2"
         >
-          <div className="grid md:grid-cols-2 gap-3">
+          <div className="grid gap-3 md:grid-cols-2">
             <Input
               error={firstNameError}
               name="name"
@@ -163,7 +164,7 @@ function Signup() {
             {...registerEmail()}
           />
 
-          <div className="grid md:grid-cols-2 gap-3">
+          <div className="grid gap-3 md:grid-cols-2">
             <PasswordInput
               error={passwordError}
               name="password"
@@ -189,15 +190,15 @@ function Signup() {
           </Button>
         </form>
 
-        <div className="w-full flex gap-3 items-center reltive my-6">
-          <span className="flex h-[1px] bg-border w-full" />
-          <p className="text-[12px] text-border flex-shrink-0">
+        <div className="reltive my-6 flex w-full items-center gap-3">
+          <span className="flex h-[1px] w-full bg-border" />
+          <p className="flex-shrink-0 text-[12px] text-border">
             OR CONTINUE WITH
           </p>
-          <span className="flex h-[1px] bg-border w-full" />
+          <span className="flex h-[1px] w-full bg-border" />
         </div>
 
-        <div className="grid sm:grid-cols-2 gap-3">
+        <div className="grid gap-3 sm:grid-cols-2">
           <Button variant="outlined" color="foreground">
             <Icon name="Google" className="text-[21px]" /> Google
           </Button>
@@ -210,7 +211,7 @@ function Signup() {
           <p className="text-foreground/75">
             Already have an account?{" "}
             <Link
-              className="underline text-foreground font-medium"
+              className="font-medium text-foreground underline"
               href="/signin"
             >
               sign in
