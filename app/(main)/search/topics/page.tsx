@@ -35,7 +35,7 @@ const Page = ({ searchParams: { q } }: PageProps) => {
           {q}
         </h1>
 
-        <SearchFeed q={q} active="" />
+        <SearchFeed q={q} active="topics" />
       </div>
 
       <div className="hidden h-full w-full border-l border-border pl-8 md:flex"></div>
