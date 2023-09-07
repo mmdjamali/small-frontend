@@ -11,9 +11,7 @@ const Dialog = ({
 }: React.ComponentPropsWithoutRef<typeof DialogPrimitives.Root>) => (
   <DialogPrimitives.Root
     onOpenChange={(open) => {
-      const bool =
-        document.body.scrollHeight > document.body.clientHeight &&
-        !/Mobi/i.test(navigator.userAgent);
+      const bool = !/Mobi/i.test(navigator.userAgent);
 
       open
         ? bool
@@ -37,8 +35,8 @@ const DialogContent = React.forwardRef<
   <DialogPrimitives.Content
     ref={ref}
     className={cn(
-      "fixed bg-background inset-0 m-auto rounded p-4 w-[min(80%,600px)] z-[51] border border-border shadow",
-      className
+      "fixed inset-0 z-[51] m-auto w-[min(80%,600px)] rounded border border-border bg-background p-4 shadow",
+      className,
     )}
     {...props}
   />
@@ -53,8 +51,8 @@ const DialogOverlay = React.forwardRef<
   <DialogPrimitives.Overlay
     ref={ref}
     className={cn(
-      "fixed inset-0 z-[50] w-full h-full bg-background/75 backdrop-blur-[2px]",
-      className
+      "fixed inset-0 z-[50] h-full w-full bg-background/75 backdrop-blur-[2px]",
+      className,
     )}
     {...props}
   />

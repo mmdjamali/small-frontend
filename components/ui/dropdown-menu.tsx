@@ -11,9 +11,7 @@ const DropdownMenu = ({
 }: React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Root>) => (
   <DropdownMenuPrimitive.Root
     onOpenChange={(open) => {
-      const bool =
-        !/Mobi/i.test(navigator.userAgent) &&
-        document.body.scrollHeight > document.body.clientHeight;
+      const bool = !/Mobi/i.test(navigator.userAgent);
 
       open
         ? bool

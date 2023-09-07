@@ -12,9 +12,7 @@ const Drawer = ({
 }: React.ComponentPropsWithoutRef<typeof DialogPrimitives.Root>) => (
   <DialogPrimitives.Root
     onOpenChange={(open) => {
-      const bool =
-        document.body.scrollHeight > document.body.clientHeight &&
-        !/Mobi/i.test(navigator.userAgent);
+      const bool = !/Mobi/i.test(navigator.userAgent);
 
       open
         ? bool
