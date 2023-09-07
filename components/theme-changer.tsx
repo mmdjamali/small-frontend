@@ -31,7 +31,7 @@ function ThemeChanger() {
       <DropdownMenuTrigger asChild>
         <Button
           className="p-2 text-[21px] outline-none"
-          variant="outlined"
+          variant="text"
           color="foreground"
         >
           {(() => {

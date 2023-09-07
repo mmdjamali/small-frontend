@@ -34,7 +34,7 @@ function ResetPassword({ token }: { token: string }) {
         pattern: /[0-9]+/,
         error_message: "must contain at least one number",
       },
-    ]
+    ],
   );
 
   const [confirmPassword, registerConfirmPassword] = useDebouncedValue("", 500);
@@ -42,10 +42,10 @@ function ResetPassword({ token }: { token: string }) {
   const [loading, setLoading] = useState(false);
 
   return (
-    <section className="w-full relative px-0 sm:p-8 max-w-md sm:max-w-lg mx-auto text-foreground text-[14px]">
-      <div className="rounded-[8px] bg-background sm:p-5 my-[10%] relative">
-        <div className="grid gap-2 mb-6 text-center">
-          <h1 className="flex items-center gap-x-1 justify-center flex-wrap text-[28px] font-bold">
+    <section className="relative mx-auto w-full max-w-md px-0 text-[14px] text-foreground sm:max-w-lg sm:p-8">
+      <div className="relative my-[10%] rounded-[8px] bg-background duration-500 animate-in fade-in-0 slide-in-from-bottom-full sm:p-5">
+        <div className="mb-6 grid gap-2 text-center">
+          <h1 className="flex flex-wrap items-center justify-center gap-x-1 text-[28px] font-bold">
             Reset your password!
           </h1>
           <p className="text-[14px] text-foreground/75">
@@ -87,7 +87,7 @@ function ResetPassword({ token }: { token: string }) {
                     password,
                     resetPasswordToken: token,
                   }),
-                }
+                },
               ).then((res) => res.json());
 
               if (!res.success) {
@@ -134,8 +134,8 @@ function ResetPassword({ token }: { token: string }) {
             {...registerConfirmPassword()}
           />
 
-          <Button loading={loading} className="mt-4">
-            <p className="capitalize">SUBMIT</p>
+          <Button loading={loading} className="mt-2">
+            Submit
           </Button>
         </form>
       </div>

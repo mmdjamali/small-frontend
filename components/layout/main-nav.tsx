@@ -12,6 +12,8 @@ import {
 } from "@/components/ui/navigation-menu";
 import { MainNavItem } from "@/types";
 import { title } from "process";
+import Input from "../ui/input";
+import Button from "../ui/button";
 
 interface MainNavProps {
   items: MainNavItem[];
@@ -19,17 +21,33 @@ interface MainNavProps {
 
 function MainNav({ items }: MainNavProps) {
   return (
-    <header className="hidden lg:flex items-center justify-center">
-      <Link className="flex items-center justify-center gap-1 mr-8" href="/">
+    <header className="flex w-full items-center">
+      <Link className="mr-8 flex items-center justify-center gap-1" href="/">
         <Icon
           name="Logo"
-          className="text-[24px] text-primary h-[24px] aspect-square"
+          className="aspect-square h-[24px] text-[24px] text-primary"
         />
         <p className="text-[16px] font-semibold text-primary">
           {siteConfig?.name}
         </p>
       </Link>
-      <NavigationMenu>
+
+      <div className="hidden w-56 items-center justify-start gap-2 rounded bg-foreground/5 px-4 py-2 sm:flex">
+        <Icon name="Search" className="flex-shrink-0 text-[21px]" />
+
+        <input
+          className="bg-transparent outline-none"
+          placeholder="Search Small..."
+        />
+      </div>
+
+      <Link className="ml-auto sm:hidden" href={"/search"}>
+        <Button color="foreground" variant="text" className="flex p-2">
+          <Icon name="Search" className="text-[21px]" />
+        </Button>
+      </Link>
+
+      {/* <NavigationMenu>
         <NavigationMenuList>
           {items?.[0]?.items && (
             <NavigationMenuItem>
@@ -96,7 +114,7 @@ function MainNav({ items }: MainNavProps) {
               </NavigationMenuItem>
             ))}
         </NavigationMenuList>
-      </NavigationMenu>
+      </NavigationMenu> */}
     </header>
   );
 }

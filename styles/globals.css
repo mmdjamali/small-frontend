@@ -53,7 +53,7 @@
   --foreground: 31 31 31;
   --background: 255 255 255;
   --border: 220 220 220;
-  --primary: 39 158 173;
+  --primary: 247 132 6;
   --success: 16 243 84;
   --error: 239 38 38;
   --warning: 244 187 32;
@@ -65,7 +65,6 @@
   --background: 31 31 31;
   --foreground: 255 255 255;
   --border: 96 96 96;
-  --primary: 39 158 173;
   --error: 239 38 38;
   --warning: 244 187 32;
 }

@@ -26,6 +26,8 @@ import {
   RiMore2Fill,
   RiMoreFill,
   RiPencilLine,
+  RiSearch2Line,
+  RiSearchLine,
   RiSettings2Line,
   RiSunCloudyLine,
   RiSunFoggyLine,
@@ -64,4 +66,5 @@ export const Icons = {
   Chat: RiChat1Line,
   ThumbUpLine: RiThumbUpLine,
   ThumbUpFill: RiThumbUpFill,
+  Search: RiSearchLine,
 };

@@ -35,7 +35,7 @@ function Signin() {
 
   return (
     <section className="relative mx-auto w-full max-w-md px-0 text-[14px] text-foreground sm:max-w-lg sm:p-8">
-      <div className="relative my-[10%] rounded-[8px] bg-background sm:p-5">
+      <div className="relative my-[10%] rounded-[8px] bg-background duration-500 animate-in fade-in-0 slide-in-from-bottom-full sm:p-5">
         <div className="mb-6 grid gap-2 text-center">
           <h1 className=" text-[28px] font-bold">
             Welcome back to {siteConfig.name}!
@@ -121,8 +121,8 @@ function Signin() {
           />
 
           <div className="grid w-full gap-1">
-            <Button loading={loading} className="mt-4">
-              <p className="capitalize">SIGNIN</p>
+            <Button loading={loading} className="mt-2">
+              <p className="capitalize">Signin</p>
             </Button>
 
             <Link href={"/forgot-password"} className="underline">
@@ -131,7 +131,7 @@ function Signin() {
           </div>
         </form>
 
-        <div className="reltive my-6 flex w-full items-center gap-3">
+        <div className="reltive my-4 flex w-full items-center gap-3">
           <span className="flex h-[1px] w-full bg-border" />
           <p className="flex-shrink-0 text-[12px] text-border">
             OR CONTINUE WITH
