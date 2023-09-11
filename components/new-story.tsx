@@ -76,9 +76,6 @@ const NewStory = () => {
           <div className="flex items-center justify-center gap-3">
             <Button
               disabled={true}
-              onClick={async () => {
-                console.log((await editor?.save())?.blocks);
-              }}
               color="foreground"
               className="hidden border-none sm:flex"
             >

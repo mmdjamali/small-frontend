@@ -84,7 +84,6 @@ const Feed = ({ active = "" }: FeedProps) => {
       >
         {(!isError || !isLoading) &&
           data?.pages.map((d, index, d_list) => {
-            console.log(d);
             return d.items?.map((post, idx, list) => (
               <ArticleListView key={post.id} post={post} />
             ));

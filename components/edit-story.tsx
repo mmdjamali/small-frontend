@@ -197,8 +197,6 @@ const Publish = ({
             },
           ).then((res) => res?.json());
 
-          console.log(res);
-
           if (!res?.success) {
             setLoading(false);
             return;
@@ -207,7 +205,6 @@ const Publish = ({
           setPublished(true);
           setLoading(false);
         } catch (err) {
-          console.log(err);
           setLoading(false);
         }
       }}
