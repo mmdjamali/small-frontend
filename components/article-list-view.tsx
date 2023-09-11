@@ -9,7 +9,9 @@ type Props = {
   post: ArticleType;
 };
 
-const ArticleListView = ({ post: { author, content, id, title } }: Props) => {
+const ArticleListView = ({
+  post: { author, content, id, title, topics },
+}: Props) => {
   const parsed: OutputBlockData[] = JSON.parse(
     isJSON(content) ? content.toString() : "[]",
   );
@@ -47,6 +49,12 @@ const ArticleListView = ({ post: { author, content, id, title } }: Props) => {
             </p>
           </div>
         </Link>
+
+        {topics?.length ? (
+          <button className="w-fit rounded bg-foreground/10 px-2 py-0.5 capitalize text-foreground">
+            {topics[0].name}
+          </button>
+        ) : null}
       </div>
 
       {withImage && (
