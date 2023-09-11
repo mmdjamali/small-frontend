@@ -1,6 +1,7 @@
 import { ArticleType, AuthorType } from "./article";
 import { CommentType } from "./comment";
 import { TopicType } from "./topic";
+import { UserType } from "./user";
 
 type ApiResponse<T> =
   | {
@@ -22,6 +23,8 @@ type PaginatedData<T> = {
 };
 
 export type UpdateTopicsApiResponse = ApiResponse<{ topics: TopicType[] }>;
+
+export type GetProfileApiResponse = ApiResponse<{ user: UserType }>;
 
 export type GetArticleApiResponse = ApiResponse<{ article: ArticleType }>;
 

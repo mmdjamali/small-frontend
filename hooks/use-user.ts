@@ -1,7 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
 import { useCustomFetch } from "./use-custom-fetch";
+import { GetProfileApiResponse } from "@/types/api";
+import { UserType } from "@/types/user";
 
-type State = boolean;
+type State = UserType | null;
 
 let state: State;
 
@@ -18,16 +20,21 @@ export const useUser = () => {
   const [loading, setLoading] = useState<boolean>(true);
 
   const handleFetch = useCallback(async () => {
-    const data = await fetch("/api/auth/verify", {
+    const res: GetProfileApiResponse = await fetch("/api/profiles/me", {
       method: "GET",
       mode: "cors",
       headers: {
         "Content-Type": "application/json",
       },
-    });
+    }).then((res) => res?.json());
 
-    dispacth(!!data?.ok ?? false);
+    if (!res?.success) {
+      dispacth(null);
+      setLoading(false);
+      return;
+    }
 
+    dispacth(res?.data?.user);
     setLoading(false);
 
     /* eslint-disable */
@@ -47,5 +54,5 @@ export const useUser = () => {
     };
   }, [user]);
 
-  return [user, loading];
+  return [user, loading] as [typeof user, typeof loading];
 };

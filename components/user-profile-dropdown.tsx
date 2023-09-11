@@ -54,25 +54,25 @@ function UserDropdownMenu() {
 
   if (loading)
     return (
-      <span className="w-9 flex-shrink-0 aspect-square rounded-full bg-foreground/25 animate-pulse animate-infinite" />
+      <span className="animate-infinite aspect-square w-9 flex-shrink-0 animate-pulse rounded-full bg-foreground/25" />
     );
 
   if (data)
     return (
       <DropdownMenu>
         <DropdownMenuTrigger className="outline-none">
-          <UserAvatar src={data ? "" : ""} />
+          <UserAvatar src={data ? data.avatarImagePath ?? "" : ""} />
         </DropdownMenuTrigger>
 
         <DropdownMenuContent align={"end"}>
-          <div className="text-[14px] font-medium text-foreground px-2 py-1.5">
-            <p className="">{data ? "Mohammad" : ""}</p>
-            <p className="text-foreground/75">
-              {data ? "mohammad@small.com" : ""}
+          <div className="px-2 py-1.5 text-[14px] font-medium text-foreground">
+            <p className="">
+              {data ? `${data.firstName} ${data.lastName}` : "Unknown"}
             </p>
+            <p className="text-foreground/75">{data ? data.email : "???"}</p>
           </div>
 
-          <span className="bg-border w-full h-[1px] my-1" />
+          <span className="my-1 h-[1px] w-full bg-border" />
 
           {links.map(({ icon, title, disabled, className, url }, idx) => (
             <Link
@@ -80,7 +80,7 @@ function UserDropdownMenu() {
               key={idx}
               className={cn(
                 "select-none",
-                disabled ? "cursor-not-allowed" : ""
+                disabled ? "cursor-not-allowed" : "",
               )}
             >
               <DropdownMenuItem disabled={disabled} className={cn(className)}>
@@ -90,10 +90,10 @@ function UserDropdownMenu() {
             </Link>
           ))}
 
-          <span className="bg-border w-full h-[1px] my-1" />
+          <span className="my-1 h-[1px] w-full bg-border" />
 
           <DropdownMenuItem
-            className="hover:text-error hover:bg-error/10 select-none"
+            className="select-none hover:bg-error/10 hover:text-error"
             onClick={() => {}}
           >
             <Icon name="Logout" className="text-[16px]" />
