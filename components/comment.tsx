@@ -5,12 +5,28 @@ import Button from "./ui/button";
 import Icon from "./icon";
 import { useState } from "react";
 import ReplyInput from "./inputs/reply-input";
+import { useUser } from "@/hooks/use-user";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuPortal,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu";
+import { useCustomFetch } from "@/hooks/use-custom-fetch";
+import { cn } from "@/lib/utils";
 
 type props = {
   comment: CommentType;
+  onRemove: (id: string | number) => void;
 };
 
-const Comment = ({ comment }: props) => {
+const Comment = ({ comment, onRemove }: props) => {
+  const [user, userLoading] = useUser();
+  const fetch = useCustomFetch();
+
+  const [removing, setRemoving] = useState(false);
+
   const { author, content, createdAt, id } = comment;
 
   const [openReplies, setOpenReplies] = useState(false);
@@ -22,18 +38,54 @@ const Comment = ({ comment }: props) => {
 
         <div className="flex flex-col">
           <Link className="hover:underline" href={""}>
-            {author.firstName + " " + author.lastName}
+            {author?.firstName + " " + author?.lastName}
           </Link>
           <p className="text-foreground/75">1 day ago</p>
         </div>
 
-        <Button
-          className="ml-auto p-2 text-[21px]"
-          color="foreground"
-          variant="text"
-        >
-          <Icon name="MoreHorizontal" />
-        </Button>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button
+              className="ml-auto p-2 text-[21px]"
+              color="foreground"
+              variant="text"
+            >
+              <Icon
+                name={removing ? "Spinner" : "MoreHorizontal"}
+                className={cn(removing ? "animate-spin" : "")}
+              />
+            </Button>
+          </DropdownMenuTrigger>
+
+          {!userLoading && user?.id === author.id ? (
+            <DropdownMenuPortal>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem
+                  onClick={async () => {
+                    try {
+                      setRemoving(true);
+                      const res = await fetch("/api/comments/" + id, {
+                        method: "DELETE",
+                      });
+
+                      if (!res?.ok) {
+                        setRemoving(false);
+                        return;
+                      }
+
+                      onRemove(id);
+                      setRemoving(false);
+                    } catch (err) {
+                      setRemoving(false);
+                    }
+                  }}
+                >
+                  <Icon name="DeleteBin" className="text-[18px]" /> Delete
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenuPortal>
+          ) : null}
+        </DropdownMenu>
       </div>
 
       <p className="break-words">{content}</p>

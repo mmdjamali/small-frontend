@@ -20,6 +20,11 @@ export const useUser = () => {
   const [loading, setLoading] = useState<boolean>(true);
 
   const handleFetch = useCallback(async () => {
+    if (user) {
+      setLoading(false);
+      return;
+    }
+
     const res: GetProfileApiResponse = await fetch("/api/profiles/me", {
       method: "GET",
       mode: "cors",
@@ -38,7 +43,7 @@ export const useUser = () => {
     setLoading(false);
 
     /* eslint-disable */
-  }, []);
+  }, [user]);
 
   useEffect(() => {
     handleFetch();

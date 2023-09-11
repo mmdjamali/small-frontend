@@ -7,8 +7,18 @@ import TextareaAutosize from "react-autosize-textarea";
 import Button from "../ui/button";
 import { useCustomFetch } from "@/hooks/use-custom-fetch";
 import toast from "../ui/toast";
+import { CommentInsertApiResponse } from "@/types/api";
+import { CommentType } from "@/types/comment";
+import { useUser } from "@/hooks/use-user";
 
-const CommentInput = ({ id }: { id: string | number }) => {
+interface CommentInputProps {
+  id: number | string;
+  onInsert?: (comment: CommentType) => void;
+}
+
+const CommentInput = ({ id, onInsert }: CommentInputProps) => {
+  const [user, userLoading] = useUser();
+
   const fetch = useCustomFetch();
 
   const [show, setShow] = useState(true);
@@ -27,18 +37,23 @@ const CommentInput = ({ id }: { id: string | number }) => {
     try {
       setLoading(true);
 
-      const res = await fetch(`/api/articles/${id}/comments`, {
-        method: "POST",
-        body: JSON.stringify({
-          content,
-        }),
-      }).then((res) => res?.json());
+      const res: CommentInsertApiResponse = await fetch(
+        `/api/articles/${id}/comments`,
+        {
+          method: "POST",
+          body: JSON.stringify({
+            content,
+          }),
+        },
+      ).then((res) => res?.json());
 
       if (!res?.success) {
         setLoading(false);
         return;
       }
       setContent("");
+
+      if (onInsert) onInsert(res.data.comment);
 
       toast({
         varinat: "success",
@@ -64,8 +79,8 @@ const CommentInput = ({ id }: { id: string | number }) => {
     >
       {show && (
         <div className="flex items-center gap-2">
-          <UserAvatar size="md" src="" />
-          <p>Mohammad Jamli</p>
+          <UserAvatar size="md" src={user?.avatarImagePath ?? ""} />
+          <p>{`${user?.firstName} ${user?.lastName}`}</p>
         </div>
       )}
 

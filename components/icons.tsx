@@ -8,6 +8,7 @@ import {
   RiCheckboxBlankCircleLine,
   RiCheckboxCircleFill,
   RiCloseLine,
+  RiDeleteBin2Line,
   RiDiscordFill,
   RiErrorWarningFill,
   RiEyeCloseLine,
@@ -67,4 +68,5 @@ export const Icons = {
   ThumbUpLine: RiThumbUpLine,
   ThumbUpFill: RiThumbUpFill,
   Search: RiSearchLine,
+  DeleteBin: RiDeleteBin2Line,
 };

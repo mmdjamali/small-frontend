@@ -23,8 +23,16 @@ import { useInfiniteQuery, useQuery } from "react-query";
 import { BACKEND_URL } from "@/config/env";
 import { GetAllCommentsApiResponse } from "@/types/api";
 import Comment from "./comment";
+import { useState } from "react";
+import { CommentType } from "@/types/comment";
+import { useUser } from "@/hooks/use-user";
 
 const ArticleComments = ({ id }: { id: string | number }) => {
+  const [user, loading] = useUser();
+
+  const [added, setAdded] = useState<CommentType[]>([]);
+  const [removed, setRemoved] = useState<string[]>([]);
+
   const {
     data,
     hasNextPage,
@@ -60,6 +68,12 @@ const ArticleComments = ({ id }: { id: string | number }) => {
     refetchOnWindowFocus: false,
   });
 
+  const handleRemove = (id: string | number) => {
+    setRemoved((prev) => [...prev, id.toString()]);
+  };
+
+  console.log(removed);
+
   return (
     <Drawer>
       <DrawerTrigger asChild>
@@ -81,7 +95,10 @@ const ArticleComments = ({ id }: { id: string | number }) => {
             </DrawerClose>
           </div>
 
-          <CommentInput id={id} />
+          <CommentInput
+            id={id}
+            onInsert={(comment) => setAdded((prev) => [...prev, comment])}
+          />
 
           <div className="mt-8 flex flex-col items-start">
             <DropdownMenu>
@@ -107,6 +124,44 @@ const ArticleComments = ({ id }: { id: string | number }) => {
             <span className="my-2 block h-[1px] w-full bg-border" />
 
             <div className="relative flex w-full flex-col">
+              {added.map((comment) => {
+                if (!comment) return <></>;
+
+                if (removed.includes(comment.id.toString())) return <></>;
+
+                return (
+                  <Comment
+                    key={comment.id}
+                    onRemove={handleRemove}
+                    comment={{
+                      ...comment,
+                      author: {
+                        firstName: user?.firstName ?? "",
+                        id: user?.id ?? 0,
+                        lastName: user?.lastName ?? "",
+                      },
+                    }}
+                  />
+                );
+              })}
+
+              {data?.pages?.map((item) => {
+                if (!item) return <></>;
+                return item?.items.map((comment) => {
+                  if (added.some(({ id }) => comment.id === id)) return <></>;
+
+                  if (removed.includes(comment.id.toString())) return <></>;
+
+                  return (
+                    <Comment
+                      onRemove={handleRemove}
+                      key={comment.id}
+                      comment={comment}
+                    />
+                  );
+                });
+              })}
+
               {isLoading ? (
                 <Icon
                   name="Spinner"
@@ -115,12 +170,6 @@ const ArticleComments = ({ id }: { id: string | number }) => {
               ) : (
                 <></>
               )}
-              {data?.pages?.map((item) => {
-                if (!item) return <></>;
-                return item?.items.map((comment) => {
-                  return <Comment key={comment.id} comment={comment} />;
-                });
-              })}
             </div>
           </div>
         </DrawerContent>

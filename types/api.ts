@@ -32,6 +32,8 @@ export type PublishArticleApiResponse = ApiResponse<{ publshed: boolean }>;
 
 export type TopicSuggestionsApiResponse = ApiResponse<{ items: TopicType[] }>;
 
+export type CommentInsertApiResponse = ApiResponse<{ comment: CommentType }>;
+
 export type GetAllCommentsApiResponse = ApiResponse<
   PaginatedData<CommentType[]>
 >;
