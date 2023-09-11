@@ -37,6 +37,9 @@ export type GetAllCommentsApiResponse = ApiResponse<
 >;
 
 export type GetAllTopicsApiResponse = ApiResponse<PaginatedData<TopicType[]>>;
+export type GetAllArticlesApiResponse = ApiResponse<
+  PaginatedData<ArticleType[]>
+>;
 
 export type GetAllArticlesDataType = {
   items?: ArticleType[];
