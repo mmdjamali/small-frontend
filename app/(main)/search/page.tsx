@@ -1,6 +1,8 @@
+import EmptySearchFetch from "@/components/empty-search-feed";
 import Icon from "@/components/icon";
 import SearchInput from "@/components/inputs/search-input";
 import SearchFeed from "@/components/search-feed";
+import Image from "next/image";
 
 type PageProps = {
   searchParams: {
@@ -10,36 +12,63 @@ type PageProps = {
 const Page = ({ searchParams: { q } }: PageProps) => {
   if (!q)
     return (
-      <main className="mx-auto grid min-h-[calc(100vh_-_58px)] max-w-[1300px] grid-cols-1 px-4 md:grid-cols-[1fr_352px] md:gap-8 md:px-8 lg:gap-12">
-        <div className="relative flex h-full w-full max-w-full flex-col pt-6">
-          <SearchInput />
-
-          <h2 className="mb-6 text-2xl font-semibold md:text-4xl">
-            Recent searches
-          </h2>
-
-          <p>You have no recent searches</p>
+      <div className="relative flex w-full flex-col">
+        <div className="relative h-[220px] w-full overflow-hidden sm:h-[280px]">
+          <Image
+            className="object-cover "
+            alt="e"
+            src={
+              "https://cdn.discordapp.com/attachments/1138951142810845277/1151470342318067732/beautiful-cubism-graffiti.jpg"
+            }
+            unoptimized
+            fill
+          />
         </div>
 
-        <div className="hidden h-full w-full border-l border-border pl-8 md:flex"></div>
-      </main>
+        <div className="relative w-full -translate-y-7 px-4 sm:px-8">
+          <SearchInput />
+        </div>
+
+        <div className="relative mx-auto mb-8 w-full max-w-[800px] overflow-hidden px-4 sm:px-8">
+          <p className="text-sm font-medium">Recent searches :</p>
+        </div>
+
+        <div className="relative mx-auto mb-4 w-full max-w-[1350px] overflow-hidden px-4 sm:px-8">
+          <p className="text-xl font-semibold">Trends</p>
+        </div>
+
+        <EmptySearchFetch />
+      </div>
     );
 
   return (
-    <main className="mx-auto grid min-h-[calc(100vh_-_58px)] max-w-[1300px] grid-cols-1 px-4 md:grid-cols-[1fr_352px] md:gap-8 md:px-8 lg:gap-12">
-      <div className="relative flex h-full w-full max-w-full flex-col pt-6 md:pt-16">
-        <SearchInput defaultValue={q} />
-
-        <h1 className="mb-4 text-2xl font-bold md:mb-6 md:text-4xl">
-          <span className="text-foreground/60">Results for </span>
-          {q}
-        </h1>
-
-        <SearchFeed q={q} active="" />
+    <div className="relative flex w-full flex-col">
+      <div className="relative h-[120px] w-full overflow-hidden sm:h-[180px]">
+        <Image
+          className="object-cover "
+          alt="e"
+          src={
+            "https://cdn.discordapp.com/attachments/1138951142810845277/1151470342318067732/beautiful-cubism-graffiti.jpg"
+          }
+          unoptimized
+          fill
+        />
       </div>
 
-      <div className="hidden h-full w-full border-l border-border pl-8 md:flex"></div>
-    </main>
+      <div className="relative w-full -translate-y-7 px-4 sm:px-8">
+        <SearchInput />
+      </div>
+
+      <div className="relative mx-auto mb-8 w-full max-w-[800px] overflow-hidden px-4 sm:px-8">
+        <p className="text-sm font-medium">Recent searches :</p>
+      </div>
+
+      <div className="relative mx-auto mb-4 w-full max-w-[1350px] overflow-hidden px-4 sm:px-8">
+        <p className="text-xl font-semibold">Trends</p>
+      </div>
+
+      <EmptySearchFetch />
+    </div>
   );
 };
 

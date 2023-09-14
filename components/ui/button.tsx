@@ -53,7 +53,7 @@ const Button = React.forwardRef<React.ElementRef<"button">, props>(
         disabled={disabled}
         className={cn(
           "relative flex items-center justify-center rounded transition-all",
-          "px-4 py-2 text-[14px]",
+          "text-h-sm px-4 py-2",
           block ? "w-full" : "",
           loading ? "pointer-events-none opacity-75" : "",
           disabled ? "pointer-events-none opacity-75" : "",
@@ -64,18 +64,11 @@ const Button = React.forwardRef<React.ElementRef<"button">, props>(
         onClick={loading ? () => {} : onClick}
         {...props}
       >
-        <div
-          className={cn(
-            "flex items-center justify-center gap-1",
-            loading ? "opacity-0" : "",
-          )}
-        >
-          {children}
-        </div>
+        {children}
         {loading ? (
           <Icon
             name="Spinner"
-            className="absolute inset-0 m-auto animate-spin text-[21px] repeat-infinite"
+            className="ml-2 animate-spin text-[21px] repeat-infinite"
           />
         ) : null}
       </button>

@@ -34,8 +34,14 @@ const config: Config = {
           DEFAULT: "rgb(var(--warning) / <alpha-value>)",
         },
       },
+      fontSize: {
+        hsm: "14px",
+      },
       borderRadius: {
-        DEFAULT: "6px",
+        sm: "6px",
+        DEFAULT: "10px",
+        lg: "14px",
+        xl: "20px",
       },
       keyframes: {
         "accordion-down": {

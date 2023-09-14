@@ -27,37 +27,19 @@ function ThemeChanger() {
   if (!mounted) return <></>;
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button
-          className="p-2 text-[21px] outline-none"
-          variant="text"
-          color="foreground"
-        >
-          {(() => {
-            const icon = themes.filter(({ name }) => name === theme)[0]?.icon;
+    <Button
+      onClick={() => {
+        setTheme(theme === "dark" ? "light" : "dark");
+      }}
+      className="p-2 text-[21px] outline-none"
+      variant="text"
+    >
+      {(() => {
+        const icon = themes.filter(({ name }) => name === theme)[0]?.icon;
 
-            return <Icon name={icon} />;
-          })()}
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuPortal>
-        <DropdownMenuContent align="end">
-          {themes.map(({ name, icon }, idx) => (
-            <DropdownMenuItem
-              className="flex cursor-pointer items-center gap-2 text-[14px] hover:bg-foreground/10"
-              onClick={() => {
-                setTheme(name);
-              }}
-              key={idx}
-            >
-              <Icon name={icon} className="text-[16px]" />
-              <p className="capitalize">{name}</p>
-            </DropdownMenuItem>
-          ))}
-        </DropdownMenuContent>
-      </DropdownMenuPortal>
-    </DropdownMenu>
+        return <Icon name={icon} />;
+      })()}
+    </Button>
   );
 }
 
@@ -66,5 +48,4 @@ export default ThemeChanger;
 const themes: { name: string; icon: IconKeyType }[] = [
   { name: "light", icon: "Sun" },
   { name: "dark", icon: "Moon" },
-  { name: "system", icon: "Macbook" },
 ];

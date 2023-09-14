@@ -1,11 +1,21 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import Icon from "../icon";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 const SearchInput = ({ defaultValue }: { defaultValue?: string }) => {
+  const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
+
+  const ref = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (!ref.current) return;
+
+    ref.current.value = searchParams.get("q") ?? "";
+  }, [pathname, searchParams]);
 
   return (
     <form
@@ -16,15 +26,16 @@ const SearchInput = ({ defaultValue }: { defaultValue?: string }) => {
 
         router.push(`${pathname}?q=${e.target.query.value}`);
       }}
-      className="mb-6 flex w-full items-center gap-2 rounded-xl border border-foreground/10 px-4 py-2.5 sm:hidden"
+      className="relative mx-auto  flex w-[min(100%_,_750px)] items-center gap-3 rounded bg-background px-6 py-5 shadow-lg shadow-foreground/10"
     >
-      <Icon name="Search" className="text-[18px]" />
+      <Icon name="Search" className="text-[18px] text-primary" />
 
       <input
+        ref={ref}
         defaultValue={defaultValue}
         name="query"
         placeholder="Search Small..."
-        className="bg-transparent outline-none"
+        className="w-full bg-transparent outline-none"
       />
     </form>
   );

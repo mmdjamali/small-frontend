@@ -12,6 +12,7 @@ import { cn } from "@/lib/utils";
 import { OutputBlockData } from "@editorjs/editorjs";
 import Image from "next/image";
 import ArticleListView from "./article-list-view";
+import Scrollable from "./scrollable-tabs";
 
 type FeedProps = {
   active?: string;
@@ -50,36 +51,42 @@ const Feed = ({ active = "" }: FeedProps) => {
   });
 
   return (
-    <Tabs defaultValue={active} className="relative w-full">
-      <TabsList className="sticky top-[58px] z-[49] bg-background">
-        <div className="flex items-center justify-center">
-          <Button className="p-1" variant="text" color="foreground">
-            <Icon name="Add" className="text-[18px]" />
-          </Button>
-        </div>
+    <Tabs defaultValue={active} className="relative w-full gap-4">
+      <div className="sticky top-[58px] z-[49] bg-background pb-2">
+        <TabsList className="relative grid">
+          <Scrollable className="gap-2 overflow-x-hidden scroll-smooth">
+            {["For you", "fallowing", "react", "fiber"].map((v) => (
+              <Link
+                href={
+                  v === "For you"
+                    ? "/"
+                    : "/tag/" + encodeURIComponent(v.toLowerCase())
+                }
+                key={v}
+                className="cursor-pointer whitespace-nowrap"
+              >
+                <TabsTrigger
+                  ref={(node) => {
+                    if (!node) return;
 
-        {["For you", "fallowing"].map((v) => (
-          <Link
-            href={
-              v === "For you"
-                ? "/"
-                : "/tag/" + encodeURIComponent(v.toLowerCase())
-            }
-            key={v}
-            className="cursor-pointer"
-          >
-            <TabsTrigger
-              className="pointer-events-none"
-              value={v === "For you" ? "" : v}
-            >
-              {v[0].toUpperCase() + v.substring(1)}
-            </TabsTrigger>
-          </Link>
-        ))}
-      </TabsList>
+                    if (active === v)
+                      node.scrollIntoView({
+                        inline: "center",
+                      });
+                  }}
+                  className="pointer-events-none"
+                  value={v === "For you" ? "" : v}
+                >
+                  {v[0].toUpperCase() + v.substring(1)}
+                </TabsTrigger>
+              </Link>
+            ))}
+          </Scrollable>
+        </TabsList>
+      </div>
 
       <TabsContent
-        className="flex w-full flex-col items-start justify-start gap-6 overflow-x-hidden py-6"
+        className="grid w-full grid-cols-[repeat(auto-fill,minmax(250px_,_1fr))] flex-col items-start justify-start gap-6 overflow-x-hidden rounded-lg border border-foreground/10 p-4 sm:p-6"
         value=""
       >
         {(!isError || !isLoading) &&

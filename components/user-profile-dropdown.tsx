@@ -64,7 +64,10 @@ function UserDropdownMenu() {
           <UserAvatar src={data ? data.avatarImagePath ?? "" : ""} />
         </DropdownMenuTrigger>
 
-        <DropdownMenuContent align={"end"}>
+        <DropdownMenuContent
+          align={"end"}
+          className="p-3 shadow-2xl shadow-foreground/50"
+        >
           <div className="px-2 py-1.5 text-[14px] font-medium text-foreground">
             <p className="">
               {data ? `${data.firstName} ${data.lastName}` : "Unknown"}

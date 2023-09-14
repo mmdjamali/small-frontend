@@ -1,13 +1,13 @@
-import { BACKEND_URL } from "@/config/env";
-import { GetAllArticlesApiResponse } from "@/types/api";
-import React from "react";
-import { useInfiniteQuery } from "react-query";
-import { TabsContent } from "../ui/tabs";
-import Button from "../ui/button";
-import ArticleListView from "../article-list-view";
-import ArticleInListLoader from "../loaders/article-in-list-loader";
+"use client";
 
-const SearchedArticles = ({ q, value }: { q: string; value: string }) => {
+import { BACKEND_URL } from "@/config/env";
+import { GetAllArticlesDataType } from "@/types/api";
+import { useInfiniteQuery } from "react-query";
+import Button from "./ui/button";
+import ArticleInListLoader from "./loaders/article-in-list-loader";
+import ArticleListView from "./article-list-view";
+
+const EmptySearchFetch = () => {
   const {
     data,
     hasNextPage,
@@ -16,24 +16,20 @@ const SearchedArticles = ({ q, value }: { q: string; value: string }) => {
     isError,
     fetchNextPage,
   } = useInfiniteQuery({
-    queryKey: ["search", "articles", q],
+    queryKey: ["articles"],
     queryFn: async ({ pageParam = 0 }) => {
-      const res: GetAllArticlesApiResponse = await fetch(
-        `${BACKEND_URL}/api/articles/search?SearchKeywords=${q}&PageIndex=${pageParam}`,
+      const res = await fetch(
+        `${BACKEND_URL}/api/articles?pageIndex=${pageParam}&pageSize=12`,
         {
           mode: "cors",
           headers: {
             "Content-Type": "application/json",
           },
         },
-      ).then((res) => res?.json());
-
-      if (!res.success) return null;
-      return res.data;
+      );
+      return (await res.json()).data as GetAllArticlesDataType;
     },
     getNextPageParam: (lastPage) => {
-      if (!lastPage) return;
-
       if (typeof lastPage.pageIndex !== "number") return;
 
       if (!lastPage.hasNextPage) return;
@@ -44,16 +40,14 @@ const SearchedArticles = ({ q, value }: { q: string; value: string }) => {
   });
 
   return (
-    <TabsContent
-      className="grid w-full grid-cols-[repeat(auto-fill,minmax(250px_,_1fr))] flex-col items-start justify-start gap-6 overflow-x-hidden rounded-lg border border-foreground/10 bg-foreground/5 p-4 sm:p-6"
-      value={value}
-    >
+    <main className="relative mx-auto grid w-full max-w-[1350px] grid-cols-1 gap-8 overflow-hidden px-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
       {(!isError || !isLoading) &&
-        data?.pages.map((d, index) => {
-          return d?.items?.map((post, idx, list) => (
+        data?.pages.map((d, index, d_list) => {
+          return d.items?.map((post, idx, list) => (
             <ArticleListView key={post.id} post={post} />
           ));
         })}
+
       {(isLoading || isFetchingNextPage) &&
         Array.from({
           length: 10,
@@ -63,6 +57,7 @@ const SearchedArticles = ({ q, value }: { q: string; value: string }) => {
             variant={idx % 2 === 0 ? "with-image" : "normal"}
           />
         ))}
+
       {hasNextPage && (
         <Button
           onClick={() => {
@@ -75,8 +70,8 @@ const SearchedArticles = ({ q, value }: { q: string; value: string }) => {
           Show more
         </Button>
       )}
-    </TabsContent>
+    </main>
   );
 };
 
-export default SearchedArticles;
+export default EmptySearchFetch;
