@@ -1,4 +1,3 @@
-import ProfilePicture from "@/components/profile-picture";
 import Link from "next/link";
 
 type PageProps = {
@@ -18,8 +17,6 @@ const Page = ({ params }: PageProps) => {
       </div>
 
       <div className="hidden h-full w-full flex-col items-start justify-start border-l border-border p-10 md:flex lg:col-span-1">
-        <ProfilePicture src="" />
-
         <h2 className="mt-3 text-[16px] font-semibold">Mohammad Jamali</h2>
 
         <Link
