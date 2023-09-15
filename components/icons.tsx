@@ -18,6 +18,7 @@ import {
   RiEyeLine,
   RiFacebookFill,
   RiFunctionFill,
+  RiGithubFill,
   RiGoogleFill,
   RiHashtag,
   RiImage2Line,
@@ -40,6 +41,7 @@ import {
   RiSunFoggyLine,
   RiThumbUpFill,
   RiThumbUpLine,
+  RiTwitterXLine,
   RiUser2Line,
   RiUser3Line,
 } from "react-icons/ri";
@@ -80,4 +82,6 @@ export const Icons = {
   Image: RiImage2Line,
   Topic: RiChat3Fill,
   Hashtag: RiHashtag,
+  Github: RiGithubFill,
+  TwitterX: RiTwitterXLine,
 };

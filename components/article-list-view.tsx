@@ -18,11 +18,7 @@ const ArticleListView = ({
   );
 
   return (
-    <div
-      className={cn(
-        "flex w-full flex-col gap-2 border-b border-dashed border-foreground/10 pb-4",
-      )}
-    >
+    <div className={cn("flex w-full flex-col gap-2")}>
       <Link
         href={`/p/${id}`}
         className="relative flex aspect-[3/2] w-full flex-shrink-0 items-center justify-center overflow-hidden rounded transition-[border-radius] hover:rounded-none"
@@ -44,41 +40,35 @@ const ArticleListView = ({
         </div>
       </Link>
 
-      <div className="flex w-full flex-col gap-1 overflow-hidden">
-        <Link href={`/p/${id}`} className="flex w-fit items-center gap-2">
-          <span className="flex aspect-square h-6 items-center justify-center rounded-full border border-border">
-            <Icon name="User" className="text-[14px] text-border" />
-          </span>
+      <div className="flex w-full items-start gap-1 overflow-hidden">
+        <div className="flex w-full flex-col gap-1">
+          <Link href={`/p/${id}`} className="flex w-fit items-center gap-2">
+            <span className="flex aspect-square h-6 items-center justify-center rounded-full border border-border">
+              <Icon name="User" className="text-[14px] text-border" />
+            </span>
 
-          <p className="text-sm font-medium text-foreground/75">
-            {author.firstName + " " + author.lastName}
-          </p>
-        </Link>
+            <p className="text-sm font-medium text-foreground/75">
+              {author.firstName + " " + author.lastName}
+            </p>
+          </Link>
 
-        <Link
-          href={`/p/${id}`}
-          className="flex h-[48px] flex-col gap-1 overflow-hidden"
-        >
-          <div className="flex w-full shrink-0 flex-col gap-1 overflow-hidden">
-            <h4 className="text-[16px] font-bold">{title || "Untitled"}</h4>
-          </div>
-        </Link>
-
-        <div className="flex w-full items-center">
-          {topics?.length ? (
-            <button className="w-fit rounded-full bg-foreground/10 px-2 text-[13px] capitalize text-foreground">
-              {topics[0].name}
-            </button>
-          ) : null}
-
-          <Button
-            variant="text"
-            color="foreground"
-            className="ml-auto p-2 text-[21px]"
+          <Link
+            href={`/p/${id}`}
+            className="flex h-[48px] flex-col gap-1 overflow-hidden"
           >
-            <Icon name="MoreVertical" />
-          </Button>
+            <div className="flex w-full shrink-0 flex-col gap-1 overflow-hidden">
+              <h4 className="text-[16px] font-bold">{title || "Untitled"}</h4>
+            </div>
+          </Link>
         </div>
+
+        <Button
+          variant="text"
+          color="foreground"
+          className="ml-auto p-2 text-[21px]"
+        >
+          <Icon name="MoreVertical" />
+        </Button>
       </div>
     </div>
   );

@@ -17,7 +17,7 @@ const TopicSearchFeed = ({ q }: { q: string }) => {
     isError,
     fetchNextPage,
   } = useInfiniteQuery({
-    queryKey: ["search", "topics", q],
+    queryKey: ["search-topics", q],
     queryFn: async ({ pageParam = 0 }) => {
       const res: GetAllTopicsApiResponse = await fetch(
         `${BACKEND_URL}/api/topics/search?searchKeywords=${q}&PageSize=10&pageIndex=${pageParam}`,
