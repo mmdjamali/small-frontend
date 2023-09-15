@@ -14,7 +14,7 @@ const SearchInputHeader = () => {
   useEffect(() => {
     if (!ref.current) return;
 
-    ref.current.value = searchParams.get("q") ?? "";
+    ref.current.value = encodeURIComponent(pathname.split("search/")[1] ?? "");
   }, [pathname, searchParams]);
 
   return (
@@ -22,13 +22,12 @@ const SearchInputHeader = () => {
       onSubmit={(e: any) => {
         e.preventDefault();
 
-        if (!e.target?.query || !e.target?.query?.value) return;
-
-        if (pathname.startsWith("/search")) {
-          router.push(`${pathname}?q=${e.target.query.value}`);
-        } else {
-          router.push(`/search?q=${e.target.query.value}`);
+        if (!e.target?.query || !e.target?.query?.value) {
+          router.push(`/search`);
+          return;
         }
+
+        router.push(`/search/${e.target.query.value}`);
       }}
       className="hidden w-56 items-center justify-start gap-2 overflow-hidden rounded-full border border-border px-4 py-2.5 sm:flex"
     >
