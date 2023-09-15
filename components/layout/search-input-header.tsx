@@ -5,7 +5,6 @@ import Icon from "../icon";
 import { useEffect, useRef, useState } from "react";
 
 const SearchInputHeader = () => {
-  const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
 
@@ -14,8 +13,17 @@ const SearchInputHeader = () => {
   useEffect(() => {
     if (!ref.current) return;
 
-    ref.current.value = encodeURIComponent(pathname.split("search/")[1] ?? "");
-  }, [pathname, searchParams]);
+    const path = pathname.split("/");
+
+    console.log(path);
+
+    if (path[1] !== "search") {
+      ref.current.value = "";
+      return;
+    }
+
+    ref.current.value = encodeURIComponent(path[path.length - 1] ?? "");
+  }, [pathname]);
 
   return (
     <form
@@ -27,7 +35,7 @@ const SearchInputHeader = () => {
           return;
         }
 
-        router.push(`/search/${e.target.query.value}`);
+        router.push(`/search/${encodeURIComponent(e.target.query.value)}`);
       }}
       className="hidden w-56 items-center justify-start gap-2 overflow-hidden rounded-full border border-border px-4 py-2.5 sm:flex"
     >
@@ -36,7 +44,6 @@ const SearchInputHeader = () => {
       <input
         ref={ref}
         name="query"
-        defaultValue={searchParams.get("q") ?? ""}
         className="w-full flex-shrink bg-transparent outline-none"
         placeholder="Search Small..."
       />
