@@ -36,7 +36,7 @@ const SearchInput = ({
       <Icon name="Search" className="flex-shrink-0 text-[18px] text-primary" />
 
       <input
-        defaultValue={query}
+        defaultValue={decodeURIComponent(query)}
         name="query"
         placeholder="Search Small..."
         className="w-full bg-transparent outline-none"
