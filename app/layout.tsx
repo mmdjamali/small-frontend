@@ -1,3 +1,4 @@
+import Footer from "@/components/layout/footer";
 import Providers from "@/components/providers";
 import { Toaster } from "@/components/ui/toaster";
 import { siteConfig } from "@/config";
@@ -29,6 +30,7 @@ export default function RootLayout({
       >
         <Providers>{children}</Providers>
         <Toaster />
+        <Footer />
       </body>
     </html>
   );

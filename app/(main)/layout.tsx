@@ -12,7 +12,7 @@ import UserDropdownMenu from "@/components/user-profile-dropdown";
 
 function MainLayout({ children }: PropsWithChildren) {
   return (
-    <div className="relative flex min-h-screen w-full flex-col text-foreground">
+    <div className="relative flex w-full flex-col text-foreground">
       <div className=" z-[50] w-full bg-background">
         <header className="mx-auto flex h-[77px] w-full max-w-[1300px] items-center justify-between gap-3 px-4 md:px-8">
           <MainNav items={siteConfig.items} />
