@@ -47,7 +47,7 @@ const TopicSearchFeed = ({ q }: { q: string }) => {
   return (
     <main className="relative mx-auto grid w-full max-w-[1300px] grid-cols-1 gap-8 overflow-hidden px-4 py-8 sm:grid-cols-2 sm:px-8 lg:grid-cols-3">
       {(!isError || !isLoading) &&
-        data?.pages.map((d, index, d_list) => {
+        data?.pages?.map((d, index, d_list) => {
           return d?.items?.map((post, idx, list) => (
             <TopicListView key={post.id} topic={post} />
           ));
@@ -56,7 +56,7 @@ const TopicSearchFeed = ({ q }: { q: string }) => {
       {(isLoading || isFetchingNextPage) &&
         Array.from({
           length: 12,
-        }).map((_, idx, list) => <TopicInListLoader key={idx} />)}
+        })?.map((_, idx, list) => <TopicInListLoader key={idx} />)}
 
       {hasNextPage && (
         <Button
