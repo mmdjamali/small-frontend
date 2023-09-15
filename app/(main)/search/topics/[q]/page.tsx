@@ -2,13 +2,18 @@ import EmptySearchFetch from "@/components/search/empty-search-feed";
 import Icon from "@/components/icon";
 import SearchInput from "@/components/inputs/search-input";
 import SearchFeed from "@/components/search/search-feed";
-import Topics from "@/components/topics";
 import Image from "next/image";
+import TopicSearchFeed from "@/components/search/topic-search-feed";
 
-const Page = () => {
+type PageProps = {
+  params: {
+    q: string;
+  };
+};
+const Page = ({ params: { q } }: PageProps) => {
   return (
     <div className="relative flex w-full flex-col">
-      <div className="relative h-[220px] w-full overflow-hidden sm:h-[280px]">
+      <div className="relative h-[220px] w-full select-none overflow-hidden sm:h-[280px]">
         <Image
           className="object-cover "
           alt="e"
@@ -21,18 +26,10 @@ const Page = () => {
       </div>
 
       <div className="relative w-full -translate-y-7 px-4 sm:px-8">
-        <SearchInput query={""} />
+        <SearchInput query={q} defaultSelected="topics" />
       </div>
 
-      <div className="relative mx-auto mb-8 w-full max-w-[800px] overflow-hidden px-4 sm:px-8">
-        <p className="text-sm font-medium">Recent searches :</p>
-      </div>
-
-      <div className="relative mx-auto mb-4 w-full max-w-[1300px] overflow-hidden px-4 sm:px-8">
-        <p className="text-xl font-semibold">Trends</p>
-      </div>
-
-      <EmptySearchFetch />
+      <TopicSearchFeed q={q} />
     </div>
   );
 };
