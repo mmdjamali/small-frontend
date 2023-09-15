@@ -108,9 +108,7 @@ function UserDropdownMenu() {
 
   return (
     <Link href={"/signin"}>
-      <Button className="p-2" variant="text" color="foreground">
-        <Icon name="Login" className="text-[21px]" />
-      </Button>
+      <Button className="border-none">Login</Button>
     </Link>
   );
 }

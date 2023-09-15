@@ -7,6 +7,7 @@ import {
   RiArticleFill,
   RiArticleLine,
   RiChat1Line,
+  RiChat3Fill,
   RiCheckboxBlankCircleLine,
   RiCheckboxCircleFill,
   RiCloseLine,
@@ -18,6 +19,7 @@ import {
   RiFacebookFill,
   RiFunctionFill,
   RiGoogleFill,
+  RiHashtag,
   RiImage2Line,
   RiLoader5Line,
   RiLoginBoxLine,
@@ -76,4 +78,6 @@ export const Icons = {
   ArrowRightS: RiArrowRightSLine,
   ArrowLeftS: RiArrowLeftSLine,
   Image: RiImage2Line,
+  Topic: RiChat3Fill,
+  Hashtag: RiHashtag,
 };

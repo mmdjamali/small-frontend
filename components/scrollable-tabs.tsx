@@ -52,14 +52,18 @@ const Scrollable = ({ children, className }: Props) => {
         setRightButton(elementWidth + elementScrollLeft !== elementScrollWidth);
         setLeftButton(elementScrollLeft > 0);
       }}
-      className={cn("flex w-full ", className)}
+      className={cn("flex w-full", className)}
     >
       {children}
       {leftButton ? (
         <TabScrollButton
           icon="ArrowLeftS"
           onClick={() => {
-            ListElement.current?.scrollBy(-60, 0);
+            ListElement.current?.scrollBy({
+              left: -60,
+              top: 0,
+              behavior: "smooth",
+            });
           }}
           className="
             left-0
@@ -74,7 +78,11 @@ const Scrollable = ({ children, className }: Props) => {
         <TabScrollButton
           icon="ArrowRightS"
           onClick={() => {
-            ListElement.current?.scrollBy(60, 0);
+            ListElement.current?.scrollBy({
+              left: 60,
+              top: 0,
+              behavior: "smooth",
+            });
           }}
           className="
             right-0

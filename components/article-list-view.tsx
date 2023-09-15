@@ -17,8 +17,6 @@ const ArticleListView = ({
     isJSON(content) ? content.toString() : "[]",
   );
 
-  const withImage = parsed?.[0]?.type === "image";
-
   return (
     <div
       className={cn(
@@ -26,7 +24,7 @@ const ArticleListView = ({
       )}
     >
       <Link
-        href={""}
+        href={`/p/${id}`}
         className="relative flex aspect-[3/2] w-full flex-shrink-0 items-center justify-center overflow-hidden rounded transition-[border-radius] hover:rounded-none"
       >
         <div className="relative flex h-full w-full">
@@ -47,7 +45,7 @@ const ArticleListView = ({
       </Link>
 
       <div className="flex w-full flex-col gap-1 overflow-hidden">
-        <Link href={""} className="flex w-fit items-center gap-2">
+        <Link href={`/p/${id}`} className="flex w-fit items-center gap-2">
           <span className="flex aspect-square h-6 items-center justify-center rounded-full border border-border">
             <Icon name="User" className="text-[14px] text-border" />
           </span>

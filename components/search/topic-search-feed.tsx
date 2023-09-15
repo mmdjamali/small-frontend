@@ -1,13 +1,14 @@
 "use client";
 
 import { BACKEND_URL } from "@/config/env";
-import { GetAllArticlesDataType } from "@/types/api";
+import { GetAllTopicsApiResponse } from "@/types/api";
 import { useInfiniteQuery } from "react-query";
-import Button from "./ui/button";
-import ArticleInListLoader from "./loaders/article-in-list-loader";
-import ArticleListView from "./article-list-view";
+import Button from "../ui/button";
+import ArticleInListLoader from "../loaders/article-in-list-loader";
+import TopicListView from "../topic-list-view";
+import TopicInListLoader from "../loaders/topic-in-list-loader";
 
-const EmptySearchFetch = () => {
+const TopicSearchFeed = ({ q }: { q: string }) => {
   const {
     data,
     hasNextPage,
@@ -16,20 +17,24 @@ const EmptySearchFetch = () => {
     isError,
     fetchNextPage,
   } = useInfiniteQuery({
-    queryKey: ["articles"],
+    queryKey: ["search", "topics", q],
     queryFn: async ({ pageParam = 0 }) => {
-      const res = await fetch(
-        `${BACKEND_URL}/api/articles?pageIndex=${pageParam}&pageSize=12`,
+      const res: GetAllTopicsApiResponse = await fetch(
+        `${BACKEND_URL}/api/topics/search?searchKeywords=${q}&PageSize=10&pageIndex=${pageParam}`,
         {
           mode: "cors",
           headers: {
             "Content-Type": "application/json",
           },
         },
-      );
-      return (await res.json()).data as GetAllArticlesDataType;
+      ).then((res) => res?.json());
+
+      if (!res.success) return null;
+      return res.data;
     },
     getNextPageParam: (lastPage) => {
+      if (!lastPage) return;
+
       if (typeof lastPage.pageIndex !== "number") return;
 
       if (!lastPage.hasNextPage) return;
@@ -40,23 +45,18 @@ const EmptySearchFetch = () => {
   });
 
   return (
-    <main className="relative mx-auto grid w-full max-w-[1350px] grid-cols-1 gap-8 overflow-hidden px-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+    <main className="relative mx-auto grid w-full max-w-[1300px] grid-cols-1 gap-8 overflow-hidden px-4 py-8 sm:grid-cols-2 sm:px-8 lg:grid-cols-3">
       {(!isError || !isLoading) &&
         data?.pages.map((d, index, d_list) => {
-          return d.items?.map((post, idx, list) => (
-            <ArticleListView key={post.id} post={post} />
+          return d?.items?.map((post, idx, list) => (
+            <TopicListView key={post.id} topic={post} />
           ));
         })}
 
       {(isLoading || isFetchingNextPage) &&
         Array.from({
-          length: 10,
-        }).map((_, idx, list) => (
-          <ArticleInListLoader
-            key={idx}
-            variant={idx % 2 === 0 ? "with-image" : "normal"}
-          />
-        ))}
+          length: 12,
+        }).map((_, idx, list) => <TopicInListLoader key={idx} />)}
 
       {hasNextPage && (
         <Button
@@ -74,4 +74,4 @@ const EmptySearchFetch = () => {
   );
 };
 
-export default EmptySearchFetch;
+export default TopicSearchFeed;
