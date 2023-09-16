@@ -59,7 +59,7 @@ const links = [
   },
   {
     url: "https://github.com/karabeyogluonur",
-    name: "Onur Kayabeyoglu",
+    name: "Onur Karabeyoglu",
     imageURL: "https://github.com/karabeyogluonur.png",
   },
   {
