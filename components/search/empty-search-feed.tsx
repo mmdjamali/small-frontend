@@ -7,7 +7,7 @@ import Button from "../ui/button";
 import ArticleInListLoader from "../loaders/article-in-list-loader";
 import ArticleListView from "../article-list-view";
 
-const EmptySearchFetch = () => {
+const EmptySearchFeed = () => {
   const {
     data,
     hasNextPage,
@@ -74,4 +74,4 @@ const EmptySearchFetch = () => {
   );
 };
 
-export default EmptySearchFetch;
+export default EmptySearchFeed;
