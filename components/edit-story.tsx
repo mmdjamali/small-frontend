@@ -194,6 +194,9 @@ const Publish = ({
             `/api/articles/${id}/publish`,
             {
               method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
             },
           ).then((res) => res?.json());
 

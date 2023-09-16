@@ -64,11 +64,9 @@ export const useCustomFetch = () => {
                   ? {
                       ...init.headers,
                       Authorization: `Bearer ${state}`,
-                      "Content-Type": "application/json",
                     }
                   : {
                       Authorization: `Bearer ${state}`,
-                      "Content-Type": "application/json",
                     },
               }
             : undefined,
