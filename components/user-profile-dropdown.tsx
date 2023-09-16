@@ -14,9 +14,12 @@ import Link from "next/link";
 import Button from "./ui/button";
 import { useUser } from "@/hooks/use-user";
 import Icon from "./icon";
+import { usePathname } from "next/navigation";
 
 function UserDropdownMenu() {
   const [data, loading] = useUser();
+
+  const pathname = usePathname();
 
   const links: {
     type: "button";
@@ -107,7 +110,7 @@ function UserDropdownMenu() {
     );
 
   return (
-    <Link href={"/signin"}>
+    <Link href={`/signin?redirect=${pathname}`}>
       <Button className="border-none">Login</Button>
     </Link>
   );

@@ -11,10 +11,13 @@ import { useDebouncedValue } from "@/hooks/use-debounced-value";
 import PasswordInput from "../password-input";
 import { siteConfig } from "@/config";
 import toast from "../ui/toast";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 function Signin() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const redirect = searchParams.get("redirect") ?? "/";
 
   const [email, registerEmail, emailError] = useDebouncedValue("", 500, [
     { pattern: /^\S+@\S+\.\S+$/, error_message: "Email is invalid" },
@@ -86,6 +89,8 @@ function Signin() {
                   description:
                     res.message ?? "something went wrong, please try again.",
                 });
+
+                return;
               } else {
                 toast({
                   varinat: "success",
@@ -95,7 +100,7 @@ function Signin() {
                 });
               }
 
-              setTimeout(() => router.push("/"), 500);
+              setTimeout(() => router.push(redirect), 500);
 
               setLoading(false);
             } catch (err) {
