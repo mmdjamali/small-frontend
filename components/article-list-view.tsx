@@ -42,7 +42,10 @@ const ArticleListView = ({
 
       <div className="flex w-full items-start gap-1 overflow-hidden">
         <div className="flex w-full flex-col gap-1">
-          <Link href={`/p/${id}`} className="flex w-fit items-center gap-2">
+          <Link
+            href={`/@${author?.userName}`}
+            className="flex w-fit items-center gap-2"
+          >
             <span className="flex aspect-square h-6 items-center justify-center rounded-full border border-border">
               <Icon name="User" className="text-[14px] text-border" />
             </span>
