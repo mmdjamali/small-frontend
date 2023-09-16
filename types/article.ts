@@ -1,4 +1,3 @@
-import { OutputBlockData } from "@editorjs/editorjs";
 import { TopicType } from "./topic";
 
 export type ArticleType = {
@@ -16,4 +15,5 @@ export type AuthorType = {
   firstName: string;
   id: number;
   lastName: string;
+  userName?: string;
 };
