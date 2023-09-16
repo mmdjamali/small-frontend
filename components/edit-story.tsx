@@ -70,6 +70,9 @@ const EditStory = ({ post, id }: EditStoryProps) => {
           await fetch("/api/articles", {
             method: "PUT",
             mode: "cors",
+            headers: {
+              "Content-Type": "application/json",
+            },
             body: JSON.stringify({
               articleId: id,
               Title: title,
@@ -113,6 +116,9 @@ const EditStory = ({ post, id }: EditStoryProps) => {
                     await fetch("/api/articles", {
                       method: "PUT",
                       mode: "cors",
+                      headers: {
+                        "Content-Type": "application/json",
+                      },
                       body: JSON.stringify({
                         articleId: id,
                         Title: title,
@@ -194,6 +200,7 @@ const Publish = ({
             `/api/articles/${id}/publish`,
             {
               method: "POST",
+              mode: "cors",
               headers: {
                 "Content-Type": "application/json",
               },
