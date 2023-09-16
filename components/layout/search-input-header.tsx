@@ -1,8 +1,8 @@
 "use client";
 
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Icon from "../icon";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 const SearchInputHeader = () => {
   const pathname = usePathname();
@@ -15,14 +15,12 @@ const SearchInputHeader = () => {
 
     const path = pathname.split("/");
 
-    console.log(path);
-
     if (path[1] !== "search") {
       ref.current.value = "";
       return;
     }
 
-    ref.current.value = encodeURIComponent(path[path.length - 1] ?? "");
+    ref.current.value = decodeURIComponent(path[path.length - 1] ?? "");
   }, [pathname]);
 
   return (
@@ -44,7 +42,7 @@ const SearchInputHeader = () => {
       <input
         ref={ref}
         name="query"
-        className="w-full flex-shrink bg-transparent outline-none"
+        className="w-full flex-shrink bg-transparent caret-primary outline-none"
         placeholder="Search Small..."
       />
     </form>
