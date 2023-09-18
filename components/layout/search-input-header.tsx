@@ -20,6 +20,8 @@ const SearchInputHeader = () => {
       return;
     }
 
+    if (path.length === 2) return;
+
     ref.current.value = decodeURIComponent(path[path.length - 1] ?? "");
   }, [pathname]);
 

@@ -7,13 +7,17 @@ const Footer = () => {
     <div className="mt-8 border-t border-dashed border-border">
       <footer className="mx-auto grid max-w-[1300px] px-4 pb-8 md:px-8">
         <div className="flex flex-col items-center justify-between gap-10 pb-16 pt-20 md:flex-row">
-          <Icon name="Logo" className="text-[24px] text-primary" />
-
+          <Link href={"/"}>
+            <Icon
+              name="Logo"
+              className="h-[21px] text-foreground/75 hover:text-foreground"
+            />
+          </Link>
           <div className="mx-auto flex w-fit flex-wrap items-center justify-center gap-8 md:mx-0">
             {links.map(({ name, url, imageURL }) => {
               return (
                 <Link
-                  className="flex items-center justify-center gap-2 font-medium"
+                  className="flex items-center justify-center gap-2 font-medium text-foreground/75 transition-colors hover:text-foreground"
                   key={name}
                   href={url}
                 >
@@ -62,9 +66,9 @@ const links = [
     name: "Onur Karabeyoglu",
     imageURL: "https://github.com/karabeyogluonur.png",
   },
-  {
-    url: "https://github.com/kaankarakoc42",
-    name: "Kaan Karakoc",
-    imageURL: "https://github.com/kaankarakoc42.png",
-  },
+  // {
+  //   url: "https://github.com/kaankarakoc42",
+  //   name: "Kaan Karakoc",
+  //   imageURL: "https://github.com/kaankarakoc42.png",
+  // },
 ];
