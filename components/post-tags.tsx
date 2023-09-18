@@ -12,6 +12,7 @@ import {
   TopicSuggestionsApiResponse,
   UpdateTopicsApiResponse,
 } from "@/types/api";
+import toast from "./ui/toast";
 
 const PostTags = () => {
   const { topics, setTopics, id } = useContext(EditStoryContext);
@@ -36,28 +37,42 @@ const PostTags = () => {
     const abortController = new AbortController();
 
     const func = async () => {
-      const res: TopicSuggestionsApiResponse = await fetch(
-        BACKEND_URL +
-          `/api/topics/search?searchKeywords=${encodeURIComponent(value)}`,
-        {
-          headers: {
-            "Content-Type": "application/json",
+      try {
+        const res: TopicSuggestionsApiResponse = await fetch(
+          BACKEND_URL +
+            `/api/topics/search?searchKeywords=${encodeURIComponent(value)}`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+            mode: "cors",
+            signal: abortController.signal,
           },
-          signal: abortController.signal,
-        },
-      ).then((res) => res.json());
+        ).then((res) => res.json());
 
-      if (!res.success) return;
+        if (!res.success) return;
 
-      const topics =
-        res?.data?.items
-          ?.map(({ name }) => name.toLocaleLowerCase())
-          .filter((topic) => !tags.includes(topic))
-          .slice(0, 2) ?? null;
+        const topics =
+          res?.data?.items
+            ?.map(({ name }) => name.toLocaleLowerCase())
+            .filter((topic) => !tags.includes(topic))
+            .slice(0, 2) ?? null;
 
-      setSuggestions(topics);
+        setSuggestions(topics);
 
-      if (topics && topics?.length) setOpen(true);
+        if (topics && topics?.length) setOpen(true);
+      } catch (err) {
+        if (typeof err === "object" && err && "name" in err) {
+          if (err?.name === "AbortError") return;
+        }
+
+        toast({
+          varinat: "error",
+          title: "Something went wrong!",
+          description:
+            "something unexpected happend during suggestion request.",
+        });
+      }
     };
 
     func();
@@ -75,6 +90,10 @@ const PostTags = () => {
         "/api/articles/UpdateTopics",
         {
           method: "POST",
+          mode: "cors",
+          headers: {
+            "Content-Type": "application/json",
+          },
           body: JSON.stringify({ articleId: id, topicNames: tags }),
         },
       ).then((res) => res?.json());
