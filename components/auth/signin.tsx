@@ -77,7 +77,7 @@ function Signin() {
                   "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                  email,
+                  EmailOrUserName: email,
                   password,
                 }),
               }).then((res) => res.json());

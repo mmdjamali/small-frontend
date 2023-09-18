@@ -36,7 +36,7 @@ const EditStory = ({ post, id }: EditStoryProps) => {
   const fetch = useCustomFetch();
 
   const [editor, setEditor] = useState<EditorJS>();
-  const [title, setTitle] = useState(post.title ?? "");
+  const [title, setTitle] = useState(post?.title ?? "");
 
   const [topics, setTopics] = useState<string[]>(
     post?.topics?.map(({ name }) => name) ?? [],
@@ -49,7 +49,7 @@ const EditStory = ({ post, id }: EditStoryProps) => {
   const container = useRef<null | HTMLDivElement>(null);
 
   const parsed: OutputBlockData[] = JSON.parse(
-    isJSON(post.content) ? post.content.toString() : "[]",
+    isJSON(post?.content) ? post?.content.toString() : "[]",
   );
 
   useEffect(() => {
