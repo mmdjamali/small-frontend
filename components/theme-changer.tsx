@@ -33,6 +33,7 @@ function ThemeChanger() {
       }}
       className="p-2 text-[21px] outline-none"
       variant="text"
+      color="foreground"
     >
       {(() => {
         const icon = themes.filter(({ name }) => name === theme)[0]?.icon;

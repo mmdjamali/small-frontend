@@ -19,7 +19,7 @@ function MainNav({ items }: MainNavProps) {
       <SearchInputHeader />
 
       <Link className="ml-auto sm:hidden" href={"/search"}>
-        <Button color="primary" variant="text" className="flex p-2">
+        <Button color="foreground" variant="text" className="flex p-2">
           <Icon name="Search" className="text-[21px]" />
         </Button>
       </Link>
