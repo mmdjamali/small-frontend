@@ -82,6 +82,7 @@ export const useCustomFetch = () => {
           (BACKEND_URL ?? "") + input,
           init
             ? {
+                mode: "cors",
                 ...init,
                 headers: init.headers
                   ? {
