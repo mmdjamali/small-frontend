@@ -32,3 +32,8 @@ export const GetMonthName = (month: number) => {
 
   return monthNames[month];
 };
+
+export const stringifyNumber = (v?: number) => {
+  if (!v) return "";
+  return v.toString();
+};
