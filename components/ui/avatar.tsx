@@ -55,12 +55,12 @@ export const AvatarFallback = React.forwardRef<
   <AvatarPrimitives.Fallback
     ref={ref}
     className={cn(
-      "grid aspect-square h-full w-full place-items-center rounded-full border border-border",
+      "grid aspect-square h-full w-full place-items-center rounded bg-foreground/10",
       className,
     )}
     {...props}
   >
-    <Icons.User className="text-[22px] text-border" />
+    <Icons.User className="text-[22px] text-foreground/25" />
   </AvatarPrimitives.Fallback>
 ));
 
