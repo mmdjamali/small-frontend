@@ -3,9 +3,7 @@
 import { BACKEND_URL } from "@/config/env";
 import { GetAllArticlesDataType } from "@/types/api";
 import { useInfiniteQuery } from "react-query";
-import Button from "../ui/button";
-import ArticleInListLoader from "../loaders/article-in-list-loader";
-import ArticleListView from "../article-list-view";
+import ArticleList from "../articles/articles-list";
 
 const EmptySearchFeed = () => {
   const {
@@ -40,37 +38,18 @@ const EmptySearchFeed = () => {
   });
 
   return (
-    <main className="relative mx-auto grid w-full max-w-[1300px] grid-cols-1 gap-8 overflow-hidden px-4 py-8 sm:grid-cols-2 sm:px-8 md:grid-cols-3 lg:grid-cols-4">
-      {(!isError || !isLoading) &&
-        data?.pages.map((d, index, d_list) => {
-          return d.items?.map((post, idx, list) => (
-            <ArticleListView key={post.id} post={post} />
-          ));
-        })}
-
-      {(isLoading || isFetchingNextPage) &&
-        Array.from({
-          length: 10,
-        }).map((_, idx, list) => (
-          <ArticleInListLoader
-            key={idx}
-            variant={idx % 2 === 0 ? "with-image" : "normal"}
-          />
-        ))}
-
-      {hasNextPage && (
-        <Button
-          onClick={() => {
-            fetchNextPage();
-          }}
-          variant="text"
-          color="foreground"
-          className="w-fit"
-        >
-          Show more
-        </Button>
-      )}
-    </main>
+    <div className="relative mx-auto w-full max-w-[1300px] overflow-hidden px-4 py-8 sm:px-8">
+      <ArticleList
+        data={data}
+        fetchNextPage={() => {
+          fetchNextPage();
+        }}
+        hasNextPage={!!hasNextPage}
+        isError={isError}
+        isFetchingNextPage={isFetchingNextPage}
+        isLoading={isLoading}
+      />
+    </div>
   );
 };
 
