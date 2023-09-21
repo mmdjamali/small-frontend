@@ -39,10 +39,12 @@ const Page = ({ params: { _id } }: { params: { _id: string } }) => {
 
   if (loading)
     return (
-      <Icon
-        name="Logo"
-        className="absolute inset-0 m-auto aspect-square h-[50px] animate-pulse text-[50px] text-foreground"
-      />
+      <div className="relative flex h-screen w-full items-center justify-center">
+        <Icon
+          name="Logo"
+          className="aspect-square h-[50px] animate-pulse text-[50px] text-foreground"
+        />
+      </div>
     );
 
   return <EditStory id={_id} post={data} />;
