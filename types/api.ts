@@ -39,12 +39,6 @@ export type GetAllCommentsApiResponse = ApiResponse<
 >;
 
 export type GetAllTopicsApiResponse = ApiResponse<PaginatedData<TopicType[]>>;
-export type GetAllArticlesApiResponse = ApiResponse<
-  PaginatedData<ArticleType[]>
->;
+export type GetAllArticlesApiResponse = ApiResponse<GetAllArticlesDataType>;
 
-export type GetAllArticlesDataType = {
-  items?: ArticleType[];
-  pageIndex?: number;
-  hasNextPage?: boolean;
-};
+export type GetAllArticlesDataType = PaginatedData<ArticleType[]>;
