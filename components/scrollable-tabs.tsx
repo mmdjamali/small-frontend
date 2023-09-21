@@ -17,15 +17,18 @@ const Scrollable = ({ children, className }: Props) => {
   const ListElement = useRef<HTMLDivElement>();
 
   const handle = useCallback((node: HTMLDivElement) => {
-    if (!node) return;
-
     const func = () => {
+      if (!node) return;
+
       ListElement.current = node;
       const elementWidth = node.clientWidth;
       const elementScrollWidth = node.scrollWidth;
       const elementScrollLeft = node.scrollLeft;
 
-      if (elementWidth >= elementScrollWidth) return;
+      if (elementWidth >= elementScrollWidth) {
+        setRightButton(false);
+        return;
+      }
 
       setRightButton(elementWidth + elementScrollLeft !== elementScrollWidth);
       setLeftButton(elementScrollLeft > 0);
@@ -49,10 +52,15 @@ const Scrollable = ({ children, className }: Props) => {
         const elementScrollWidth = node?.scrollWidth;
         const elementScrollLeft = node?.scrollLeft;
 
+        if (elementWidth >= elementScrollWidth) {
+          setRightButton(false);
+          return;
+        }
+
         setRightButton(elementWidth + elementScrollLeft !== elementScrollWidth);
         setLeftButton(elementScrollLeft > 0);
       }}
-      className={cn("flex w-full", className)}
+      className={cn("flex w-full ", className)}
     >
       {children}
       {leftButton ? (
@@ -60,9 +68,9 @@ const Scrollable = ({ children, className }: Props) => {
           icon="ArrowLeftS"
           onClick={() => {
             ListElement.current?.scrollBy({
+              behavior: "smooth",
               left: -60,
               top: 0,
-              behavior: "smooth",
             });
           }}
           className="
@@ -79,9 +87,9 @@ const Scrollable = ({ children, className }: Props) => {
           icon="ArrowRightS"
           onClick={() => {
             ListElement.current?.scrollBy({
+              behavior: "smooth",
               left: 60,
               top: 0,
-              behavior: "smooth",
             });
           }}
           className="
