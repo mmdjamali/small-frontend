@@ -1,8 +1,8 @@
 "use client";
 
 import { useUser } from "@/hooks/use-user";
-import Icon from "./icon";
-import Button from "./ui/button";
+import Icon from "../icon";
+import Button from "../ui/button";
 import Link from "next/link";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useCustomFetch } from "@/hooks/use-custom-fetch";
