@@ -18,7 +18,7 @@ const ArticleListView = ({
   );
 
   return (
-    <div className={cn("flex w-full flex-col gap-2")}>
+    <div className={cn("flex w-full flex-col gap-1")}>
       <Link
         href={`/p/${id}`}
         className="relative flex aspect-[3/2] w-full flex-shrink-0 items-center justify-center overflow-hidden rounded transition-[border-radius] hover:rounded-none"
@@ -40,8 +40,8 @@ const ArticleListView = ({
         </div>
       </Link>
 
-      <div className="flex w-full items-start gap-1 overflow-hidden">
-        <div className="flex w-full flex-col gap-1">
+      <div className="flex w-full flex-col items-start gap-1 overflow-hidden">
+        <div className="flex w-full items-center justify-between gap-1">
           <Link
             href={`/@${author?.userName}`}
             className="flex w-fit items-center gap-2"
@@ -55,23 +55,23 @@ const ArticleListView = ({
             </p>
           </Link>
 
-          <Link
-            href={`/p/${id}`}
-            className="flex h-[48px] flex-col gap-1 overflow-hidden"
+          <Button
+            variant="text"
+            color="foreground"
+            className="ml-auto p-2 text-[21px]"
           >
-            <div className="flex w-full shrink-0 flex-col gap-1 overflow-hidden">
-              <h4 className="text-[16px] font-bold">{title || "Untitled"}</h4>
-            </div>
-          </Link>
+            <Icon name="MoreHorizontal" />
+          </Button>
         </div>
 
-        <Button
-          variant="text"
-          color="foreground"
-          className="ml-auto p-2 text-[21px]"
+        <Link
+          href={`/p/${id}`}
+          className="flex h-[48px] flex-col gap-1 overflow-hidden"
         >
-          <Icon name="MoreVertical" />
-        </Button>
+          <div className="flex w-full shrink-0 flex-col gap-1 overflow-hidden">
+            <h4 className="text-[16px] font-bold">{title || "Untitled"}</h4>
+          </div>
+        </Link>
       </div>
     </div>
   );
