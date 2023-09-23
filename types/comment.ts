@@ -4,5 +4,6 @@ export type CommentType = {
   id: number;
   author: AuthorType;
   content: string;
-  createdAt: string;
+  createdDate: string;
+  hasReplies: boolean;
 };
