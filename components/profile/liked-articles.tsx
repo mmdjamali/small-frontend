@@ -13,8 +13,6 @@ const LikedArticles = ({ id }: { id: string }) => {
     hasNextPage,
   } = useGetLikedArticles(id);
 
-  console.log(JSON.stringify(data, null, 2));
-
   return (
     <ArticleList
       data={data}
