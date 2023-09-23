@@ -8,6 +8,7 @@ export function Toaster() {
       closeButton
       richColors
       position="top-right"
+      className="z-[9999]"
       //   toastOptions={{
       //     style: {
       //       background: "rgb(var(--background))",
