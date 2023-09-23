@@ -72,8 +72,6 @@ const ArticleComments = ({ id }: { id: string | number }) => {
     setRemoved((prev) => [...prev, id.toString()]);
   };
 
-  console.log(removed);
-
   return (
     <Drawer>
       <DrawerTrigger asChild>
@@ -85,9 +83,11 @@ const ArticleComments = ({ id }: { id: string | number }) => {
         <DrawerOverlay />
         <DrawerContent
           side="right"
-          className="z-50 flex h-screen w-full flex-col overflow-y-scroll border-x border-border bg-background px-4 sm:w-[min(100%_,_450px)]"
+          className="z-50 flex h-screen  w-full flex-col overflow-y-scroll border-x border-border bg-background px-4 sm:w-[min(100%_,_450px)]"
         >
-          <div className="flex flex-row-reverse items-center justify-between py-2">
+          <div className="flex items-center justify-between py-4">
+            <h3 className="text-[18px] font-medium">Comments</h3>
+
             <DrawerClose asChild>
               <Button className="p-2" color="foreground" variant="text">
                 <Icon name="Close" className="text-[21px]" />
@@ -101,28 +101,6 @@ const ArticleComments = ({ id }: { id: string | number }) => {
           />
 
           <div className="mt-8 flex flex-col items-start">
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="text" color="foreground">
-                  Select <Icon name="ArrowDown" className="text-[18px]" />
-                </Button>
-              </DropdownMenuTrigger>
-
-              <DropdownMenuPortal>
-                <DropdownMenuContent align="start">
-                  <Button
-                    variant="text"
-                    color="foreground"
-                    className="justify-start px-2 py-1.5"
-                  >
-                    Hello
-                  </Button>
-                </DropdownMenuContent>
-              </DropdownMenuPortal>
-            </DropdownMenu>
-
-            <span className="my-2 block h-[1px] w-full bg-border" />
-
             <div className="relative flex w-full flex-col">
               {added.map((comment) => {
                 if (!comment) return <></>;
