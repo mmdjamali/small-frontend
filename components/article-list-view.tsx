@@ -51,7 +51,7 @@ const ArticleListView = ({
             </span>
 
             <p className="text-sm font-medium text-foreground/75">
-              {author.firstName + " " + author.lastName}
+              {author?.firstName + " " + author?.lastName}
             </p>
           </Link>
 

@@ -63,9 +63,18 @@ const ArticleActionBar = ({ id }: { id: string | number }) => {
               )}
             </Button>
           )
-        ) : null}
+        ) : (
+          <Button
+            disabled={true}
+            className="p-2 text-[21px]"
+            variant="text"
+            color="foreground"
+          >
+            <Icon name="ThumbUpLine" />
+          </Button>
+        )}
 
-        {user?.id ? <ArticleComments id={id} /> : null}
+        <ArticleComments id={id} />
       </div>
 
       <div className="flex items-center gap-2">

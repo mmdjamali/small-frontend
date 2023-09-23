@@ -95,10 +95,12 @@ const ArticleComments = ({ id }: { id: string | number }) => {
             </DrawerClose>
           </div>
 
-          <CommentInput
-            id={id}
-            onInsert={(comment) => setAdded((prev) => [...prev, comment])}
-          />
+          {user?.id ? (
+            <CommentInput
+              id={id}
+              onInsert={(comment) => setAdded((prev) => [...prev, comment])}
+            />
+          ) : null}
 
           <div className="mt-8 flex flex-col items-start">
             <div className="relative flex w-full flex-col">

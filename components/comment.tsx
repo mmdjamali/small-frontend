@@ -141,32 +141,34 @@ const Comment = ({ comment, onRemove }: props) => {
 
       {openReplies && (
         <>
-          <div className="relative flex w-full justify-start gap-3">
-            <div className="relative flex w-[36px] flex-shrink-0 items-center justify-center">
-              <span
-                className={cn(
-                  "absolute top-0 flex w-0.5 bg-border",
-                  "h-[32px]",
-                )}
-              />
-              <span className="absolute right-0 top-[30px] flex h-0.5 w-[50%] bg-border" />
-            </div>
+          {user?.id ? (
+            <div className="relative flex w-full justify-start gap-3">
+              <div className="relative flex w-[36px] flex-shrink-0 items-center justify-center">
+                <span
+                  className={cn(
+                    "absolute top-0 flex w-0.5 bg-border",
+                    "h-[32px]",
+                  )}
+                />
+                <span className="absolute right-0 top-[30px] flex h-0.5 w-[50%] bg-border" />
+              </div>
 
-            <div className="flex w-full flex-col pb-5 pt-2">
-              <ReplyInput
-                id={id}
-                onClose={() => {
-                  setOpenReplies(false);
-                }}
-                onSuccess={(reply: ReplyType) => {
-                  updateAdded(reply);
-                }}
-                placeholder={`Replying to ${author?.firstName ?? ""} ${
-                  author?.lastName ?? ""
-                }`}
-              />
+              <div className="flex w-full flex-col pb-5 pt-2">
+                <ReplyInput
+                  id={id}
+                  onClose={() => {
+                    setOpenReplies(false);
+                  }}
+                  onSuccess={(reply: ReplyType) => {
+                    updateAdded(reply);
+                  }}
+                  placeholder={`Replying to ${author?.firstName ?? ""} ${
+                    author?.lastName ?? ""
+                  }`}
+                />
+              </div>
             </div>
-          </div>
+          ) : null}
 
           <CommentReplies added={added} removed={removed} id={id.toString()} />
         </>
