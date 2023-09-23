@@ -3,6 +3,7 @@ import {
   RiAddLine,
   RiArrowDownSLine,
   RiArrowLeftSLine,
+  RiArrowRightLine,
   RiArrowRightSLine,
   RiArticleFill,
   RiArticleLine,
@@ -36,6 +37,10 @@ import {
   RiPercentLine,
   RiSearch2Line,
   RiSearchLine,
+  RiSendPlane2Fill,
+  RiSendPlane2Line,
+  RiSendPlaneFill,
+  RiSendPlaneLine,
   RiSettings2Line,
   RiSunCloudyLine,
   RiSunFoggyLine,
@@ -84,6 +89,8 @@ export const Icons = {
   Hashtag: RiHashtag,
   Github: RiGithubFill,
   TwitterX: RiTwitterXLine,
+  ArrowRight: RiArrowRightLine,
+  Send: RiSendPlaneLine,
   Logo: (props: IconBaseProps) => (
     <svg
       viewBox="0 0 45 45"
