@@ -2,36 +2,58 @@ import TextareaAutosize from "react-autosize-textarea";
 import Button from "../ui/button";
 import UserAvatar from "../user-avatar";
 import { useCustomFetch } from "@/hooks/use-custom-fetch";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import toast from "../ui/toast";
+import Icon from "../icon";
+import { ReplyType } from "@/types/reply";
+import { InsertReplyApiResponse } from "@/types/api";
+import { useUser } from "@/hooks/use-user";
 
 type ReplyInputProps = {
   id: string | number;
   placeholder: string;
   onClose: () => void;
+  onSuccess: (reply: ReplyType) => void;
 };
 
-const ReplyInput = ({ id, placeholder, onClose }: ReplyInputProps) => {
+const ReplyInput = ({
+  id,
+  placeholder,
+  onClose,
+  onSuccess,
+}: ReplyInputProps) => {
   const fetch = useCustomFetch();
 
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(false);
+  const [user, user_loading] = useUser();
 
   const [parent] = useAutoAnimate();
 
-  const handleCommentInsert = async () => {
+  const handleCommentInsert = async (e: FormEvent<HTMLFormElement>) => {
+    if (!user?.id) return;
+
+    e.preventDefault();
+
     if (!content) return;
 
     try {
       setLoading(true);
 
-      const res = await fetch(`/api/comments/${id}/replies`, {
-        method: "POST",
-        body: JSON.stringify({
-          content,
-        }),
-      }).then((res) => res?.json());
+      const res: InsertReplyApiResponse = await fetch(
+        `/api/comments/${id}/replies`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          mode: "cors",
+          body: JSON.stringify({
+            content,
+          }),
+        },
+      ).then((res) => res?.json());
 
       if (!res?.success) {
         setLoading(false);
@@ -46,6 +68,12 @@ const ReplyInput = ({ id, placeholder, onClose }: ReplyInputProps) => {
         description: res?.message ?? "",
       });
 
+      onSuccess({
+        ...res.data.commentReply,
+        author: {
+          ...user,
+        },
+      });
       setLoading(false);
     } catch (err) {
       toast({
@@ -58,34 +86,29 @@ const ReplyInput = ({ id, placeholder, onClose }: ReplyInputProps) => {
   };
 
   return (
-    <div
+    <form
+      onSubmit={handleCommentInsert}
       ref={parent}
-      className="flex w-full flex-col gap-2 rounded border border-foreground/10 p-3"
+      className="flex w-full gap-2 rounded border border-foreground/10 p-3 py-1 pr-1"
     >
-      <TextareaAutosize
+      <input
         value={content}
-        onChange={(e: any) => {
-          setContent(e.target?.value);
+        onChange={(e) => {
+          setContent(e.target.value);
         }}
         placeholder={placeholder}
-        className="mt-4 bg-transparent text-sm outline-none"
-        rows={3}
+        className="w-full bg-transparent text-sm outline-none"
       />
 
-      <div className="flex items-center justify-end gap-2">
-        <Button onClick={onClose} color="foreground" variant="text">
-          Cancel
-        </Button>
-        <Button
-          onClick={handleCommentInsert}
-          loading={loading}
-          className="border-none"
-          color="foreground"
-        >
-          Reply
-        </Button>
-      </div>
-    </div>
+      <Button
+        type="submit"
+        loading={loading}
+        className="border-none p-2"
+        color="foreground"
+      >
+        <Icon name="Send" className="text-[21px]" />
+      </Button>
+    </form>
   );
 };
 
