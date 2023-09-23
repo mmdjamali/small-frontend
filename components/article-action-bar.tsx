@@ -5,11 +5,13 @@ import Button from "./ui/button";
 
 import ArticleComments from "./article-comments";
 import { useUser } from "@/hooks/use-user";
+import { useLike } from "@/hooks/use-like";
 
 const ArticleActionBar = ({ id }: { id: string | number }) => {
   const [user, user_loading] = useUser();
+  const { like, liked, unlike } = useLike(id.toString());
 
-  if (user_loading)
+  if (user_loading || liked.isLoading)
     return (
       <div className=" flex w-full items-center justify-between border-y border-border py-2">
         <div className="flex items-center gap-2">
@@ -28,9 +30,39 @@ const ArticleActionBar = ({ id }: { id: string | number }) => {
     <div className=" flex w-full items-center justify-between border-y border-border py-2">
       <div className="flex items-center gap-2">
         {user?.id ? (
-          <Button className="p-2 text-[21px]" variant="text" color="foreground">
-            <Icon name="ThumbUpLine" />
-          </Button>
+          !!liked?.data?.isLike ? (
+            <Button
+              onClick={() => {
+                unlike.mutate();
+              }}
+              disabled={unlike.isLoading}
+              className="p-2 text-[21px]"
+              variant="text"
+              color="foreground"
+            >
+              {unlike.isLoading ? (
+                <Icon name="Spinner" className="animate-spin" />
+              ) : (
+                <Icon name="ThumbUpFill" className="text-primary" />
+              )}
+            </Button>
+          ) : (
+            <Button
+              onClick={() => {
+                return like.mutate();
+              }}
+              disabled={like.isLoading}
+              className="p-2 text-[21px]"
+              variant="text"
+              color="foreground"
+            >
+              {like.isLoading ? (
+                <Icon name="Spinner" className="animate-spin" />
+              ) : (
+                <Icon name="ThumbUpLine" />
+              )}
+            </Button>
+          )
         ) : null}
 
         {user?.id ? <ArticleComments id={id} /> : null}
