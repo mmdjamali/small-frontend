@@ -49,3 +49,5 @@ export type GetAllArticlesApiResponse = ApiResponse<GetAllArticlesDataType>;
 export type GetAllArticlesDataType = PaginatedData<ArticleType[]>;
 
 export type InsertReplyApiResponse = ApiResponse<{ commentReply: ReplyType }>;
+
+export type LikeArticleApiResponse = ApiResponse<{ isLike: boolean }>;
