@@ -26,7 +26,7 @@ const Page = async ({ params: { _id } }: { params: { _id: string } }) => {
     const html = edjsHTML().parse({ blocks });
 
     return (
-      <div className="relative mx-auto flex max-w-[600px] flex-col px-4 pb-8">
+      <div className="relative mx-auto flex max-w-[700px] flex-col px-4 pb-8">
         <div className="my-8 flex flex-col items-start gap-8">
           <h1 className="text-4xl font-bold">{res.data?.article?.title}</h1>
 
