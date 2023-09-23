@@ -1,5 +1,6 @@
 import { ArticleType, AuthorType } from "./article";
 import { CommentType } from "./comment";
+import { ReplyType } from "./reply";
 import { TopicType } from "./topic";
 import { UserType } from "./user";
 
@@ -38,7 +39,13 @@ export type GetAllCommentsApiResponse = ApiResponse<
   PaginatedData<CommentType[]>
 >;
 
+export type GetAllCommentRepliesApiResponse = ApiResponse<
+  PaginatedData<ReplyType[]>
+>;
+
 export type GetAllTopicsApiResponse = ApiResponse<PaginatedData<TopicType[]>>;
 export type GetAllArticlesApiResponse = ApiResponse<GetAllArticlesDataType>;
 
 export type GetAllArticlesDataType = PaginatedData<ArticleType[]>;
+
+export type InsertReplyApiResponse = ApiResponse<{ commentReply: ReplyType }>;
