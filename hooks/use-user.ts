@@ -81,6 +81,8 @@ export const useUser = () => {
 
       return res.data.user;
     },
+    refetchOnWindowFocus: false,
+    retry: 1,
   });
 
   return [data, isLoading] as [typeof data, typeof isLoading];
