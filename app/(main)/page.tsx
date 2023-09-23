@@ -1,7 +1,9 @@
 import Feed from "@/components/feed";
 import Image from "next/image";
+import { redirect } from "next/navigation";
 
 export default async function Home() {
+  redirect("/search");
   return (
     <div className="relative flex w-full flex-col">
       <div className="relative h-[480px] w-full overflow-hidden">

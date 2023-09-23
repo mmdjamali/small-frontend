@@ -2,13 +2,11 @@
 
 import Icon from "@/components/icon";
 import Drafts from "@/components/profile/drafts";
-import ProfileActions from "@/components/profile/profile-actions";
+import LikedArticles from "@/components/profile/liked-articles";
 import ProfileTabs from "@/components/profile/profile-tabs";
 import Button from "@/components/ui/button";
 import { useUser } from "@/hooks/use-user";
-import { cn } from "@/lib/utils";
-import Image from "next/image";
-import Link from "next/link";
+import { stringifyNumber } from "@/lib/utils";
 import { usePathname, useRouter } from "next/navigation";
 
 const Page = () => {
@@ -50,7 +48,7 @@ const Page = () => {
       </div>
 
       <div className="mx-auto w-full max-w-[1300px] px-4 pb-8 sm:px-8 sm:py-8">
-        <Drafts />
+        <LikedArticles id={stringifyNumber(user?.id)} />
       </div>
     </>
   );
