@@ -41,6 +41,9 @@ const CommentInput = ({ id, onInsert }: CommentInputProps) => {
         `/api/articles/${id}/comments`,
         {
           method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
           body: JSON.stringify({
             content,
           }),
@@ -77,39 +80,39 @@ const CommentInput = ({ id, onInsert }: CommentInputProps) => {
       ref={parent}
       className="flex w-full flex-col gap-2 rounded border border-foreground/10 p-3"
     >
-      {show && (
-        <div className="flex items-center gap-2">
+      <div className="flex items-start gap-3">
+        <div className="flex flex-shrink-0 items-center gap-2">
           <UserAvatar size="md" src={user?.avatarImagePath ?? ""} />
-          <p>{`${user?.firstName} ${user?.lastName}`}</p>
         </div>
-      )}
-
-      <TextareaAutosize
-        value={content}
-        onChange={(e: any) => {
-          setContent(e.target?.value);
-        }}
-        onFocus={handleFocus}
-        placeholder="What are your thoughts?"
-        className="bg-transparent text-sm outline-none"
-        rows={show ? 2 : 1}
-      />
+        <div className="flex w-full flex-col">
+          <div className="flex h-[36px] items-center">
+            <p className="font-medium">{`${user?.firstName ?? ""}  ${
+              user?.lastName ?? ""
+            }`}</p>
+          </div>
+          <TextareaAutosize
+            value={content}
+            onChange={(e: any) => {
+              setContent(e.target?.value);
+            }}
+            onFocus={handleFocus}
+            placeholder="What are your thoughts?"
+            className="w-full bg-transparent text-sm outline-none"
+            rows={2}
+          />
+        </div>
+      </div>
 
       {show && (
         <div className="flex items-center justify-end gap-2">
           <Button
             color="foreground"
-            variant="text"
+            variant="outlined"
             onClick={() => setShow(false)}
           >
             Cancel
           </Button>
-          <Button
-            onClick={handleCommentInsert}
-            loading={loading}
-            className="border-none"
-            color="foreground"
-          >
+          <Button onClick={handleCommentInsert} loading={loading}>
             Comment
           </Button>
         </div>
