@@ -64,8 +64,6 @@ function Editor({ setEditor, blocks }: EditorComponentPrpos) {
                   body: formData,
                 }).then((res) => res?.json());
 
-                console.log(res);
-
                 if (res.success)
                   return {
                     success: 1,

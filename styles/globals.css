@@ -32,21 +32,10 @@
     @apply text-inherit;
   }
 
-  /* html::-webkit-scrollbar {
-    @apply w-3 h-3;
+  ::selection {
+    color: rgb(var(--foreground));
+    background: rgb(var(--primary) / 0.5);
   }
-
-  html::-webkit-scrollbar-track {
-    @apply bg-background;
-  }
-
-  html::-webkit-scrollbar-thumb {
-    @apply bg-gradient-to-b from-background to-primary/75 rounded;
-  }
-
-  html::-webkit-scrollbar-thumb:hover {
-    @apply bg-gradient-to-b from-primary/25 to-primary;
-  } */
 }
 
 /* @keyframes rainbow {
