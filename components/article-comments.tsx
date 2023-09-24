@@ -119,6 +119,9 @@ const ArticleComments = ({ id }: { id: string | number }) => {
                         firstName: user?.firstName ?? "",
                         id: user?.id ?? 0,
                         lastName: user?.lastName ?? "",
+                        avatarImagePath: user?.avatarImagePath ?? "",
+                        email: user?.email ?? "",
+                        userName: user?.userName ?? "",
                       },
                     }}
                   />
