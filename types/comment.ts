@@ -1,8 +1,8 @@
-import { AuthorType } from "./article";
+import { UserType } from "./user";
 
 export type CommentType = {
   id: number;
-  author: AuthorType;
+  author: UserType;
   content: string;
   createdDate: string;
   hasReplies: boolean;

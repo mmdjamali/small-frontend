@@ -1,4 +1,4 @@
-import { ArticleType, AuthorType } from "./article";
+import { ArticleType } from "./article";
 import { CommentType } from "./comment";
 import { ReplyType } from "./reply";
 import { TopicType } from "./topic";
