@@ -5,6 +5,7 @@ import { OutputBlockData } from "@editorjs/editorjs";
 import Image from "next/image";
 import { ArticleType } from "@/types/article";
 import Button from "./ui/button";
+import { IMAGE_BACKEND_URL } from "@/config/env";
 
 type Props = {
   post: ArticleType;
@@ -46,9 +47,18 @@ const ArticleListView = ({
             href={`/@${author?.userName}`}
             className="flex w-fit items-center gap-2"
           >
-            <span className="flex aspect-square h-6 items-center justify-center rounded-full border border-border">
-              <Icon name="User" className="text-[14px] text-border" />
-            </span>
+            <div className="relative flex aspect-square h-6 items-center justify-center overflow-hidden rounded-full bg-foreground/10">
+              {author?.avatarImagePath ? (
+                <Image
+                  unoptimized
+                  fill
+                  alt=""
+                  src={IMAGE_BACKEND_URL + "/" + author?.avatarImagePath ?? ""}
+                />
+              ) : (
+                <Icon name="User" className="text-[14px] text-foreground/25" />
+              )}
+            </div>
 
             <p className="text-sm font-medium text-foreground/75">
               {author?.firstName + " " + author?.lastName}
