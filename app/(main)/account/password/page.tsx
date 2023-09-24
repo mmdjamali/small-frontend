@@ -6,7 +6,7 @@ import { useUser } from "@/hooks/use-user";
 import { ChangeEvent, FormEvent, useState } from "react";
 
 const Page = () => {
-  const [user] = useUser();
+  const { user } = useUser();
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();

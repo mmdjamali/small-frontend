@@ -28,7 +28,7 @@ import { CommentType } from "@/types/comment";
 import { useUser } from "@/hooks/use-user";
 
 const ArticleComments = ({ id }: { id: string | number }) => {
-  const [user, loading] = useUser();
+  const { user } = useUser();
 
   const [added, setAdded] = useState<CommentType[]>([]);
   const [removed, setRemoved] = useState<string[]>([]);

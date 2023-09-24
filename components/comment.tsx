@@ -26,7 +26,8 @@ type props = {
 };
 
 const Comment = ({ comment, onRemove }: props) => {
-  const [user, userLoading] = useUser();
+  const { user, isLoading, isRefetching } = useUser();
+
   const fetch = useCustomFetch();
 
   const [removing, setRemoving] = useState(false);
@@ -78,7 +79,7 @@ const Comment = ({ comment, onRemove }: props) => {
                 </Button>
               </DropdownMenuTrigger>
 
-              {!userLoading && user?.id === author.id ? (
+              {!isLoading && user?.id === author.id ? (
                 <DropdownMenuPortal>
                   <DropdownMenuContent align="end">
                     <DropdownMenuItem

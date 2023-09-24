@@ -13,6 +13,7 @@ import { OutputBlockData } from "@editorjs/editorjs";
 import Image from "next/image";
 import ArticleListView from "./article-list-view";
 import Scrollable from "./scrollable-tabs";
+import ArticleList from "./articles/articles-list";
 
 type FeedProps = {
   active?: string;
@@ -85,10 +86,18 @@ const Feed = ({ active = "" }: FeedProps) => {
         </TabsList>
       </div>
 
-      <TabsContent
-        className="grid w-full grid-cols-[repeat(auto-fill,minmax(250px_,_1fr))] flex-col items-start justify-start gap-6 overflow-x-hidden rounded-lg border border-foreground/10 p-4 sm:p-6"
-        value=""
-      >
+      <TabsContent className="" value="">
+        <ArticleList
+          data={data}
+          fetchNextPage={() => {
+            fetchNextPage();
+          }}
+          hasNextPage={!!hasNextPage}
+          isError={isError}
+          isFetchingNextPage={isFetchingNextPage}
+          isLoading={isLoading}
+        />
+
         {(!isError || !isLoading) &&
           data?.pages.map((d, index, d_list) => {
             return d.items?.map((post, idx, list) => (

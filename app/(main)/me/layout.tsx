@@ -10,11 +10,11 @@ import { usePathname, useRouter } from "next/navigation";
 import { PropsWithChildren } from "react";
 
 const Layout = ({ children }: PropsWithChildren) => {
-  const [user, loading] = useUser();
+  const { user, isLoading, isRefetching } = useUser();
   const router = useRouter();
   const pathname = usePathname();
 
-  if (loading)
+  if (isLoading || (!user && isRefetching))
     return (
       <div className="flex w-full items-center justify-center py-40">
         <Icon

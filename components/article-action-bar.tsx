@@ -8,10 +8,10 @@ import { useUser } from "@/hooks/use-user";
 import { useLike } from "@/hooks/use-like";
 
 const ArticleActionBar = ({ id }: { id: string | number }) => {
-  const [user, user_loading] = useUser();
+  const { user, isLoading, isRefetching } = useUser();
   const { like, liked, unlike } = useLike(id.toString());
 
-  if (user_loading || liked.isLoading)
+  if (isLoading || liked.isLoading || (!user && isRefetching))
     return (
       <div className=" flex w-full items-center justify-between border-y border-border py-2">
         <div className="flex items-center gap-2">

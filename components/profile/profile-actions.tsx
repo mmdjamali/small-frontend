@@ -9,7 +9,7 @@ import { useCustomFetch } from "@/hooks/use-custom-fetch";
 
 const ProfileActions = ({ id }: { id: string }) => {
   const fetch = useCustomFetch();
-  const [user, user_loading] = useUser();
+  const { user, isLoading, isRefetching } = useUser();
 
   const client = useQueryClient();
 
@@ -74,7 +74,7 @@ const ProfileActions = ({ id }: { id: string }) => {
     },
   });
 
-  if (user_loading || isFollowed.isLoading)
+  if (isLoading || isFollowed.isLoading || (!user && isRefetching))
     return (
       <div className="mt-6 flex gap-2">
         <span className="flex h-[39px] w-32 animate-pulse rounded-full bg-foreground/10" />
@@ -83,7 +83,7 @@ const ProfileActions = ({ id }: { id: string }) => {
       </div>
     );
 
-  if (!user_loading && !user) return <></>;
+  if (!isLoading && !user) return <></>;
 
   if (!user) return <></>;
 

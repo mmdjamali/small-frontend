@@ -27,7 +27,7 @@ const ReplyInput = ({
 
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(false);
-  const [user, user_loading] = useUser();
+  const { user, isLoading, isRefetching } = useUser();
 
   const [parent] = useAutoAnimate();
 

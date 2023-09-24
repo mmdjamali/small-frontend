@@ -5,7 +5,7 @@ import Input from "@/components/ui/input";
 import { useUser } from "@/hooks/use-user";
 
 const Page = () => {
-  const [user] = useUser();
+  const { user } = useUser();
 
   const Desc = () => {
     return (

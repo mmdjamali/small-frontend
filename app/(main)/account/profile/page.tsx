@@ -10,7 +10,7 @@ import Image from "next/image";
 import { ChangeEvent, FormEvent, useState } from "react";
 
 const Page = () => {
-  const [user] = useUser();
+  const { user } = useUser();
   const fetch = useCustomFetch();
 
   const [picturePath, setPicturePath] = useState<null | string>(
@@ -46,7 +46,7 @@ const Page = () => {
       className="flex min-h-[50vh] w-full flex-col items-end gap-8"
     >
       <div className="flex w-full items-center gap-4">
-        <div className="relative aspect-square h-16 shrink-0 overflow-hidden rounded-full bg-foreground/10">
+        <div className="relative flex aspect-square h-16 shrink-0 items-center justify-center overflow-hidden rounded-full bg-foreground/10">
           {user?.avatarImagePath ? (
             <Image
               unoptimized

@@ -15,9 +15,10 @@ import Button from "./ui/button";
 import { useUser } from "@/hooks/use-user";
 import Icon from "./icon";
 import { usePathname } from "next/navigation";
+import { IMAGE_BACKEND_URL } from "@/config/env";
 
 function UserDropdownMenu() {
-  const [data, loading] = useUser();
+  const { user, isLoading, isRefetching } = useUser();
 
   const pathname = usePathname();
 
@@ -55,27 +56,32 @@ function UserDropdownMenu() {
     },
   ];
 
-  if (loading)
+  if (isLoading || (!user && isRefetching))
     return (
       <span className="animate-infinite aspect-square w-9 flex-shrink-0 animate-pulse rounded-full bg-foreground/25" />
     );
 
-  if (data)
+  if (user)
     return (
       <DropdownMenu>
         <DropdownMenuTrigger className="outline-none">
-          <UserAvatar src={data ? data.avatarImagePath ?? "" : ""} />
+          <UserAvatar
+            src={
+              user ? IMAGE_BACKEND_URL + "/" + user.avatarImagePath ?? "" : ""
+            }
+          />
         </DropdownMenuTrigger>
 
         <DropdownMenuContent
+          sideOffset={12}
           align={"end"}
           className="p-3 shadow-2xl shadow-foreground/50"
         >
           <div className="px-2 py-1.5 text-[14px] font-medium text-foreground">
             <p className="">
-              {data ? `${data.firstName} ${data.lastName}` : "Unknown"}
+              {user ? `${user.firstName} ${user.lastName}` : "Unknown"}
             </p>
-            <p className="text-foreground/75">{data ? data.email : "???"}</p>
+            <p className="text-foreground/75">{user ? user.email : "???"}</p>
           </div>
 
           <span className="my-1 h-[1px] w-full bg-border" />

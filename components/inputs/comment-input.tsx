@@ -17,7 +17,7 @@ interface CommentInputProps {
 }
 
 const CommentInput = ({ id, onInsert }: CommentInputProps) => {
-  const [user, userLoading] = useUser();
+  const { user } = useUser();
 
   const fetch = useCustomFetch();
 
