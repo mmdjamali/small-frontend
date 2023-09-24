@@ -4,7 +4,7 @@ import UserProfileTabs from "@/components/profile/user-profile-tabs";
 import UserStories from "@/components/profile/user-stories";
 import EmptySearchFetch from "@/components/search/empty-search-feed";
 import Button from "@/components/ui/button";
-import { BACKEND_URL } from "@/config/env";
+import { BACKEND_URL, IMAGE_BACKEND_URL } from "@/config/env";
 import { stringifyNumber } from "@/lib/utils";
 import { GetProfileApiResponse } from "@/types/api";
 import { UserType } from "@/types/user";
@@ -48,7 +48,12 @@ const Page = async ({ params }: PageProps) => {
       <div className="relative mx-auto flex h-full w-full max-w-[800px] flex-col items-start px-4 pt-6 sm:px-8 md:pt-16">
         <div className="relative grid aspect-square h-24 place-items-center overflow-hidden rounded-full bg-foreground/10">
           {user?.avatarImagePath ? (
-            <Image unoptimized fill alt="" src={user?.avatarImagePath ?? ""} />
+            <Image
+              unoptimized
+              fill
+              alt=""
+              src={IMAGE_BACKEND_URL + "/" + user?.avatarImagePath ?? ""}
+            />
           ) : (
             <Icon name="User" className="text-[50px] text-foreground/25" />
           )}

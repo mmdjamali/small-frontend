@@ -2,6 +2,7 @@
 
 import Icon from "@/components/icon";
 import ProfileActions from "@/components/profile/profile-actions";
+import { IMAGE_BACKEND_URL } from "@/config/env";
 import { useUser } from "@/hooks/use-user";
 import Image from "next/image";
 import Link from "next/link";
@@ -29,7 +30,12 @@ const Layout = ({ children }: PropsWithChildren) => {
       <div className="relative mx-auto flex h-full w-full max-w-[800px] flex-col items-start px-4 pt-6 sm:px-8 md:pt-16">
         <div className="relative grid aspect-square h-24 place-items-center overflow-hidden rounded-full bg-foreground/10">
           {user?.avatarImagePath ? (
-            <Image unoptimized fill alt="" src={user?.avatarImagePath ?? ""} />
+            <Image
+              unoptimized
+              fill
+              alt=""
+              src={IMAGE_BACKEND_URL + "/" + user?.avatarImagePath ?? ""}
+            />
           ) : (
             <Icon name="User" className="text-[50px] text-foreground/25" />
           )}

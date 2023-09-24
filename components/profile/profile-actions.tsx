@@ -90,7 +90,7 @@ const ProfileActions = ({ id }: { id: string }) => {
   return (
     <div className="mt-6 flex gap-2">
       {user?.id?.toString() === id.toString() ? (
-        <Link href={"/account/general"}>
+        <Link href={"/account"}>
           <Button color="foreground" className="rounded-full px-6">
             Edit profile
           </Button>
