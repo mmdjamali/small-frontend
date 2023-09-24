@@ -11,6 +11,7 @@ interface props extends React.ComponentPropsWithoutRef<"input"> {
   success?: boolean;
   actions?: React.ReactNode[];
   label?: string;
+  description?: string | React.ReactNode;
 }
 
 const Input = React.forwardRef<React.ElementRef<"input">, props>(
@@ -26,9 +27,10 @@ const Input = React.forwardRef<React.ElementRef<"input">, props>(
       actions,
       label,
       required,
+      description,
       ...props
     },
-    ref
+    ref,
   ) => {
     const variants = {
       outlined: {
@@ -49,13 +51,13 @@ const Input = React.forwardRef<React.ElementRef<"input">, props>(
         {label ? (
           <label
             htmlFor={ID}
-            className="text-[14px] font-medium text-foreground mb-1"
+            className="mb-1 text-[14px] font-medium text-foreground"
           >
             {label}
             {required ? (
               <>
                 {" "}
-                <span className="text-error text-[12px]">{"*"}</span>
+                <span className="text-[12px] text-error">{"*"}</span>
               </>
             ) : null}
           </label>
@@ -63,12 +65,12 @@ const Input = React.forwardRef<React.ElementRef<"input">, props>(
 
         <div
           className={cn(
-            "relative flex items-center hover:border-foreground/50 w-full px-3 py-2 border-foreground/10 border rounded text-[14px] transition-all",
+            "relative flex w-full items-center rounded border border-foreground/10 px-3 py-2 text-[14px] transition-all hover:border-foreground/50",
             variants[variant]["shared"],
             variants[variant][color],
             success ? variants[variant]["success"] : "",
             error ? variants[variant]["error"] : "",
-            className
+            className,
           )}
         >
           <input
@@ -76,8 +78,8 @@ const Input = React.forwardRef<React.ElementRef<"input">, props>(
             ref={ref}
             required={required}
             className={cn(
-              "flex-shrink w-full outline-none text-foreground/75 bg-transparent",
-              inputClassName
+              "w-full flex-shrink bg-transparent text-foreground/75 outline-none",
+              inputClassName,
             )}
             {...props}
           />
@@ -91,9 +93,12 @@ const Input = React.forwardRef<React.ElementRef<"input">, props>(
         {error && typeof error === "string" ? (
           <p className="text-error ">{error}</p>
         ) : null}
+        {description ? (
+          <p className="text-foreground/50">{description}</p>
+        ) : null}
       </div>
     );
-  }
+  },
 );
 
 Input.displayName = "@1stMmD/Input";
