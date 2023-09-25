@@ -9,6 +9,7 @@ import {
   RiArticleLine,
   RiChat1Line,
   RiChat3Fill,
+  RiCheckLine,
   RiCheckboxBlankCircleLine,
   RiCheckboxCircleFill,
   RiCloseLine,
@@ -91,6 +92,7 @@ export const Icons = {
   TwitterX: RiTwitterXLine,
   ArrowRight: RiArrowRightLine,
   Send: RiSendPlaneLine,
+  Check: RiCheckLine,
   Logo: (props: IconBaseProps) => (
     <svg
       viewBox="0 0 45 45"
