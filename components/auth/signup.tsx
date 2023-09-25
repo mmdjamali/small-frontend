@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { FormEvent, useState } from "react";
 import Input from "../ui/input";
 import Button from "../ui/button";
 import Icon from "../icon";
@@ -12,6 +12,8 @@ import { siteConfig } from "@/config";
 import toast from "../ui/toast";
 
 import { useRouter } from "next/navigation";
+import { useUsername } from "@/hooks/use-username";
+import UsernameInput from "../inputs/username-input";
 
 function Signup() {
   const router = useRouter();
@@ -51,7 +53,87 @@ function Signup() {
   );
   const [confirmPassword, registerConfirmPassword] = useDebouncedValue("", 500);
 
+  const {
+    username,
+    registerUsername,
+    usernameError,
+    usernameLoading,
+    usernameSuccess,
+  } = useUsername();
+
   const [loading, setLoading] = useState(false);
+
+  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (
+      !email ||
+      !password ||
+      !firstName ||
+      !lastName ||
+      !confirmPassword ||
+      !username
+    )
+      return toast({
+        varinat: "error",
+        title: "Invaild credentials!",
+        description: "credentials can't be empty.",
+      });
+
+    if (
+      emailError ||
+      passwordError ||
+      firstNameError ||
+      lastNameError ||
+      password !== confirmPassword ||
+      usernameError
+    )
+      return toast({
+        varinat: "error",
+        title: "Invaild Credentials!",
+        description: "credentials are not valid.",
+      });
+
+    try {
+      setLoading(true);
+
+      const res = await fetch(BACKEND_URL + "/api/auth/register", {
+        method: "POST",
+        credentials: "include",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          firstName,
+          lastName,
+          email,
+          password,
+          username,
+        }),
+      }).then((res) => res.json());
+
+      if (!res.success) {
+        toast({
+          varinat: "error",
+          title: "Something went wrong!",
+          description: res.message ?? "something went wrong, please try again.",
+        });
+      } else {
+        toast({
+          varinat: "success",
+          title: "Signup was successful!",
+          description: "welcome to small, we are smaller than medium :)",
+        });
+      }
+
+      setTimeout(() => router.push("/"), 500);
+
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+    }
+  };
 
   return (
     <section className="relative mx-auto w-full max-w-md px-0 text-[14px] text-foreground sm:max-w-lg sm:p-8">
@@ -65,81 +147,10 @@ function Signup() {
           </p>
         </div>
 
-        <form
-          onSubmit={async (e) => {
-            e.preventDefault();
-
-            if (
-              !email ||
-              !password ||
-              !firstName ||
-              !lastName ||
-              !confirmPassword
-            )
-              return toast({
-                varinat: "error",
-                title: "Invaild credentials!",
-                description: "credentials can't be empty.",
-              });
-
-            if (
-              emailError ||
-              passwordError ||
-              firstNameError ||
-              lastNameError ||
-              password !== confirmPassword
-            )
-              return toast({
-                varinat: "error",
-                title: "Invaild Credentials!",
-                description: "credentials are not valid.",
-              });
-
-            try {
-              setLoading(true);
-
-              const res = await fetch(BACKEND_URL + "/api/auth/register", {
-                method: "POST",
-                credentials: "include",
-                mode: "cors",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                  firstName,
-                  lastName,
-                  email,
-                  password,
-                }),
-              }).then((res) => res.json());
-
-              if (!res.success) {
-                toast({
-                  varinat: "error",
-                  title: "Something went wrong!",
-                  description:
-                    res.message ?? "something went wrong, please try again.",
-                });
-              } else {
-                toast({
-                  varinat: "success",
-                  title: "Signup was successful!",
-                  description:
-                    "welcome to small, we are smaller than medium :)",
-                });
-              }
-
-              setTimeout(() => router.push("/"), 500);
-
-              setLoading(false);
-            } catch (err) {
-              setLoading(false);
-            }
-          }}
-          className="flex flex-col gap-2"
-        >
+        <form onSubmit={onSubmit} className="flex flex-col gap-2">
           <div className="grid gap-3 md:grid-cols-2">
             <Input
+              required
               error={firstNameError}
               name="name"
               label="Name"
@@ -148,6 +159,7 @@ function Signup() {
             />
 
             <Input
+              required
               error={lastNameError}
               name="last_name"
               label="Last Name"
@@ -157,11 +169,23 @@ function Signup() {
           </div>
 
           <Input
+            required
             error={emailError}
             name="email"
             label="Email"
             placeholder="test@gmail.com"
             {...registerEmail()}
+          />
+
+          <UsernameInput
+            required
+            success={usernameSuccess}
+            loading={usernameLoading}
+            error={username ? usernameError ?? undefined : undefined}
+            name="username"
+            label="Username"
+            placeholder="Username"
+            {...registerUsername()}
           />
 
           <div className="grid gap-3 md:grid-cols-2">
@@ -189,7 +213,7 @@ function Signup() {
             Sign up
           </Button>
         </form>
-
+        {/* 
         <div className="reltive my-4 flex w-full items-center gap-3">
           <span className="flex h-[1px] w-full bg-border" />
           <p className="flex-shrink-0 text-[12px] text-border">
@@ -205,7 +229,7 @@ function Signup() {
           <Button variant="outlined" color="foreground">
             <Icon name="Facebook" className=" text-[21px]" /> Facebook
           </Button>
-        </div>
+        </div> */}
 
         <div className="mt-3">
           <p className="text-foreground/75">
