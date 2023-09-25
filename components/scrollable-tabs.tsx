@@ -60,7 +60,7 @@ const Scrollable = ({ children, className }: Props) => {
         setRightButton(elementWidth + elementScrollLeft !== elementScrollWidth);
         setLeftButton(elementScrollLeft > 0);
       }}
-      className={cn("flex w-full ", className)}
+      className={cn("flex w-full overflow-x-hidden", className)}
     >
       {children}
       {leftButton ? (
