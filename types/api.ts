@@ -1,3 +1,4 @@
+import { SearchKeywordType } from ".";
 import { ArticleType } from "./article";
 import { CommentType } from "./comment";
 import { ReplyType } from "./reply";
@@ -51,3 +52,7 @@ export type GetAllArticlesDataType = PaginatedData<ArticleType[]>;
 export type InsertReplyApiResponse = ApiResponse<{ commentReply: ReplyType }>;
 
 export type LikeArticleApiResponse = ApiResponse<{ isLike: boolean }>;
+
+export type GetRecentSearchesApiResponse = ApiResponse<{
+  searchKeywords: SearchKeywordType[];
+}>;
