@@ -56,3 +56,7 @@ export type LikeArticleApiResponse = ApiResponse<{ isLike: boolean }>;
 export type GetRecentSearchesApiResponse = ApiResponse<{
   searchKeywords: SearchKeywordType[];
 }>;
+
+export type CheckUsernameApiResponse = ApiResponse<{
+  isAvailable: boolean;
+}>;
