@@ -136,6 +136,7 @@ function Signin() {
           </div>
         </form>
 
+        {/* 
         <div className="reltive my-4 flex w-full items-center gap-3">
           <span className="flex h-[1px] w-full bg-border" />
           <p className="flex-shrink-0 text-[12px] text-border">
@@ -151,7 +152,7 @@ function Signin() {
           <Button variant="outlined" color="foreground">
             <Icon name="Facebook" className=" text-[21px]" /> Facebook
           </Button>
-        </div>
+        </div> */}
 
         <div className="mt-3">
           <p className="text-foreground/75">
