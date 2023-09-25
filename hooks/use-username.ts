@@ -71,7 +71,7 @@ export const useUsername = (initialValue: string = "", delay: number = 500) => {
     registerUsername: register,
     usernameError: error,
     usernameLoading: loading,
-    usernameSuccess: true,
+    usernameSuccess: success,
   } as const;
 };
 

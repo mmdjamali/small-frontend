@@ -12,6 +12,7 @@ import PasswordInput from "../password-input";
 import { siteConfig } from "@/config";
 import toast from "../ui/toast";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useUsernameOrEmail } from "@/hooks/use-username-or-email";
 
 function Signin() {
   const router = useRouter();
@@ -19,9 +20,7 @@ function Signin() {
 
   const redirect = searchParams.get("redirect") ?? "/";
 
-  const [email, registerEmail, emailError] = useDebouncedValue("", 500, [
-    { pattern: /^\S+@\S+\.\S+$/, error_message: "Email is invalid" },
-  ]);
+  const [email, registerEmail, emailError] = useUsernameOrEmail("", 500);
 
   const [password, registerPassword, passwordError] = useDebouncedValue(
     "",
@@ -110,10 +109,10 @@ function Signin() {
           className="flex flex-col gap-2"
         >
           <Input
-            error={emailError}
+            error={email ? emailError ?? undefined : undefined}
             name="email"
-            label="Email"
-            placeholder="test@gmail.com"
+            label="Email or username"
+            placeholder="email or username"
             {...registerEmail()}
           />
 
