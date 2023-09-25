@@ -28,8 +28,6 @@ const Layout = ({ children }: PropsWithChildren) => {
 
   if (!user) return router.push(`/signin?redirect=${pathname}`);
 
-  console.log(user);
-
   return (
     <main className="grid w-full ">
       <div className="relative mx-auto flex h-full w-full max-w-[900px] flex-col items-start px-4 pt-6 sm:px-8 md:pt-16">
@@ -92,7 +90,7 @@ const Layout = ({ children }: PropsWithChildren) => {
                   <Link
                     href={url}
                     className={cn(
-                      "rounded px-4 py-2 font-medium text-foreground/75",
+                      "whitespace-nowrap rounded px-4 py-2 font-medium text-foreground/75",
                       url === pathname
                         ? "bg-primary/10 text-primary"
                         : "hover:text-foreground",

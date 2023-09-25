@@ -4,6 +4,7 @@ import SearchInput from "@/components/inputs/search-input";
 import SearchFeed from "@/components/search/search-feed";
 import Topics from "@/components/topics";
 import Image from "next/image";
+import RecentSearches from "@/components/profile/recent-searches";
 
 const Page = () => {
   return (
@@ -24,9 +25,7 @@ const Page = () => {
         <SearchInput query={""} />
       </div>
 
-      <div className="relative mx-auto mb-8 w-full max-w-[800px] overflow-hidden px-4 sm:px-8">
-        <p className="text-sm font-medium">Recent searches :</p>
-      </div>
+      <RecentSearches />
 
       <div className="relative mx-auto mb-4 w-full max-w-[1300px] overflow-hidden px-4 sm:px-8">
         <p className="text-xl font-semibold">Trends</p>
