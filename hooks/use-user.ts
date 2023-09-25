@@ -1,20 +1,8 @@
 import { useCustomFetch } from "./use-custom-fetch";
 import { GetProfileApiResponse } from "@/types/api";
-import { UserType } from "@/types/user";
-import { useQuery } from "react-query";
+import { useQuery, QueryOptions } from "react-query";
 
-type State = UserType | null;
-
-let state: State;
-
-let listeners: Array<(state: State) => void> = [];
-
-const dispacth = (new_state: State) => {
-  listeners.forEach((setState) => setState(new_state));
-  state = new_state;
-};
-
-export const useUser = () => {
+export const useUser = (options?: { refetchOnMount: boolean }) => {
   const fetch = useCustomFetch();
 
   const res = useQuery({
@@ -34,6 +22,7 @@ export const useUser = () => {
     },
     refetchOnWindowFocus: false,
     retry: 1,
+    refetchOnMount: options?.refetchOnMount ?? false,
   });
 
   return { ...res, user: res.data } as const;

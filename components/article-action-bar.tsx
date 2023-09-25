@@ -8,7 +8,9 @@ import { useUser } from "@/hooks/use-user";
 import { useLike } from "@/hooks/use-like";
 
 const ArticleActionBar = ({ id }: { id: string | number }) => {
-  const { user, isLoading, isRefetching } = useUser();
+  const { user, isLoading, isRefetching } = useUser({
+    refetchOnMount: true,
+  });
   const { like, liked, unlike } = useLike(id.toString());
 
   if (isLoading || liked.isLoading || (!user && isRefetching))

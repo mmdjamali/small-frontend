@@ -18,7 +18,9 @@ import { usePathname } from "next/navigation";
 import { IMAGE_BACKEND_URL } from "@/config/env";
 
 function UserDropdownMenu() {
-  const { user, isLoading, isRefetching } = useUser();
+  const { user, isLoading, isRefetching } = useUser({
+    refetchOnMount: true,
+  });
 
   const pathname = usePathname();
 
