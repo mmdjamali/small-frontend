@@ -9,10 +9,8 @@ export default async function Home() {
       <div className="relative h-[480px] w-full overflow-hidden">
         <Image
           className="object-cover"
-          alt="e"
-          src={
-            "https://cdn.discordapp.com/attachments/1138951142810845277/1151470342318067732/beautiful-cubism-graffiti.jpg"
-          }
+          alt="Beautiful cubism graffiti art"
+          src={"/beautiful-cubism-graffiti.jpg"}
           unoptimized
           fill
         />

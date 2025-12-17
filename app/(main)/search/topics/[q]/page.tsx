@@ -17,9 +17,7 @@ const Page = ({ params: { q } }: PageProps) => {
         <Image
           className="object-cover "
           alt="e"
-          src={
-            "https://cdn.discordapp.com/attachments/1138951142810845277/1151470342318067732/beautiful-cubism-graffiti.jpg"
-          }
+          src={"/beautiful-cubism-graffiti.jpg"}
           unoptimized
           fill
         />
