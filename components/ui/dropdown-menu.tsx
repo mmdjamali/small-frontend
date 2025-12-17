@@ -13,12 +13,6 @@ const DropdownMenu = ({
     onOpenChange={(open) => {
       const bool = !/Mobi/i.test(navigator.userAgent);
 
-      open
-        ? bool
-          ? document.body.classList.add("pr-[var(--margin-dropdown)]")
-          : null
-        : document.body.classList.remove("pr-[var(--margin-dropdown)]");
-
       onOpenChange ? onOpenChange(open) : null;
     }}
     {...props}
