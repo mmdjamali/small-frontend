@@ -12,12 +12,6 @@ let initialState: State;
 
 let listernes: Array<(state: State) => void> = [];
 
-let refreshing: {
-  promise: Promise<string> | null,
-} = {
-  promise: null,
-}
-
 export const dispatch = (state: State) => {
   initialState = state;
   listernes.forEach((setState) => setState(initialState));
@@ -60,8 +54,6 @@ export const useCustomFetch = () => {
   const custom_fetch = useCallback(
     async (input: RequestInfo | URL, init?: RequestInit | undefined) => {
       try {
-        if (refreshing.promise) return
-
         const res = await fetch(
           (BACKEND_URL ?? "") + input,
           init
@@ -89,11 +81,8 @@ export const useCustomFetch = () => {
 
         if (res.status !== 401) return res;
 
-        refreshing.promise = refresh_token();
 
-        const new_token = (await refreshing.promise) ?? "";
-
-        refreshing.promise = null;
+        const new_token = await refresh_token();
 
         if (!new_token) return res;
 
