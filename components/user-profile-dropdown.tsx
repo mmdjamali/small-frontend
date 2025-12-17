@@ -14,15 +14,20 @@ import Link from "next/link";
 import Button from "./ui/button";
 import { useUser } from "@/hooks/use-user";
 import Icon from "./icon";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { IMAGE_BACKEND_URL } from "@/config/env";
+import { useCustomFetch } from "@/hooks/use-custom-fetch";
 
 function UserDropdownMenu() {
   const { user, isLoading, isRefetching } = useUser({
     refetchOnMount: true,
   });
 
+  const custom_fetch = useCustomFetch();
+
   const pathname = usePathname();
+
+  const navigate = useRouter();
 
   const links: {
     type: "button";
@@ -69,7 +74,7 @@ function UserDropdownMenu() {
         <DropdownMenuTrigger className="outline-none">
           <UserAvatar
             src={
-              user ? IMAGE_BACKEND_URL + "/" + user.avatarImagePath ?? "" : ""
+              user ? (IMAGE_BACKEND_URL + "/" + user.avatarImagePath ?? "") : ""
             }
           />
         </DropdownMenuTrigger>
@@ -108,7 +113,14 @@ function UserDropdownMenu() {
 
           <DropdownMenuItem
             className="select-none hover:bg-error/10 hover:text-error"
-            onClick={() => {}}
+            onClick={async () => {
+              await custom_fetch("/api/auth/logout", {
+                method: "POST",
+                mode: "cors",
+              }).then((res) => res?.json());
+
+              navigate.push("/signin");
+            }}
           >
             <Icon name="Logout" className="text-[16px]" />
             {"Logout"}
