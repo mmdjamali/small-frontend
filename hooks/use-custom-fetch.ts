@@ -58,18 +58,25 @@ export const useCustomFetch = () => {
           (BACKEND_URL ?? "") + input,
           init
             ? {
-                mode: "cors",
-                ...init,
-                headers: init.headers
-                  ? {
-                      ...init.headers,
-                      Authorization: `Bearer ${state}`,
-                    }
-                  : {
-                      Authorization: `Bearer ${state}`,
-                    },
-              }
-            : undefined,
+              mode: "cors",
+              credentials: "include",
+              ...init,
+              headers: init.headers
+                ? {
+                  ...init.headers,
+                  Authorization: `Bearer ${state}`,
+                }
+                : {
+                  Authorization: `Bearer ${state}`,
+                },
+            }
+            : {
+              mode: "cors",
+              credentials: "include",
+              headers: {
+                Authorization: `Bearer ${state}`,
+              },
+            },
         );
 
         if (res.status !== 401) return res;
@@ -82,18 +89,25 @@ export const useCustomFetch = () => {
           (BACKEND_URL ?? "") + input,
           init
             ? {
-                mode: "cors",
-                ...init,
-                headers: init.headers
-                  ? {
-                      ...init.headers,
-                      Authorization: `Bearer ${new_token}`,
-                    }
-                  : {
-                      Authorization: `Bearer ${new_token}`,
-                    },
-              }
-            : undefined,
+              mode: "cors",
+              credentials: "include",
+              ...init,
+              headers: init.headers
+                ? {
+                  ...init.headers,
+                  Authorization: `Bearer ${new_token}`,
+                }
+                : {
+                  Authorization: `Bearer ${new_token}`,
+                },
+            }
+            : {
+              mode: "cors",
+              credentials: "include",
+              headers: {
+                Authorization: `Bearer ${new_token}`,
+              },
+            },
         );
       } catch (err) {
         return;

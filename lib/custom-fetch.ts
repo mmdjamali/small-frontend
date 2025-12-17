@@ -10,13 +10,17 @@ export const custom_fetch = async (
     (BACKEND_URL ?? "") + input,
     init
       ? {
-          mode: "cors",
-          ...init,
-          headers: {
-            "Content-Type": "application/json",
-            ...init?.headers,
-          },
-        }
-      : undefined,
+        mode: "cors",
+        credentials: "include",
+        ...init,
+        headers: {
+          "Content-Type": "application/json",
+          ...init?.headers,
+        },
+      }
+      : {
+        mode: "cors",
+        credentials: "include",
+      },
   );
 };
