@@ -115,7 +115,7 @@ function UserDropdownMenu() {
             className="select-none hover:bg-error/10 hover:text-error"
             onClick={async () => {
               await custom_fetch("/api/auth/logout", {
-                method: "POST",
+                method: "DELETE",
                 mode: "cors",
               }).then((res) => res?.json());
 
